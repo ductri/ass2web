@@ -6,8 +6,6 @@ include __DIR__ . './vendor/autoload.php';
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 echo 'abc';
-
-
 $collector = new RouteCollector();
 console_log('abc');
 // console_log($collector);
