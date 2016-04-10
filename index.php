@@ -1,7 +1,7 @@
 <?php
 include 'utils.php';
 include "config/config.php";
-include __DIR__ . './vendor/autoload.php';
+include 'vendor/autoload.php';
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
