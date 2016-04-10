@@ -1,10 +1,10 @@
 #!/bin/bash
 # Run composer install
 
-cd app-root/runtime/repo/php
+cd app-root/runtime/repo
 
 export HOME_ORIGIN=$HOME
-export HOME=$HOME/app-root/runtime/repo/php
+export HOME=$HOME/app-root/runtime/repo
 
 /usr/bin/php composer.phar install
 
