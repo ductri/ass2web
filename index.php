@@ -1,6 +1,6 @@
 <?php
 include 'utils.php';
-// include "config/config.php";
+include "config/config.php";
 // include __DIR__ . './vendor/autoload.php';
 echo 'abc';
 console_log('abc');
