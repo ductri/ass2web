@@ -1,4 +1,5 @@
 <?php
+echo 'abc';
 console_log('abc');
 // include 'utils.php';
 // include "config/config.php";
