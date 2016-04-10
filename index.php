@@ -5,10 +5,7 @@ include 'vendor/autoload.php';
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
-echo 'abc';
 $collector = new RouteCollector();
-console_log('abc');
-console_log($collector);
 $collector->get('/', function(){
 	readfile('html/tuanBD/theme.html');
 });
