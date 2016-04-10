@@ -1,4 +1,7 @@
 RewriteEngine on
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]
+
+#Chuyen tat ca cac request den file, folder ko ton tai den index.php
