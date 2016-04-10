@@ -1,0 +1,200 @@
+@import url("http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css");
+.nonedis{
+	margin:0%;
+	padding: 0%;
+}
+
+body{
+	 font-family: 'Lato',arial,sans-serif;
+	 width: 100%;
+   background-color: #eeeeee;
+}
+#navadd{
+	border-radius: 0px;
+	height: auto;
+	margin-top: 0%;
+	width: 100%;
+	position: fixed;
+	z-index: 2;
+	
+}
+#navadd1{
+	border-radius: 0px;
+	height: auto;
+	margin-top: 0%;
+	width: 100%;
+	position: fixed;
+	z-index: 2;
+	background-color: black;
+}
+  #header{
+  	
+  	background-color: black;
+  	margin: auto;
+  	width: 100%;
+  	border-radius: 0px ! important;
+  }
+#bellow1{
+ 	background-color: black;
+  	height: 100%;
+  	margin: 0;
+  	margin-top: -3px;
+  	z-index: 2;
+  }
+
+  #bellow2{
+  	padding-left: 8%;
+  	height: auto;
+  	margin: 0;
+  }
+#headerIcon{
+	padding-left: 9%;
+}
+ #tribeo{
+  border-radius: 5px;
+  margin-top: 1%;
+}
+
+#container{
+	width: 100%;
+	margin: 0px;
+	padding: 0%;
+}
+
+#bottom{
+	background-image: url("frontpage.png");
+	height: 450px;
+	background-position: 50% 60%;
+	width: 100%;
+	margin: 0%;
+	padding: 0%;
+	background-size: cover;
+	border-radius: 0px;
+}
+
+#bottom h1, h2{
+	color: white;
+
+}
+
+#bottom p{
+	color: white;
+	font-family: "Lato"
+	font-weight: 1%;
+}
+
+#text{
+	line-height: 100%;
+	padding-top: 5%;
+	padding-left: 9%;
+	margin: 2%;
+	margin-top: 7%;
+}
+
+#bottomRow{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+  #footer li{
+  	display: inline-block;
+
+}
+
+#footer{
+	border-top: 3px;
+  	border-top-style: solid;
+  	border-top-color: white;
+  	margin-top: 1%;
+  	height: 45%;
+  	background-color: #efefef;
+
+}
+#search{
+	width: 30%;
+	display: inline-table;
+	margin-top: 0.5%;
+}
+#search1{
+	width: 70%;
+	display: inline-table;
+	margin-top: 0.5%;
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+.mid{
+	text-align: center;
+}
+
+.slide{
+
+}
+.padding-item {
+  border: 1px solid #CCC7B3;
+  overflow:hidden;
+  box-shadow: 2px 2px 1px #D5D5D5;
+  border-radius: 10px;
+  background-color: #D7D8D7;
+  display:inline-block;
+}
+.padding-item hr {
+  margin-top: 2px;
+  margin-bottom: 5px;
+  color: black;
+  border-color: black;
+  background-color: black;
+}
+.item-picture {
+  width: 100%;
+}
+
+
+.hover-group .image-wrapper {
+  /* We need this to make the .hover-toggle div relative to .image-wrapper */
+  position: relative;
+  background: black;
+}
+
+.hover-group .image-wrapper .hover-toggle {
+  /* set it at the bottom of .image-wrapper */
+  position: absolute;
+  bottom: 0;
+  /* and don't display it */
+  display: none;
+}
+.hover-group .image-wrapper img {
+  -webkit-transition: all 0.5s linear;
+   -moz-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+     -o-transition: all 0.5s linear;
+        transition: all 0.5s linear;
+}
+.hover-group .image-wrapper:hover img{
+  opacity: 0.7;
+  filter: alpha(opacity=70); /* For IE8 and earlier */
+}
+
+.hover-group .image-wrapper:hover .hover-toggle {
+  /* only display it when .image-wrapper is being hovered on */
+  display: table;
+}
+
+.top-10 {
+  margin-top:30px;
+}
+
+.clear{
+	clear: both;
+}
