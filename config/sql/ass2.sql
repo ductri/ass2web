@@ -52,14 +52,14 @@ CREATE TABLE `slide` (
   `slideid` int(11) NOT NULL,
   `userid` int(11) DEFAULT NULL,
   `url` text NOT NULL,
-  `subjectid` int(11) DEFAULT NULL
+  `topicid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Info about slide';
 
 --
 -- Dumping data for table `slide`
 --
 
-INSERT INTO `slide` (`slideid`, `userid`, `url`, `subjectid`) VALUES
+INSERT INTO `slide` (`slideid`, `userid`, `url`, `topicid`) VALUES
 (1, 1, 'xxx', 1),
 (2, 1, 'xxx', 1),
 (3, 3, 'xxx', 3),
@@ -68,19 +68,19 @@ INSERT INTO `slide` (`slideid`, `userid`, `url`, `subjectid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subject`
+-- Table structure for table `topic`
 --
 
-CREATE TABLE `subject` (
-  `subjectid` int(11) NOT NULL,
+CREATE TABLE `topic` (
+  `topicid` int(11) NOT NULL,
   `name` char(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `subject`
+-- Dumping data for table `topic`
 --
 
-INSERT INTO `subject` (`subjectid`, `name`) VALUES
+INSERT INTO `topic` (`topicid`, `name`) VALUES
 (1, 'Education'),
 (3, 'Science'),
 (4, 'Economy');
@@ -125,16 +125,16 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `slide`
   ADD PRIMARY KEY (`slideid`),
-  ADD KEY `IXFK_slide_subject` (`subjectid`),
+  ADD KEY `IXFK_slide_topic` (`topicid`),
   ADD KEY `IXFK_slide_user` (`slideid`),
   ADD KEY `IXFK_slide_user_02` (`userid`),
   ADD KEY `IXFK_slide_user_03` (`userid`);
 
 --
--- Indexes for table `subject`
+-- Indexes for table `topic`
 --
-ALTER TABLE `subject`
-  ADD PRIMARY KEY (`subjectid`);
+ALTER TABLE `topic`
+  ADD PRIMARY KEY (`topicid`);
 
 --
 -- Indexes for table `user`
@@ -158,10 +158,10 @@ ALTER TABLE `comment`
 ALTER TABLE `slide`
   MODIFY `slideid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `subject`
+-- AUTO_INCREMENT for table `topic`
 --
-ALTER TABLE `subject`
-  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `topic`
+  MODIFY `topicid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -182,7 +182,7 @@ ALTER TABLE `comment`
 -- Constraints for table `slide`
 --
 ALTER TABLE `slide`
-  ADD CONSTRAINT `FK_slide_subject` FOREIGN KEY (`subjectid`) REFERENCES `subject` (`subjectid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_slide_topic` FOREIGN KEY (`topicid`) REFERENCES `topic` (`topicid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_slide_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
