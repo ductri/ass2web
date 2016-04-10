@@ -6,9 +6,10 @@ include __DIR__ . './vendor/autoload.php';
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 echo 'abc';
-console_log('abc');
 
-// $collector = new RouteCollector();
+
+$collector = new RouteCollector();
+console_log('abc');
 // console_log($collector);
 // $collector->get('/', function(){
 // 	readfile('html/tuanBD/theme.html');
