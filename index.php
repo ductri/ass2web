@@ -2,10 +2,11 @@
 include 'utils.php';
 include "config/config.php";
 include __DIR__ . './vendor/autoload.php';
+
+use Phroute\Phroute\RouteCollector;
+use Phroute\Phroute\Dispatcher;
 echo 'abc';
 console_log('abc');
-// use Phroute\Phroute\RouteCollector;
-// use Phroute\Phroute\Dispatcher;
 
 // $collector = new RouteCollector();
 // console_log($collector);
