@@ -10,6 +10,14 @@ $collector->get('/', function(){
 	readfile('html/tuanBD/theme.html');
 });
 
+$collector->get('/upload', function(){
+	readfile('html/keo/upload.html');
+});
+
+$collector->get('/signup', function(){
+	readfile('html/keo/signup.html');
+});
+
 $collector->get('/catalog/{catalog}', function($catalog){
 	//Asume
 	$catalog = "top-download";
@@ -25,5 +33,4 @@ $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 $dispatcher =  new Dispatcher($collector->getData());
 
 echo $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));   // Home Page
-
 ?>

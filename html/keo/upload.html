@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upload to T-Share</title>
+  <link rel="stylesheet" type="text/css" href="/pub/css/keo/upload/style.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script src="/pub/js/keo/upload/index.js" type="text/javascript"></script>
+  <script src="/pub/js/quang/index.js"></script>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <nav class="navbar navbar-inverse nonedis visible-xs" id="navadd1">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bellow1">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+        <img class="navbar-brand" src="/pub/img/logo.png" alt="logo" style="height: 45px;width: auto;padding: 0px;padding-right: 5px;">
+        <a href="./../../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
+      </div>
+      <div class="collapse navbar-collapse" id="ss">
+        <div class="input-group stylish-input-group" id="search1">
+          <input type="text" class="form-control"  placeholder="Search" >
+          <span class="input-group-addon">
+            <button type="submit">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
+          <li><a href="../keo/Upload/upload.html">Up load</a></li>
+          <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
+          <li><a href="../quang/register.html">Sign up</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="bellow1" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right" style="padding-left: 2%; display: block">
+        <li><a href="./../../tuanBD/theme.html">Home</a></li>
+        <li>
+          <a href="../quang/catalog.html" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="../quang/catalog.html">Top Rate</a></li>
+            <li><a href="../quang/catalog.html">Top Download</a></li>
+            <li><a href="../quang/catalog.html">Education</a></li>
+            <li><a href="../quang/catalog.html">Technology</a></li>
+            <li><a href="../quang/catalog.html">Mobile</a></li>
+            <li><a href="../quang/catalog.html">Photograph</a></li>
+            <li><a href="../quang/catalog.html">Food</a></li>
+            <li><a href="../quang/catalog.html">Business</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="navbar navbar-inverse nonedis hidden-xs" id="navadd">
+    <div class="container-fluid" id="header">
+      <div class="navbar-header" id="headerIcon">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bellow2">
+          <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+        </button>
+        <img class="navbar-brand" src="/pub/img/logo.png" alt="logo"  style="height: 45px;width: auto;padding: 0px;padding-right: 10px;">
+        <a href="./../../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 22px;"> T-Share | </a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <div class="input-group stylish-input-group" id="search">
+          <input type="text" class="form-control"  placeholder="Search" >
+          <span class="input-group-addon">
+            <button type="submit">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      <!-- <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
+        <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='../keo/Upload/upload.html';">Upload</button></li>
+        <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
+        <li><a href="../quang/register.html">Sign up</a></li>
+      </ul> -->
+    </div>
+  </div>
+
+  <div id="bellow2" class="hidden-xs">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block">
+        <li><a href="./../../tuanBD/theme.html">Home</a></li>
+        <li><a href="./../../quang/catalog.html">Top Rate</a></li>
+        <li><a href="./../../quang/catalog.html">Top Download</a></li>
+        <li><a href="./../../quang/catalog.html">Technology</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="./../../quang/catalog.html">Education</a></li>
+            <li><a href="./../../quang/catalog.html">Mobile</a></li>
+            <li><a href="./../../quang/catalog.html">Photograph</a></li>
+            <li><a href="./../../quang/catalog.html">Food</a></li>
+            <li><a href="./../../quang/catalog.html">Business</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Login -->
+<!-- BEGIN # MODAL LOGIN -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <img class="img-circle" id="img_logo" src="./../../quang/images/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <!-- Begin # DIV Form -->
+      <div id="div-forms">
+
+        <!-- Begin # Login Form -->
+        <form id="login-form">
+          <div class="modal-body">
+            <div id="div-login-msg">
+              <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+              <span id="text-login-msg">Type your username and password.</span>
+            </div>
+            <input id="login_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+            <input id="login_password" class="form-control" type="password" placeholder="Password" required>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Remember me
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+            </div>
+            <div>
+              <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+            </div>
+          </div>
+        </form>
+        <!-- End # Login Form -->
+
+        <!-- Begin | Lost Password Form -->
+        <form id="lost-form" style="display:none;">
+          <div class="modal-body">
+            <div id="div-lost-msg">
+              <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+              <span id="text-lost-msg">Type your e-mail.</span>
+            </div>
+            <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
+          </div>
+          <div class="modal-footer">
+            <div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+            </div>
+            <div>
+              <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
+            </div>
+          </div>
+        </form>
+        <!-- End | Lost Password Form -->
+      </div>
+      <!-- End # DIV Form -->
+
+    </div>
+  </div>
+</div>
+<!-- END # MODAL LOGIN -->
+<div class="container"> <br />
+
+ <div class="row">
+  <div class="col-md-6 col-md-offset-3" style="position: relative; margin-top: 100px">
+    <div class="panel panel-default">
+     <div class="panel-heading"><strong> Upload files </strong></div>
+     <div class="panel-body">
+       <div class="form-group">
+         <label for="document-name">Name of Document:</label>
+         <input type="text" class="form-control" id="document-name" placeholder="">
+       </div>
+
+       <div class="kv-main">
+        <form enctype="multipart/form-data">
+          <div class="form-group">
+            <input id="file-5" class="file" type="file" multiple data-preview-file-type="any" data-upload-url="#">
+          </div>
+        </form>
+        <br>
+      </div>
+
+      <form role="form_type">
+        <div class="form-group">
+          <label for="sel1">Select Type (select one):</label>
+          <select class="form-control" id="sel1">
+            <option value="Technology">Technology</option>
+            <option value="Education">Education</option>
+            <option value="Mobile">Mobile</option>
+            <option value="Photograph">Photograph</option>
+            <option value="Food">Food</option>
+            <option value="Bussiness">Bussiness</option> <br>
+          </select>
+
+        </div>
+      </form>
+      <br>
+
+      <form role="form_comment">
+        <div class="form-group">
+          <label for="comment">Description:</label>
+          <textarea class="form-control" rows="4" id="comment"></textarea>
+        </div>
+      </form>
+
+      <!-- Progress Bar -->
+						<!--
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"> <span class="sr-only">30% Complete</span> </div>
+						</div> -->
+						
+						
+						<!-- Upload Finished -->
+						<div class="js-upload-finished">
+							<h4>Upload history</h4>
+							<div class="list-group"> 
+               <a href="#" class="list-group-item list-group-item-danger"><span class="badge alert-danger pull-right">23-11-2014</span>amended-catalogue-01.xls</a> 
+               <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">23-11-2014</span>amended-catalogue-01.xls</a> 
+
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+   </div>
+ </div>
+</body>
+</html>

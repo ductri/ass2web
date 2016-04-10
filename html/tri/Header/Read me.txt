@@ -1,3 +1,0 @@
-To create Navigation bar:
-+ Copy code in header.html, then paste to place where you want to create the bar.
-+ Copy code in style.css flie, then paste to your *.css
