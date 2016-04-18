@@ -26,9 +26,10 @@ $collector->get('/signup', function(){
 });
 
 $collector->get('/catalog/{catalog}', function($catalog){
-	//Asume 
+	//Asume
 	$catalog = "top-download";
-	readfile('html/quang/catalog.html');
+	//readfile('html/quang/catalog.html');
+	include('html/quang/catalog.php');
 });
 
 $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
