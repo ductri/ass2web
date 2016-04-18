@@ -77,7 +77,7 @@
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
-        <li><a style="color: white;"><strong><?php echo "ahihi"; //$_SESSION["name"]?></strong></a></li>
+        <li><a style="color: white;"><strong><?php $_SESSION["name"]?></strong></a></li>
         <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>
