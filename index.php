@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'utils.php';
 include "config/config.php";
 include 'vendor/autoload.php';
@@ -44,30 +46,42 @@ $DBManager = new DBManager();
 //TOPIC
 $collector->post('/topic/add', function(){
 	global $DBManager;
-	$topic = $DBManager->getTable("topic");
-	$topic->addTopic($_POST["name"]);
+	$topicDB = $DBManager->getTable("topic");
+	$respone = $topicDB->addTopic($_POST["name"]);
+	echo $response;
 });
 
 $collector->get('/topic/get', function(){
 	global $DBManager;
-	$topic = $DBManager->getTable("topic");
-	$topic->getTopics();
+	$topicDB = $DBManager->getTable("topic");
+	$respone = $topicDB->getTopics();
+	echo $response;
 });
 
 $collector->post('/topic/edit', function(){
 	global $DBManager;
-	$topic = $DBManager->getTable("topic");
-	$topic->editTopic($_POST['topicid'], $_POST['newName']);
+	$topicDB = $DBManager->getTable("topic");
+	$respone = $topicDB->editTopic($_POST['topicid'], $_POST['newName']);
+	echo $response;
 });
 
 //Khong xoa duoc nhan topic dang duoc ref
 $collector->post('/topic/delete', function(){
 	global $DBManager;
-	$topic = $DBManager->getTable("topic");
-	$topic->deleteTopic($_POST['topicid']);
+	$topicDB = $DBManager->getTable("topic");
+	$respone = $topicDB->deleteTopic($_POST['topicid']);
+	echo $response;
 });
 
-
+// LOGIN
+$collector->post('/login', function(){
+	global $DBManager;
+	$userDB = $DBManager->getTable("user");
+	$respone = $userDB->login($_POST['username'], $_POST['password']);
+	if ($respone["result"] !== "fail") 
+		$_SESSION["username"] = $respone["result"]["username"];
+	echo json_encode($respone);
+});	
 
 $dispatcher =  new Dispatcher($collector->getData());
 

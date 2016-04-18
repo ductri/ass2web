@@ -1,6 +1,6 @@
 <?php 
 require_once('/../utils.php');
-class Topic  {
+class TopicDB  {
 	private $conn;
 
 	function __construct($conn) {
@@ -16,7 +16,7 @@ class Topic  {
 				array_push($response, $row) ;
 			}
 		}
-		echo json_encode($response);
+		return json_encode($response);
 	}
 
 	public function addTopic($name) {
@@ -30,7 +30,7 @@ class Topic  {
 			$response["result"] = "fail";
 			$response["msg"] = "Add topic $name fail";
 		}
-		echo json_encode($response);
+		return json_encode($response);
 	}
 
 	public function editTopic($topicid, $name) {
@@ -44,7 +44,7 @@ class Topic  {
 			$response["result"] = "fail";
 			$response["msg"] = "Edit topic $topicid fail";
 		}
-		echo json_encode($response);
+		return json_encode($response);
 	}
 
 	public function deleteTopic($topicid) {
@@ -58,7 +58,7 @@ class Topic  {
 			$response["result"] = "fail";
 			$response["msg"] = "Delete topic $topicid fail";
 		}
-		echo json_encode($response);
+		return json_encode($response);
 	}
 }
 

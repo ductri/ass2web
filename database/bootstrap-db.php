@@ -1,10 +1,12 @@
 <?php 
 require_once("/../utils.php");
-require_once("topic.php");
+require_once("TopicDB.php");
+require_once("UserDB.php");
 
 class DBManager {
 	private $conn;
-	private $topic = null;
+	private $topicDB = null;
+	private $userDB = null;
 
 	function __construct() {
 		//Connect db
@@ -17,12 +19,17 @@ class DBManager {
 	function getTable($table_name) {
 		switch ($table_name) {
 			case 'topic':
-
-				if (null === $this->topic) {
-					$this->topic = new Topic($this->conn);
+				if (null === $this->topicDB) {
+					$this->topicDB = new TopicDB($this->conn);
 				}
-				return $this->topic;
-				
+				return $this->topicDB;
+				break;
+
+			case 'user':
+				if (null === $this->userDB) {
+					$this->userDB = new UserDB($this->conn);
+				}
+				return $this->userDB;
 				break;
 			
 			default:
