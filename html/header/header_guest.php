@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Catalog</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="/pub/js/quang/index.js"></script>
-<link rel="stylesheet" href="/pub/css/quang/style.css"/>
-</head>
+
 <body>
 <!-- Header -->
 <nav class="navbar navbar-inverse nonedis visible-xs" id="navadd1">
@@ -45,24 +33,24 @@
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
-        <li><a href="../quang/register.html">Sign up</a></li>
+        <li><a href="/signup">Sign up</a></li>
       </ul>
     </div>
   </div>
   <div id="bellow1" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right" style="padding-left: 2%; display: block">
-      <li><a href="../tuanBD/theme.html">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li>
         <a href="../quang/catalog.html" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="../quang/catalog.html">Top Rate</a></li>
-          <li><a href="../quang/catalog.html">Top Download</a></li>
-          <li><a href="../quang/catalog.html">Education</a></li>
-          <li><a href="../quang/catalog.html">Technology</a></li>
-          <li><a href="../quang/catalog.html">Mobile</a></li>
-          <li><a href="../quang/catalog.html">Photograph</a></li>
-          <li><a href="../quang/catalog.html">Food</a></li>
-          <li><a href="../quang/catalog.html">Business</a></li>
+          <li><a href="/catalog/top-rate">Top Rate</a></li>
+          <li><a href="/catalog/top-download">Top Download</a></li>
+          <li><a href="/catalog/technology">Technology</a></li>
+          <li><a href="/catalog/education">Education</a></li>
+          <li><a href="/catalog/mobile">Mobile</a></li>
+          <li><a href="/catalog/photograph">Photograph</a></li>
+          <li><a href="/catalog/food">Food</a></li>
+          <li><a href="/catalog/business">Business</a></li>
         </ul>
       </li>
     </ul>
@@ -92,7 +80,7 @@
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='../keo/Upload/upload.html';">Upload</button></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
-        <li><a href="../quang/register.html">Sign up</a></li>
+        <li><a href="/signup">Sign up</a></li>
       </ul>
     </div>
   </div>
@@ -100,18 +88,18 @@
   <div id="bellow2" class="hidden-xs">
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block">
-        <li><a href="../tuanBD/theme.html">Home</a></li>
-        <li><a href="../quang/catalog.html">Top Rate</a></li>
-        <li><a href="../quang/catalog.html">Top Download</a></li>
-        <li><a href="../quang/catalog.html">Technology</a></li>
+       <li><a href="/">Home</a></li>
+        <li><a href="/catalog/top-rate">Top Rate</a></li>
+        <li><a href="/catalog/top-download">Top Download</a></li>
+        <li><a href="/catalog/technology">Technology</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="../quang/catalog.html">Education</a></li>
-            <li><a href="../quang/catalog.html">Mobile</a></li>
-            <li><a href="../quang/catalog.html">Photograph</a></li>
-            <li><a href="../quang/catalog.html">Food</a></li>
-            <li><a href="../quang/catalog.html">Business</a></li>
+            <li><a href="/catalog/education">Education</a></li>
+            <li><a href="/catalog/mobile">Mobile</a></li>
+            <li><a href="/catalog/photograph">Photograph</a></li>
+            <li><a href="/catalog/food">Food</a></li>
+            <li><a href="/catalog/business">Business</a></li>
           </ul>
         </li>
 
