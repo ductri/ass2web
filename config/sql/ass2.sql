@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2016 at 06:48 PM
+-- Generation Time: Apr 19, 2016 at 05:20 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -51,19 +51,23 @@ INSERT INTO `comment` (`slideid`, `userid`, `content`, `time`, `commentid`) VALU
 CREATE TABLE `slide` (
   `slideid` int(11) NOT NULL,
   `userid` int(11) DEFAULT NULL,
-  `url` text NOT NULL,
-  `topicid` int(11) DEFAULT NULL
+  `topicid` int(11) DEFAULT NULL,
+  `title` char(50) NOT NULL,
+  `description` text NOT NULL,
+  `timeupload` datetime NOT NULL,
+  `filename` char(50) NOT NULL,
+  `noslide` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Info about slide';
 
 --
 -- Dumping data for table `slide`
 --
 
-INSERT INTO `slide` (`slideid`, `userid`, `url`, `topicid`) VALUES
-(1, 1, 'xxx', 1),
-(2, 1, 'xxx', 1),
-(3, 3, 'xxx', 3),
-(4, 5, 'xxx', 4);
+INSERT INTO `slide` (`slideid`, `userid`, `topicid`, `title`, `description`, `timeupload`, `filename`, `noslide`) VALUES
+(1, 1, 1, 'Slide 1', 'DES s1', '2016-04-05 00:00:00', 'slide.pptx', 9),
+(2, 1, 1, 'Slide 2', 'DES s2', '2016-04-06 00:00:00', 'slide.pptx', 9),
+(3, 3, 3, 'Slide 3', 'DES s3', '2016-04-21 00:00:00', 'slide.pptx', 9),
+(4, 5, 4, 'Slide 4', 'DES s4', '2016-04-21 00:00:00', 'slide.pptx', 9);
 
 -- --------------------------------------------------------
 
@@ -83,7 +87,10 @@ CREATE TABLE `topic` (
 INSERT INTO `topic` (`topicid`, `name`) VALUES
 (1, 'Education'),
 (3, 'Science'),
-(4, 'Economy');
+(4, 'Economy'),
+(5, 'conghoa'),
+(7, 'ductri'),
+(8, 'ductri topic');
 
 -- --------------------------------------------------------
 
@@ -161,7 +168,7 @@ ALTER TABLE `slide`
 -- AUTO_INCREMENT for table `topic`
 --
 ALTER TABLE `topic`
-  MODIFY `topicid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `topicid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `user`
 --

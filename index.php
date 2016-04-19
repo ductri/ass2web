@@ -74,11 +74,11 @@ $collector->post('/topic/delete', function(){
 	$response = $topicDB->deleteTopic($_POST['topicid']);
 	echo json_encode($response);
 });
+
+
 //////////////////
 // LOGIN
 //////////////////
-
-//TODO
 $collector->post('/login', function(){
 	$response = array();
 
@@ -118,6 +118,10 @@ $collector->get('/logout', function() {
 	}
 	session_destroy();
 	echo json_encode($response);
+});
+
+$collector->get('/user/{userId}/avatar', function($userId) {
+	
 });
 //////////////////
 //SLIDE
