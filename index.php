@@ -43,46 +43,141 @@ $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 // html render
 //***********************************
 $DBManager = new DBManager();
-
+//////////////////
 //TOPIC
+//////////////////
 $collector->post('/topic/add', function(){
 	global $DBManager;
 	$topicDB = $DBManager->getTable("topic");
-	$respone = $topicDB->addTopic($_POST["name"]);
-	echo $response;
+	$response = $topicDB->addTopic($_POST["name"]);
+	echo json_encode($response);
 });
 
 $collector->get('/topic/get', function(){
 	global $DBManager;
 	$topicDB = $DBManager->getTable("topic");
-	$respone = $topicDB->getTopics();
-	echo $response;
+	$response = $topicDB->getTopics();
+	echo json_encode($response);
 });
 
 $collector->post('/topic/edit', function(){
 	global $DBManager;
 	$topicDB = $DBManager->getTable("topic");
-	$respone = $topicDB->editTopic($_POST['topicid'], $_POST['newName']);
-	echo $response;
+	$response = $topicDB->editTopic($_POST['topicid'], $_POST['newName']);
+	echo json_encode($response);
 });
 
 //Khong xoa duoc nhan topic dang duoc ref
 $collector->post('/topic/delete', function(){
 	global $DBManager;
 	$topicDB = $DBManager->getTable("topic");
-	$respone = $topicDB->deleteTopic($_POST['topicid']);
-	echo $response;
+	$response = $topicDB->deleteTopic($_POST['topicid']);
+	echo json_encode($response);
+});
+//////////////////
+// LOGIN
+//////////////////
+
+//TODO
+$collector->post('/login', function(){
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$response["data"] = $userDB->login($_POST['username'], $_POST['password']);
+		if ($response["data"] !== null) {
+			$response["code"] = 0;
+			$response["msg"] = "Login success";
+			$_SESSION["username"] = $response["data"]["username"];
+		} else {
+			$response["code"] = 3;
+			$response["msg"] = "Login fail";
+			$response["data"] = [];
+		}
+		echo json_encode($response);
+	} else {
+		# Already logged in
+		$response["code"] = 2;
+		$response["msg"] = "Already login";
+		$response["data"] = [];
+		echo json_encode($response);
+	}
+});	
+
+$collector->get('/logout', function() {
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		$response["code"] = 0;
+		$response["msg"] = "Logout success";
+		$response["data"] = [];
+	}
+	session_destroy();
+	echo json_encode($response);
+});
+//////////////////
+//SLIDE
+//////////////////
+$collector->get('/slide/getlist/{topicId}', function($topicId){
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		$response["code"] = 0;
+		$response["msg"] = "Success";
+		global $DBManager;
+		$slideDB = $DBManager->getTable("slide");
+		$response["data"] = $slideDB->getSlidesInTopic($topicId);
+	}
+	echo json_encode($response);
 });
 
-// LOGIN
-$collector->post('/login', function(){
-	global $DBManager;
-	$userDB = $DBManager->getTable("user");
-	$respone = $userDB->login($_POST['username'], $_POST['password']);
-	if ($respone["result"] !== "fail") 
-		$_SESSION["username"] = $respone["result"]["username"];
-	echo json_encode($respone);
-});	
+$collector->get('/slide/getinfo/{slideId}', function($slideId){
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		$response["code"] = 0;
+		$response["msg"] = "Success";
+		global $DBManager;
+		$slideDB = $DBManager->getTable("slide");
+		$response["data"] = $slideDB->getSlide($slideId);
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/slide/{slideId}/{id}', function($slideId, $id){
+	readfile("./slideupload/slide".$slideId."/slide".$id.".png");
+});
+
+
+$collector->get('/slide/download/{slideId}', function($slideId) {
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$slideDB = $DBManager->getTable("slide");
+		$slide = $slideDB->getSlide($slideId);
+		$file = "./slideupload/slide".$slide['slideid']."/".$slide['filename'];
+		header("Content-disposition: attachment;filename=".$slide['filename']);
+		header("Content-Length: " . filesize($file));
+		header("Content-Type: application/octet-stream;");
+		readfile($file);
+	}
+});
+
 
 $dispatcher =  new Dispatcher($collector->getData());
 

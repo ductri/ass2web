@@ -2,11 +2,13 @@
 require_once("/../utils.php");
 require_once("TopicDB.php");
 require_once("UserDB.php");
+require_once("SlideDB.php");
 
 class DBManager {
 	private $conn;
 	private $topicDB = null;
 	private $userDB = null;
+	private $slideDB = null;
 
 	function __construct() {
 		//Connect db
@@ -30,6 +32,13 @@ class DBManager {
 					$this->userDB = new UserDB($this->conn);
 				}
 				return $this->userDB;
+				break;
+			
+			case 'slide':
+				if (null === $this->slideDB) {
+					$this->slideDB = new SlideDB($this->conn);
+				}
+				return $this->slideDB;
 				break;
 			
 			default:

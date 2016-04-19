@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Get url to route
  * @return array
@@ -45,6 +45,14 @@ class Utils {
 	 */
 	public static function encrypt($password) {
 		return $password;
+	}
+
+	public static function checkLogin() {
+		if (isset($_SESSION["username"])) {
+			return $_SESSION["username"];
+		} else {
+			return "";
+		}
 	}
 }
  ?>

@@ -16,7 +16,7 @@ class TopicDB  {
 				array_push($response, $row) ;
 			}
 		}
-		return json_encode($response);
+		return $response;
 	}
 
 	public function addTopic($name) {
@@ -30,7 +30,7 @@ class TopicDB  {
 			$response["result"] = "fail";
 			$response["msg"] = "Add topic $name fail";
 		}
-		return json_encode($response);
+		return $response;
 	}
 
 	public function editTopic($topicid, $name) {
@@ -44,7 +44,7 @@ class TopicDB  {
 			$response["result"] = "fail";
 			$response["msg"] = "Edit topic $topicid fail";
 		}
-		return json_encode($response);
+		return $response;
 	}
 
 	public function deleteTopic($topicid) {
@@ -58,7 +58,7 @@ class TopicDB  {
 			$response["result"] = "fail";
 			$response["msg"] = "Delete topic $topicid fail";
 		}
-		return json_encode($response);
+		return $response;
 	}
 }
 

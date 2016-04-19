@@ -26,4 +26,24 @@ class User {
 	}
 }
 
+class Slide {
+	public slideId;
+	public userId;
+	public URL;
+	public topicId;
+	public title;
+	public description;
+	public timeUpload;
+
+	function __construct($slideId, $userId, $URL, $topicId, $title, $description, $timeUpload) {
+		$this->slideId = $slideId;
+		$this->userId = $userId;
+		$this->URL = $URL;
+		$this->topicId = $topicId;
+		$this->title = $title;
+		$this->description = $description;
+		$this->timeUpload = $timeUpload;
+	}
+}
+
  ?>

@@ -12,15 +12,13 @@ class UserDB {
 		$result = $this->conn->query($sql);
 		
 		$response = array();
-		if ($result->num_rows == 0) {
-			$response["result"] = "fail";
-			$response["msg"] = "Wrong username or password";
-		} else {
+		if ($result->num_rows > 0) {
 			$row = $result->fetch_assoc();
-			$response["result"] = $row;
-			$response["msg"] = "Login success";
+			array_push($response, $row);
+			return $response[0];
+		} else {
+			return null;
 		}
-		return $response;
 	}
 }
 
