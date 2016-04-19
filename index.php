@@ -14,7 +14,7 @@ $collector = new RouteCollector();
 // html render
 //***********************************
 $collector->get('/', function(){
-	readfile('html/tuanBD/theme.html');
+	include('html/tuanBD/theme.php');
 });
 
 $collector->get('/upload', function(){
