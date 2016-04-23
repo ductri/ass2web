@@ -3,12 +3,14 @@ require_once("/../utils.php");
 require_once("TopicDB.php");
 require_once("UserDB.php");
 require_once("SlideDB.php");
+require_once("CommentDB.php");
 
 class DBManager {
 	private $conn;
 	private $topicDB = null;
 	private $userDB = null;
 	private $slideDB = null;
+	private $commentDB = null;
 
 	function __construct() {
 		//Connect db
@@ -41,6 +43,11 @@ class DBManager {
 				return $this->slideDB;
 				break;
 			
+			case 'comment':
+				if (null === $this->commentDB) {
+					$this->commentDB = new CommentDB($this->conn);
+				}
+				return $this->commentDB;
 			default:
 				# code...
 				break;

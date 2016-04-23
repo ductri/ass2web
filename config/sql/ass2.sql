@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2016 at 05:20 AM
+-- Generation Time: Apr 19, 2016 at 05:35 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -102,18 +102,19 @@ CREATE TABLE `user` (
   `userid` int(11) NOT NULL,
   `username` char(20) DEFAULT NULL,
   `password` char(20) DEFAULT NULL,
-  `userright` char(10) DEFAULT 'user'
+  `userright` char(10) DEFAULT 'user',
+  `avatar` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `username`, `password`, `userright`) VALUES
-(1, 'ductri', '123456', 'user'),
-(3, 'qwerty', '123456', 'user'),
-(4, 'aaaaa', '123456', 'user'),
-(5, 'admin', '123456', 'admin');
+INSERT INTO `user` (`userid`, `username`, `password`, `userright`, `avatar`) VALUES
+(1, 'ductri', '123456', 'user', 'av1.jpg'),
+(3, 'qwerty', '123456', 'user', 'av2.jpg'),
+(4, 'aaaaa', '123456', 'user', 'av3.jpg'),
+(5, 'admin', '123456', 'admin', 'av4.jpg');
 
 --
 -- Indexes for dumped tables

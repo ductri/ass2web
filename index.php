@@ -121,7 +121,28 @@ $collector->get('/logout', function() {
 });
 
 $collector->get('/user/{userId}/avatar', function($userId) {
-	
+	global $DBManager;
+	$userDB = $DBManager->getTable("user");
+	$user = $userDB->getInfo($userId);
+	if ($user !== null) {
+		readfile("./resources/useravatar/".$user["avatar"]);
+	}
+});
+
+$collector->get('/user/getinfo/{userId}', function($userId) {
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$response["code"] = 0;
+		$response["msg"] = "Logout success";
+		$response["data"] = $userDB->getInfo($userId);;
+		echo $response;
+	}
 });
 //////////////////
 //SLIDE
@@ -160,7 +181,7 @@ $collector->get('/slide/getinfo/{slideId}', function($slideId){
 });
 
 $collector->get('/slide/{slideId}/{id}', function($slideId, $id){
-	readfile("./slideupload/slide".$slideId."/slide".$id.".png");
+	readfile("./resources/slideupload/slide".$slideId."/slide".$id.".png");
 });
 
 
@@ -182,6 +203,53 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 	}
 });
 
+//////////////////
+//COMMENT
+//////////////////
+$collector->get('/comment/getlist/{slideId}/{startIndex}/{length}', function($slideId, $startIndex, $lenght){
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		$response["code"] = 0;
+		$response["msg"] = "Success";
+		global $DBManager;
+		$commentDB = $DBManager->getTable("comment");
+		$response["data"] = $commentDB->getListComment($slideId, $startIndex, $lenght);
+	}
+	echo json_encode($response);
+});
+
+$collector->post('/comment/add', function(){
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$commentDB = $DBManager->getTable("comment");
+
+		$slideId = $_POST["slideid"];
+		$userId = $_POST["userid"];
+		$content = $_POST["content"];
+		$result = $commentDB->add($slideId, $userId, $content);
+		$response["data"] = [];
+		if ($result === true) {
+			$response["code"] = 0;
+			$response["msg"] = "Add comment success";
+			
+		} else {
+			$response["code"] = 2;
+			$response["msg"] = "Add comment fail";
+		}
+	}
+	echo json_encode($response);
+});
 
 $dispatcher =  new Dispatcher($collector->getData());
 
