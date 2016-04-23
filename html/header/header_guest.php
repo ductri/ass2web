@@ -1,4 +1,4 @@
-
+<script src="/pub/js/keo/signup/signup.js"></script>
 <body>
 <!-- Header -->
 <nav class="navbar navbar-inverse nonedis visible-xs" id="navadd1">
@@ -17,7 +17,7 @@
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       </button>
       <img class="navbar-brand" src="/pub/img/logo.png" alt="logo" style="height: 45px;width: auto;padding: 0px;padding-right: 5px;">
-      <a href="../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
+      <a href="/" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
     </div>
     <div class="collapse navbar-collapse" id="ss">
       <div class="input-group stylish-input-group" id="search1">
@@ -31,7 +31,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
-        <li><a href="../keo/Upload/upload.html">Up load</a></li>
+        <li><a href="/upload">Up load</a></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
         <li><a href="/signup">Sign up</a></li>
       </ul>
@@ -78,7 +78,7 @@
         </span>
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
-        <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='../keo/Upload/upload.html';">Upload</button></li>
+        <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
         <li><a href="/signup">Sign up</a></li>
       </ul>
@@ -112,7 +112,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <img class="img-circle" id="img_logo" src="public/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
+        <img class="img-circle" id="img_logo" src="pub/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
@@ -138,7 +138,7 @@
           </div>
           <div class="modal-footer">
             <div>
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+              <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnLogin">Login</button>
             </div>
             <div>
               <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
@@ -172,4 +172,5 @@
     </div>
   </div>
 </div>
+</body>
 <!-- END # MODAL LOGIN -->

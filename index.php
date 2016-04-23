@@ -22,7 +22,8 @@ $collector->get('/upload', function(){
 });
 
 $collector->get('/signup', function(){
-	readfile('html/keo/signup.html');
+	//readfile('html/keo/signup.html');
+	include('html/keo/signup.php');
 });
 
 $collector->get('/catalog/{catalog}', function($catalog){
