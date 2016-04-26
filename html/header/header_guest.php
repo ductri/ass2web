@@ -112,7 +112,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <img class="img-circle" id="img_logo" src="pub/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
+        <img class="img-circle" id="img_logo" src="/pub/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>

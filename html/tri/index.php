@@ -1,5 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assignmet1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/pub/css/tri/style.css"/>
+	<script src="/pub/js/quang/index.js"></script>
+</head>
 <?php
-echo 'ductri';
 if(!isset($_SESSION)) 
 { 
     session_start(); 
@@ -8,7 +20,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 ?>
 
-<!-- <div class='container'>
+<div class='container'>
 		<div class='row'>
 			<div class='col-md-1 col-lg-1'>
 			</div>
@@ -409,4 +421,3 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 </body>
 </html>
- -->
