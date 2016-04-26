@@ -37,7 +37,7 @@ $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 	//Asume
 	$catalog = "top-download";
 	$slideid = 1;
-	readfile('html/tri/index.html');
+	include('html/tri/index.php');
 });
 
 //***********************************
@@ -53,6 +53,7 @@ $collector->post('/topic/add', function(){
 	$response = $topicDB->addTopic($_POST["name"]);
 	echo json_encode($response);
 });
+
 
 $collector->get('/topic/get', function(){
 	global $DBManager;
@@ -104,7 +105,7 @@ $collector->post('/login', function(){
 		$response["data"] = [];
 		echo json_encode($response);
 	}
-});	
+});
 
 $collector->get('/logout', function() {
 	$response = array();
@@ -243,7 +244,7 @@ $collector->post('/comment/add', function(){
 		if ($result === true) {
 			$response["code"] = 0;
 			$response["msg"] = "Add comment success";
-			
+
 		} else {
 			$response["code"] = 2;
 			$response["msg"] = "Add comment fail";

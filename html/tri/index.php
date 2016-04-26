@@ -1,12 +1,14 @@
 <?php
+echo 'ductri';
 if(!isset($_SESSION)) 
 { 
     session_start(); 
 }
 include(dirname(__FILE__)."\..\header\index.php");
+
 ?>
 
-<div class='container'>
+<!-- <div class='container'>
 		<div class='row'>
 			<div class='col-md-1 col-lg-1'>
 			</div>
@@ -407,3 +409,4 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 </body>
 </html>
+ -->
