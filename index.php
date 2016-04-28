@@ -100,6 +100,9 @@ $collector->post('/login', function(){
 		echo json_encode($response);
 	} else {
 		# Already logged in
+		session_start();
+session_unset();
+session_destroy();
 		$response["code"] = 2;
 		$response["msg"] = "Already login";
 		$response["data"] = [];
