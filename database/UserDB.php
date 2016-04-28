@@ -35,8 +35,15 @@ class UserDB {
 		}
 	}
 
-	function register($username, $password) {
-		
+	function register($username, $firstName, $lastName, $email, $password, $avatarFileName) {
+		$sql = "INSERT INTO USER(username, firstname, lastname, email, password, avatar) VALUES('$username', '$firstName', '$lastName', '$email', $password, $avatarFileName);";
+		echo $sql;
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

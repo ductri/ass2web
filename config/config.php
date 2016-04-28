@@ -14,4 +14,7 @@ define("DB_HOSTNAME", "localhost");
 // define("DB_PASSWORD", "EWVI3RILgLzB");
 // define("DB_HOSTNAME", "https://ass2-webhcmut.rhcloud.com");
 
+
+define("UPLOAD_DIR_SLIDE", "resources/slideupload/");
+define("UPLOAD_DIR_AVATAR", "resources/useravatar/");
  ?>
