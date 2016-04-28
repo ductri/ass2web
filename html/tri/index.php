@@ -20,6 +20,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 ?>
 
+
 <div class='container'>
 		<div class='row'>
 			<div class='col-md-1 col-lg-1'>
@@ -418,6 +419,90 @@ include(dirname(__FILE__)."\..\header\index.php");
 			</div>
 		</div>
 	</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		 var obj;
+	
+		console.log("ahihi");
+			$.ajax({
+				url:'/comment/getlist/2/0/4',
+				type: 'get',
+
+				success: function(data) {
+	              data1=data;
+	              obj= JSON.parse(data);
+	              
+	              $.ajax({
+	              	url:"/comment/getlist/2/0/4",
+	              	type:"get",
+
+	              	success: function(data){
+	              		console.log(obj.msg);
+	              	}
+	              });
+
+
+	            }
+			});
+
+		}
+
+	);
+
+
+
+	function showComment(_src,_name,_cmt,_time){
+	var cmt= document.createElement('div');
+	cmt.className= "list-group-item";
+
+		var cmtAva = document.createElement('div');
+		cmtAva.className="comment-avatar pull-left";
+
+			var img = document.createElement("IMG");
+			img.setAttribute("src",_src);
+			img.setAttribute("alt","ahihi");
+			cmtAva.appendChild(img);
+			cmt.appendChild(cmtAva);
+
+		var cmtText = document.createElement('div');
+		cmtText.className="comment-text";
+
+			var cmtName = document.createElement('div');
+			cmtName.className="name";
+			cmtName.innerHTML=_name;
+
+		cmtText.appendChild(cmtName);
+
+			var cmtContent = document.createElement('div');
+			cmtContent.className="comment-content";
+			cmtContent.innerHTML=_cmt;
+
+		cmtText.appendChild(cmtContent);
+
+			var time =  document.createElement('div');
+			time.className="comment-time";
+			time.innerHTML=_time;
+
+		cmtText.appendChild(time);
+		cmt.appendChild(cmtText);
+
+	t=document.getElementById('comment-list');
+	t.appendChild(cmt);
+}	
+	
+	for(var i=0;i<5;i++){
+		var srcCmt="asdf"+i;
+		var nameUser="Tuan"+i;
+		var comment="hay lam"+i;
+		var timeCmt="10h"+i;
+		showComment(srcCmt,nameUser,comment,timeCmt);
+	}
+	
+</script>
+
+
 
 </body>
 </html>
