@@ -1,3 +1,5 @@
+//require_once("config.php");
+
 $( document ).ready(function() {
     var $formLogin = $('#login-form');
     var $formLost = $('#lost-form');
@@ -6,8 +8,8 @@ $( document ).ready(function() {
     var $msgAnimateTime = 150;
     var $msgShowTime = 2000;
 
-    $("form").submit(function () {
-
+    $("form").submit(function (e) {
+    	e.preventDefault();
     	var $lg_username = $('#login_username').val();
         var $lg_password = $('#login_password').val();
 
@@ -24,15 +26,16 @@ $( document ).ready(function() {
 
         var $first_name_len = $first_name.length;
         var $last_name_len = $last_name.length;
+        console.log($last_name_len)
         var $display_name_len = $display_name.length;
         var $password_len = $password.length;   
-
-        var $dataSignup = 'firstname:'+$first_name+', &lastname:'+$last_name+', &displayname:'+$display_name+', &password:'+$password; 
 
         var $letters = /^[A-Za-z]+$/;
         var $mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
 
+        console.log("123");
 
+        
         switch(this.id) {
             case "login-form":
             {
@@ -41,29 +44,32 @@ $( document ).ready(function() {
                     //msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
                 } else {	
 
-                	if ($lg_username_len == 0 || $lg_username_len > 20 || $lg_username_len < 2) {
-						alert("First name should length be between 2 to 20");
+                	if ($lg_username_len == 0 || $lg_username_len < 2) {
+						alert("Please input username");
 						$('#login_username').focus();
 						return false;
 					} else {
 						if ($lg_username.match($letters)) {
-							if ($lg_password_len < 5) {
-								alert("Password should not empty / length be from 5 characters");
+							if ($lg_password_len == 0) {
+								alert("Please input password");
 								$('#login_password').focus();
 								return false;
 							} else {
-								var dataLogin = {username: lg_username, password: password};
+								var dataLogin = {username: $lg_username, password: $lg_password};
 								
 								$.ajax({
 						        	type: "POST",
 						        	url: "/login",
 						        	data: dataLogin,
-						        	beforeSend: function(){$("#btnLogin").val('Connecting...');},
-						        	success: function(code){
-						        		if (code == "0") {
-						        			//$("body").load("/").hide().fadeIn(1500).delay(6000);
-						        			window.location.href = "/";
-						        			
+						        	success: function(results){
+						        		var data = JSON.parse(results)
+						        		
+						        		if (data.code == 0) {
+						        			window.location.href = "/";	        			
+						        		} else if(data.code == 3){
+						        			alert("Username or password wrong !")
+						        		} else if (data.code == 2) {
+						        			alert("You already have logined")
 						        		}
 						        	}
 						        }); 
@@ -105,30 +111,32 @@ $( document ).ready(function() {
 
             case "registration_form":
             {
-            	if ($first_name == "ERROR") {
+            	//if ($first_name == "ERROR") {
                     //msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
-                } else {	
-
+               // } else {	
+						
                 	if ($first_name_len == 0 || $first_name_len > 20 || $first_name_len < 2) {
 						alert("First name should length be between 2 to 20");
 						$('#first_name').focus();
 						return false;
+						console.log("First name test");
 					} else {
 						if ($first_name.match($letters)) {
-							
-							if ($last_name_len == 0 || $last_name_len > 30 || $lastname_len < 3) {
+							console.log("aaaaaaaaaaaa")
+							if ($last_name_len == 0 || $last_name_len > 30 || $last_name_len < 3) {
 								alert("Last name should length be between 3 to 30");
 								$('#last_name').focus();
 								return false;
+
 							} else {
-								if ($last_name.match(letters)) {
+								if ($last_name.match($letters)) {
 
 									if ($display_name_len == 0 || $display_name_len > 30 || $display_name_len < 3) {
 										alert("Display name should length be between 3 to 30");
 										$('#display_name').focus();
 										return false;
 									} else {
-										if ($display_name.match(letters)) {
+										if ($display_name.match($letters)) {
 
 											if ($password_len < 5) {
 												alert("Password should not empty / length be from 5 characters");
@@ -137,15 +145,17 @@ $( document ).ready(function() {
 											} else {
 												if ($password_confirmation == $password) {
 
+													var dataSignup = {firstname: $first_name, lastname: $last_name, display: $display_name, password: $password};
+
 													$.ajax({
 											        	type: "POST",
 											        	url: "/signup",
-											        	data: $dataSignup,
-											        	beforeSend: function(){$("#btnRegister").val('Connecting...');},
+											        	data: JSON.stringify(dataSignup),
+											        	beforeSend: function(){$('#btnRegister').val('Connecting...');},
 											        	success: function(code){
-											        		if (code == "0") {
-											        			//$("body").load("/").hide().fadeIn(1500).delay(6000);
-											        			window.location.href = "/";
+											        		if (code.code == "0") {
+											        		$("body").load("/").hide().fadeIn(1500).delay(6000);
+											        			//window.location.href = "/";
 											        			
 											        		}
 											        	}
@@ -183,10 +193,11 @@ $( document ).ready(function() {
 
                    	 	//msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
                 	}
+
                 	return false;
                 	break;
 
-				}
+				//}
             }
 
             default:
