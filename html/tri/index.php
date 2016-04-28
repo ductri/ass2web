@@ -96,102 +96,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 							</div>
 
 							<div class="list-group" id='comment-list'>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="/user/1/avatar" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											Harry Potter
-										</div>
-										<div class="comment-content ">
-											I have worked for me in independent contractor sales and as an owner. I have been known to occasionally fire and then re-hire myself. The people who worked for me gave their best almost all the time, and were not afraid to talk about anything. I still work for me.
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="/user/2/avatar" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											三阮德
-										</div>
-										<div class="comment-content ">
-											我在独立订约销售，作为所有者为我工作。我已经知道偶尔开火，然后重新聘请自己。谁为我工作的人都对他们最好的几乎所有的时间，而不是害怕谈论任何事情。我仍然为我工作。
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="/user/3/avatar" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											Nguyễn Đức Trí
-										</div>
-										<div class="comment-content ">
-											Tôi đã làm việc cho tôi trong doanh số bán nhà thầu độc lập và là chủ sở hữu. Tôi đã được biết đến để thỉnh thoảng bắn và sau đó lại thuê mình. Những người làm việc cho tôi đã gần như tất cả thời gian tốt nhất của họ, và không ngại để nói về bất cứ điều gì. Tôi vẫn làm việc cho tôi.
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="/user/4/avatar" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											Naruto kun
-										</div>
-										<div class="comment-content ">
-											Ako ay nagtrabaho para sa akin sa malayang kontratista benta at bilang isang may-ari. Ako ay kilala sa paminsan-minsan sunog at pagkatapos ay muling-hire sa aking sarili. Ang mga tao na nagtrabaho para sa akin ibinigay ang kanilang pinakamahusay na sa halos lahat ng oras, at hindi sila natakot na makipag-usap tungkol sa anumang bagay. Ako pa rin gumagana para sa akin.
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="/user/5/avatar" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											Nguyen Duc Tri
-										</div>
-										<div class="comment-content ">
-											Ek het vir my gewerk het in onafhanklike kontrakteur verkope en as 'n eienaar. Ek is bekend om af te brand en dan weer in diens te neem myself. Die mense wat vir my gewerk het hul beste byna al die tyd, en was nie bang om te praat oor enigiets. Ek werk nog vir my.
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
-								<div class="list-group-item">
-									<div class="comment-avatar pull-left">
-										<img src="resources/image/av6.jpg" alt="Nguyen Duc Tri">
-									</div>
-									<div class="comment-text">
-										<div class="name">
-											Nguyen Duc Tri
-										</div>
-										<div class="comment-content ">
-											خلفا هيت فير بلدي gewerk هيت في onafhanklike kontrakteur verkope أون باسم 'ن eienaar. خلفا لbekend ام بالعربية الشركة المصرية للاتصالات العلامة التجارية أون دان weer في diens الشركة المصرية للاتصالات النيم نفسي. يموت mense وات فير بلدي gewerk هيت الهول أفضل byna آل يموت TYD، EN كان نيه الانفجار ام enigiets الشركة المصرية للاتصالات برات OOR. خلفا الشغل وتد فير بلدي.
-										</div>
-										<div class="comment-time">
-											20 hours ago
-										</div>
-									</div>
-								</div>
+								
 								
 								<div  id="show-more" class='text-center'>
 									<a href="https://google.com.vn">	
@@ -426,26 +331,47 @@ include(dirname(__FILE__)."\..\header\index.php");
 		 var obj;
 	
 		console.log("ahihi");
+			i=2;
 			$.ajax({
-				url:'/comment/getlist/2/0/4',
+				url:'/comment/getlist/'+i+'/0/2',
+				//url:"/user/getinfo/1",
 				type: 'get',
 
 				success: function(data) {
+					console.log(data);
 	              data1=data;
 	              obj= JSON.parse(data);
-	              
-	              $.ajax({
-	              	url:"/comment/getlist/2/0/4",
-	              	type:"get",
+	              console.log(obj.data[0]);
+	              //obj_data= JSON.parse(obj.data[0]);
+	              for(index=0;index<2;index++){
+	              	console.log("dsafds" +index);
+	              	 $.ajax({
+	              	 	//console.log(obj.data[index].userid);
+	              		url:'/user/getinfo/1',
+	              		type:"get",
 
-	              	success: function(data){
-	              		console.log(obj.msg);
-	              	}
+	              		success: function(data){
+	              			
+	              			
+	              			console.log("data" +data);
+	              			//obj1= JSON.parse(data);
+	              			//showComment(obj1.src,obj1.name,obj.data[index].content,obj.data[index].time);
+	              		},
+	              		async: false
 	              });
+
+	              	 
+	              }
+	             
 
 
 	            }
 			});
+			t1="src";
+			t2="daf";
+			t3="adf";
+			t4="fadf";
+			showComment(t1,t2,t3,t4);
 
 		}
 
@@ -489,16 +415,19 @@ include(dirname(__FILE__)."\..\header\index.php");
 		cmt.appendChild(cmtText);
 
 	t=document.getElementById('comment-list');
-	t.appendChild(cmt);
+
+	var before = document.getElementById("show-more");
+
+	//t.appendChild(cmt);
+	t.insertBefore(cmt,before);
 }	
-	
-	for(var i=0;i<5;i++){
-		var srcCmt="asdf"+i;
-		var nameUser="Tuan"+i;
-		var comment="hay lam"+i;
-		var timeCmt="10h"+i;
-		showComment(srcCmt,nameUser,comment,timeCmt);
+
+function delay1(){
+	var o,p;
+	for(o=0;o<99999;o++){
+		for(p=0;p<9999;p++);
 	}
+}	
 	
 </script>
 
