@@ -353,7 +353,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              		success: function(data){
 	              			
 	              			
-	              			console.log("data" +data);
+	              			console.log("datab" +data);
 	              			//obj1= JSON.parse(data);
 	              			//showComment(obj1.src,obj1.name,obj.data[index].content,obj.data[index].time);
 	              		},

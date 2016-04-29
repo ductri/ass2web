@@ -136,18 +136,14 @@ $collector->get('/user/{userId}/avatar', function($userId) {
 
 $collector->get('/user/getinfo/{userId}', function($userId) {
 	$response = array();
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-		$response["code"] = 0;
-		$response["msg"] = "Logout success";
-		$response["data"] = $userDB->getInfo($userId);;
-		echo json_encode($response);
-	}
+	
+	global $DBManager;
+	$userDB = $DBManager->getTable("user");
+	$response["code"] = 0;
+	$response["msg"] = "get success";
+	$response["data"] = $userDB->getInfo($userId);;
+	echo json_encode($response);
+	
 });
 
 $collector->post('/user/register', function() {
