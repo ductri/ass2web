@@ -352,10 +352,11 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 	              		success: function(data){
 	              			
-	              			
+	     
 	              			console.log("datab" +data);
-	              			//obj1= JSON.parse(data);
-	              			//showComment(obj1.src,obj1.name,obj.data[index].content,obj.data[index].time);
+	              			obj1= JSON.parse(data);
+	              			console.log("ten "+obj1.data.username);
+	              			showComment(obj1.src,obj1.data.username,obj.data[index].content,obj.data[index].time);
 	              		},
 	              		async: false
 	              });
@@ -422,12 +423,6 @@ include(dirname(__FILE__)."\..\header\index.php");
 	t.insertBefore(cmt,before);
 }	
 
-function delay1(){
-	var o,p;
-	for(o=0;o<99999;o++){
-		for(p=0;p<9999;p++);
-	}
-}	
 	
 </script>
 
