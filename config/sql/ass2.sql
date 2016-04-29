@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2016 at 05:35 AM
+-- Generation Time: Apr 29, 2016 at 05:58 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -40,7 +40,13 @@ CREATE TABLE `comment` (
 
 INSERT INTO `comment` (`slideid`, `userid`, `content`, `time`, `commentid`) VALUES
 (2, 4, 'Nice', '2016-04-14 00:00:00', 1),
-(2, 4, 'Nice', '2016-04-14 00:00:00', 2);
+(2, 4, 'Nice', '2016-04-14 00:00:00', 2),
+(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 3),
+(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 4),
+(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 5),
+(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 6),
+(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 7),
+(1, 3, 'Duc tri la vo dich', '2016-04-19 11:30:23', 8);
 
 -- --------------------------------------------------------
 
@@ -103,18 +109,22 @@ CREATE TABLE `user` (
   `username` char(20) DEFAULT NULL,
   `password` char(20) DEFAULT NULL,
   `userright` char(10) DEFAULT 'user',
-  `avatar` char(255) NOT NULL
+  `avatar` char(255) NOT NULL,
+  `firstname` char(30) NOT NULL,
+  `lastname` char(30) NOT NULL,
+  `email` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `username`, `password`, `userright`, `avatar`) VALUES
-(1, 'ductri', '123456', 'user', 'av1.jpg'),
-(3, 'qwerty', '123456', 'user', 'av2.jpg'),
-(4, 'aaaaa', '123456', 'user', 'av3.jpg'),
-(5, 'admin', '123456', 'admin', 'av4.jpg');
+INSERT INTO `user` (`userid`, `username`, `password`, `userright`, `avatar`, `firstname`, `lastname`, `email`) VALUES
+(1, 'ductri', '123456', 'user', 'av1.jpg', '', '', ''),
+(3, 'qwerty', '123456', 'user', 'av2.jpg', '', '', ''),
+(4, 'aaaaa', '123456', 'user', 'av3.jpg', '', '', ''),
+(5, 'admin', '123456', 'admin', 'av4.jpg', '', '', ''),
+(6, 'ductriabc', '1234567', 'user', 'ductriabc.png', 'nguyen', 'tri', 'ductricse1@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -159,7 +169,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `commentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `slide`
 --
@@ -174,7 +184,7 @@ ALTER TABLE `topic`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
