@@ -136,18 +136,14 @@ $collector->get('/user/{userId}/avatar', function($userId) {
 
 $collector->get('/user/getinfo/{userId}', function($userId) {
 	$response = array();
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-		$response["code"] = 0;
-		$response["msg"] = "Logout success";
-		$response["data"] = $userDB->getInfo($userId);;
-		echo json_encode($response);
-	}
+	
+	global $DBManager;
+	$userDB = $DBManager->getTable("user");
+	$response["code"] = 0;
+	$response["msg"] = "Logout success";
+	$response["data"] = $userDB->getInfo($userId);;
+	echo json_encode($response);
+	
 });
 
 $collector->post('/user/register', function() {
@@ -158,24 +154,40 @@ $collector->post('/user/register', function() {
 		$lastName = $_POST["lastname"];
 		$email = $_POST["email"];
 		$password = utils::encrypt($_POST["password"]);
+		if (isset($_FILES["avatar"])) {
+			$temporary = explode(".", $_FILES["avatar"]["name"]);
+			$file_extension = end($temporary);
+			//echo utils::console_log($_FILES["avatar"]);
+			$avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
+			
 
-		$temporary = explode(".", $_FILES["avatar"]["name"]);
-		$file_extension = end($temporary);
-		//echo utils::console_log($_FILES["avatar"]);
-		$avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
 
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-
-		if ($userDB->register($userName, $firstName, $lastName, 
-			$email, $password, "'$userName.$file_extension'") === true) {
-			$response["code"] = 0;
-			$response["msg"] = "Register success";
-			$response["data"] = [];
+			if ($userDB->register($userName, $firstName, $lastName, 
+				$email, $password, "'$userName.$file_extension'") === true) {
+				$response["code"] = 0;
+				$response["msg"] = "Register success";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 3;
+				$response["msg"] = "Register fail";
+				$response["data"] = [];
+			}
 		} else {
-			$response["code"] = 3;
-			$response["msg"] = "Register fail";
-			$response["data"] = [];
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+
+			if ($userDB->register($userName, $firstName, $lastName, 
+				$email, $password, "default.png") === true) {
+				$response["code"] = 0;
+				$response["msg"] = "Register success";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 3;
+				$response["msg"] = "Register fail";
+				$response["data"] = [];
+			}
 		}
 	} else {
 		$response["code"] = 2;
@@ -191,17 +203,13 @@ $collector->post('/user/register', function() {
 $collector->get('/slide/getlist/{topicId}', function($topicId){
 	$response = array();
 
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		$response["code"] = 0;
-		$response["msg"] = "Success";
-		global $DBManager;
-		$slideDB = $DBManager->getTable("slide");
-		$response["data"] = $slideDB->getSlidesInTopic($topicId);
-	}
+	
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getSlidesInTopic($topicId);
+	
 	echo json_encode($response);
 });
 
