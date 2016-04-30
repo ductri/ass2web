@@ -101,8 +101,8 @@ $collector->post('/login', function(){
 	} else {
 		# Already logged in
 		session_start();
-session_unset();
-session_destroy();
+		session_unset();
+		session_destroy();
 		$response["code"] = 2;
 		$response["msg"] = "Already login";
 		$response["data"] = [];
@@ -156,41 +156,33 @@ $collector->post('/user/register', function() {
 		$lastName = $_POST["lastname"];
 		$email = $_POST["email"];
 		$password = utils::encrypt($_POST["password"]);
-		if (isset($_FILES["avatar"])) {
-			$temporary = explode(".", $_FILES["avatar"]["name"]);
-			$file_extension = end($temporary);
-			//echo utils::console_log($_FILES["avatar"]);
-			$avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
-			
-
-			global $DBManager;
-			$userDB = $DBManager->getTable("user");
-
-			if ($userDB->register($userName, $firstName, $lastName, 
-				$email, $password, "'$userName.$file_extension'") === true) {
-				$response["code"] = 0;
-				$response["msg"] = "Register success";
-				$response["data"] = [];
-			} else {
-				$response["code"] = 3;
-				$response["msg"] = "Register fail";
-				$response["data"] = [];
-			}
+		
+			// $temporary = explode(".", $_FILES["avatar"]["name"]);
+			// $file_extension = end($temporary);
+			// //echo utils::console_log($_FILES["avatar"]);
+			// $avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->register($userName, $firstName, $lastName, 
+			$email, $password, "default.png");
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Register success";
+			$response["data"] = [];
+		} else if ($result === "username_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Register fail: Username has existed!";
+			$response["data"] = [];
+		} else if ($result === "email_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Register fail: Email has existed!";
+			$response["data"] = [];
 		} else {
-			global $DBManager;
-			$userDB = $DBManager->getTable("user");
-
-			if ($userDB->register($userName, $firstName, $lastName, 
-				$email, $password, "default.png") === true) {
-				$response["code"] = 0;
-				$response["msg"] = "Register success";
-				$response["data"] = [];
-			} else {
-				$response["code"] = 3;
-				$response["msg"] = "Register fail";
-				$response["data"] = [];
-			}
+			$response["code"] = 3;
+			$response["msg"] = "Register fail: Database has error, please report to admin: admin@cse.hcmut.edu";
+			$response["data"] = [];
 		}
+		
 	} else {
 		$response["code"] = 2;
 		$response["msg"] = "Already logged in";
@@ -199,6 +191,32 @@ $collector->post('/user/register', function() {
 	echo json_encode($response);
 	
 });
+
+$collector->get('/user/resetpassword/{email}', function($email) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->resetPassword($email);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Reset successfully. New password has sent to your email.";
+			$response["data"] = [];
+		} else if ($result === "emailnotexist") {
+			$response["code"] = 3;
+			$response["msg"] = "Email has not registered!";
+			$response["data"] = [];
+		}
+
+	} else {
+		$response["code"] = 2;
+		$response["msg"] = "Already logged in";
+		$response["data"] = [];
+	}
+
+});
+
 //////////////////
 //SLIDE
 //////////////////
