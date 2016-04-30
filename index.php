@@ -203,18 +203,21 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 			$response["code"] = 0;
 			$response["msg"] = "Reset successfully. New password has sent to your email.";
 			$response["data"] = [];
-		} else if ($result === "emailnotexist") {
+		} else if ($result === "fail") {
+			$response["code"] = 3;
+			$response["msg"] = "Database has error, please report to admin@cse.hcmut.edu.vn";
+			$response["data"] = [];
+		} else if ($result === "email_not_exist") {
 			$response["code"] = 3;
 			$response["msg"] = "Email has not registered!";
 			$response["data"] = [];
 		}
-
 	} else {
 		$response["code"] = 2;
 		$response["msg"] = "Already logged in";
 		$response["data"] = [];
 	}
-
+	echo json_encode($response);
 });
 
 //////////////////
