@@ -41,7 +41,7 @@
     <ul class="nav navbar-nav navbar-right" style="padding-left: 2%; display: block">
       <li><a href="/">Home</a></li>
       <li>
-        <a href="../quang/catalog.html" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="/catalog/top-rate">Top Rate</a></li>
           <li><a href="/catalog/top-download">Top Download</a></li>
@@ -66,7 +66,7 @@
         <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
       </button>
       <img class="navbar-brand" src="/pub/img/logo.png" alt="logo"  style="height: 45px;width: auto;padding: 0px;padding-right: 10px;">
-      <a href="../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 22px;"> T-Share | </a>
+      <a href="/" class="navbar-brand" style="color: white;font-size: 22px;"> T-Share | </a>
     </div>
     <div class="collapse navbar-collapse">
       <div class="input-group stylish-input-group" id="search">

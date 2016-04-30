@@ -191,17 +191,12 @@ $collector->post('/user/register', function() {
 $collector->get('/slide/getlist/{topicId}', function($topicId){
 	$response = array();
 
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		$response["code"] = 0;
-		$response["msg"] = "Success";
-		global $DBManager;
-		$slideDB = $DBManager->getTable("slide");
-		$response["data"] = $slideDB->getSlidesInTopic($topicId);
-	}
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getSlidesInTopic($topicId);
+
 	echo json_encode($response);
 });
 
