@@ -140,7 +140,9 @@ $collector->get('/user/getinfo/{userId}', function($userId) {
 	global $DBManager;
 	$userDB = $DBManager->getTable("user");
 	$response["code"] = 0;
-	$response["msg"] = "Logout success";
+
+	$response["msg"] = "get success";
+
 	$response["data"] = $userDB->getInfo($userId);;
 	echo json_encode($response);
 	
