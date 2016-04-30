@@ -36,13 +36,89 @@ class UserDB {
 	}
 
 	function register($username, $firstName, $lastName, $email, $password, $avatarFileName) {
-		$sql = "INSERT INTO USER(username, firstname, lastname, email, password, avatar) VALUES('$username', '$firstName', '$lastName', '$email', $password, $avatarFileName);";
-		echo $sql;
+		$sql = "SELECT COUNT(*) as no FROM USER WHERE username='$username'";
+		if ($this->conn->query($sql)->fetch_assoc()['no'] > 0) {
+			return "username_exist";
+		}
+		$sql = "SELECT COUNT(*) as no FROM USER WHERE email='$email'";
+		if ($this->conn->query($sql)->fetch_assoc()['no'] > 0) {
+			return "email_exist";
+		}
+
+		$sql = "INSERT INTO USER(username, firstname, lastname, email, password, avatar) VALUES('$username', '$firstName', '$lastName', '$email', $password, '$avatarFileName');";
+		
 		$result = $this->conn->query($sql);
 		if ($result === true) {
-			return true;
+			return "success";
 		} else {
-			return false;
+			return "fail";
+		}
+	}
+
+	function resetPassword($email) {
+		$sql = "SELECT * from USER where email = '$email'";
+		$result = $this->conn->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+
+			$newPassword = utils::encrypt(rand());
+			$hNewPassword = utils::encrypt($newPassword);
+
+			#Send new password to user's email
+			if ($this->sendEmail($email, $row['firstname'], $row['lastname'], 
+				$row['username'], $newPassword) === true) {
+				$sql = "UPDATE USER set password='$hNewPassword' WHERE email='$email'";
+				$result = $this->conn->query($sql);
+				if ($result === true) {
+					return "success";
+				} else {
+					return "fail";
+				}
+			} else {
+				return "cannot_send_email";
+			}
+		} else {
+			return "email_not_exist";
+		}
+	}
+
+	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
+		//require './../PHPMailerAutoload.php';
+
+		$mail = new PHPMailer;
+
+		//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  					  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = SERVER_EMAIL;                 // SMTP username
+		$mail->Password = SERVER_EMAIL_PASSWORD;                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+
+		$mail->setFrom('ductri@tshare.com', 'no-reply.ass2web-tshare');
+		$mail->addAddress($email, $firstName.$lastName);     // Add a recipient
+		$mail->isHTML(true);         	// Set email format to HTML
+		$mail->Subject = '[T-Share] Your new password';
+		$mail->Body    = "Hi $lastName,<br>
+		You are so stupid when forgot your password. Fortunately, I am a very generous person. I'll give you the last chance to access my website. Please take it <strong>carefully</strong>. <br>
+		Your username: $userName<br>
+		Your new password: $newPassword<br>
+		It's not necessory to say thank to me. Bye, <br>
+		T-Share<br>
+
+		";
+
+		$mail->AltBody = "New password: $newPassword";
+
+		if(!$mail->send()) {
+		    //echo 'Message could not be sent.';
+		    //echo 'Mailer Error: ' . $mail->ErrorInfo;
+		    return false;
+		} else {
+		    //echo 'Message has been sent';
+		    return true;
 		}
 	}
 }

@@ -101,8 +101,8 @@ $collector->post('/login', function(){
 	} else {
 		# Already logged in
 		session_start();
-session_unset();
-session_destroy();
+		session_unset();
+		session_destroy();
 		$response["code"] = 2;
 		$response["msg"] = "Already login";
 		$response["data"] = [];
@@ -136,18 +136,16 @@ $collector->get('/user/{userId}/avatar', function($userId) {
 
 $collector->get('/user/getinfo/{userId}', function($userId) {
 	$response = array();
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-		$response["code"] = 0;
-		$response["msg"] = "Logout success";
-		$response["data"] = $userDB->getInfo($userId);;
-		echo json_encode($response);
-	}
+	
+	global $DBManager;
+	$userDB = $DBManager->getTable("user");
+	$response["code"] = 0;
+
+	$response["msg"] = "get success";
+
+	$response["data"] = $userDB->getInfo($userId);;
+	echo json_encode($response);
+	
 });
 
 $collector->post('/user/register', function() {
@@ -158,25 +156,33 @@ $collector->post('/user/register', function() {
 		$lastName = $_POST["lastname"];
 		$email = $_POST["email"];
 		$password = utils::encrypt($_POST["password"]);
-
-		$temporary = explode(".", $_FILES["avatar"]["name"]);
-		$file_extension = end($temporary);
-		//echo utils::console_log($_FILES["avatar"]);
-		$avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
-
+		
+			// $temporary = explode(".", $_FILES["avatar"]["name"]);
+			// $file_extension = end($temporary);
+			// //echo utils::console_log($_FILES["avatar"]);
+			// $avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
 		global $DBManager;
 		$userDB = $DBManager->getTable("user");
-
-		if ($userDB->register($userName, $firstName, $lastName, 
-			$email, $password, "'$userName.$file_extension'") === true) {
+		$result = $userDB->register($userName, $firstName, $lastName, 
+			$email, $password, "default.png");
+		if ($result === "success") {
 			$response["code"] = 0;
 			$response["msg"] = "Register success";
 			$response["data"] = [];
+		} else if ($result === "username_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Register fail: Username has existed!";
+			$response["data"] = [];
+		} else if ($result === "email_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Register fail: Email has existed!";
+			$response["data"] = [];
 		} else {
 			$response["code"] = 3;
-			$response["msg"] = "Register fail";
+			$response["msg"] = "Register fail: Database has error, please report to admin: admin@cse.hcmut.edu";
 			$response["data"] = [];
 		}
+		
 	} else {
 		$response["code"] = 2;
 		$response["msg"] = "Already logged in";
@@ -185,6 +191,39 @@ $collector->post('/user/register', function() {
 	echo json_encode($response);
 	
 });
+
+$collector->get('/user/resetpassword/{email}', function($email) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->resetPassword($email);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Reset successfully. New password has sent to your email.";
+			$response["data"] = [];
+		} else if ($result === "fail") {
+			$response["code"] = 5;
+			$response["msg"] = "Database has error, please report to admin@cse.hcmut.edu.vn";
+			$response["data"] = [];
+		} else if ($result === "email_not_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Email has not registered!";
+			$response["data"] = [];
+		} else if ($result === "cannot_send_email") {
+			$response["code"] = 4;
+			$response["msg"] = "Can not send to your email!";
+			$response["data"] = [];
+		}
+	} else {
+		$response["code"] = 2;
+		$response["msg"] = "Already logged in";
+		$response["data"] = [];
+	}
+	echo json_encode($response);
+});
+
 //////////////////
 //SLIDE
 //////////////////
@@ -196,7 +235,6 @@ $collector->get('/slide/getlist/{topicId}', function($topicId){
 	global $DBManager;
 	$slideDB = $DBManager->getTable("slide");
 	$response["data"] = $slideDB->getSlidesInTopic($topicId);
-
 	echo json_encode($response);
 });
 
