@@ -230,13 +230,11 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 $collector->get('/slide/getlist/{topicId}', function($topicId){
 	$response = array();
 
-	
 	$response["code"] = 0;
 	$response["msg"] = "Success";
 	global $DBManager;
 	$slideDB = $DBManager->getTable("slide");
 	$response["data"] = $slideDB->getSlidesInTopic($topicId);
-	
 	echo json_encode($response);
 });
 

@@ -1,3 +1,4 @@
+
 $( document ).ready(function() {
     var $formLogin = $('#login-form');
     var $formLost = $('#lost-form');
