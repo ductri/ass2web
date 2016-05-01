@@ -256,10 +256,9 @@ $collector->get('/slide/getinfo/{slideId}', function($slideId){
 	echo json_encode($response);
 });
 
-$collector->get('/slide/{slideId}/{id}', function($slideId, $id){
+$collector->get('/slide/getslide/{slideId}/{id}', function($slideId, $id){
 	readfile("./resources/slideupload/slide".$slideId."/slide".$id.".png");
 });
-
 
 $collector->get('/slide/download/{slideId}', function($slideId) {
 	$response = array();
@@ -271,12 +270,13 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
 		$slide = $slideDB->getSlide($slideId);
-		$file = "./slideupload/slide".$slide['slideid']."/".$slide['filename'];
+		$file = "./resources/slideupload/slide".$slide['slideid']."/".$slide['filename'];
 		header("Content-disposition: attachment;filename=".$slide['filename']);
 		header("Content-Length: " . filesize($file));
 		header("Content-Type: application/octet-stream;");
 		readfile($file);
 	}
+	echo json_encode($response);
 });
 
 //////////////////

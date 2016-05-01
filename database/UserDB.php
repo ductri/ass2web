@@ -45,7 +45,7 @@ class UserDB {
 			return "email_exist";
 		}
 
-		$sql = "INSERT INTO USER(username, firstname, lastname, email, password, avatar) VALUES('$username', '$firstName', '$lastName', '$email', $password, '$avatarFileName');";
+		$sql = "INSERT INTO USER(username, firstname, lastname, email, password, avatar) VALUES('$username', '$firstName', '$lastName', '$email', '$password', '$avatarFileName');";
 		
 		$result = $this->conn->query($sql);
 		if ($result === true) {
