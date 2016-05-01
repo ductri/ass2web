@@ -89,37 +89,22 @@ $( document ).ready(function() {
             case "lost-form":
             {
                 var $ls_email=$('#lost_email').val();
-
-                if ($ls_email == "ERROR") {
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "error", "glyphicon-remove", "Send error");
-                } else {
-
-					if ($ls_email.match($mailformat)) {
-						var dataLostPass = {email: $ls_email};
+				var dataLostPass = {email: $ls_email};
 								
-								$.ajax({
-						        	type: "POST",
-						        	url: "/lostpassword",
-						        	data: dataLostPass,
-						        	success: function(d){
-						        		var data_lostpass = JSON.parse(d)
+				$.ajax({
+						type: "POST",
+						url: "/lostpassword",
+						data: dataLostPass,
+						success: function(d){
+						        var data_lostpass = JSON.parse(d)
 						        		
-						        		if (data_lostpass.code == 0) {
-						        			window.location.href = "/";	        			
-						        		} else if(data.code == 1){
-						        			alert(" wrong !")
-						        		}
-						        	}
-						        }); 
-						return true ;
-					} else {
-						alert("You have entered an invalid email address!");
-						email.focus();
-						return false;
-					}
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "success", "glyphicon-ok", "Send OK");
-                }
-                return false;
+						        if (data_lostpass.code == 0) {
+						        	window.location.href = "/";	        			
+						        } else if(data.code == 1){
+						        	alert(" wrong !")
+						        }
+						}
+				});
                 break;
             }
 
@@ -173,7 +158,7 @@ $( document ).ready(function() {
 											        		} else if (code.code == 2) {
 											        			alert("Account already exit");
 											        		} else if (code.code == 3) {
-											        			alert("Register Failed");
+											        			alert(code.msg);
 											        		}
 											        	}
 											        });
