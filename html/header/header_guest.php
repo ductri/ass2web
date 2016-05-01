@@ -154,6 +154,7 @@
               <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
               <span id="text-lost-msg">Send the password to your email !</span>
             </div>
+            <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
           </div>
           <div class="modal-footer">
             <div>
