@@ -62,6 +62,7 @@ $( document ).ready(function() {
 						        	success: function(results){
 						        		var data = JSON.parse(results)
 						        		console.log(data.code);
+						        		console.log(data.msg);
 						        		if (data.code == 0) {
 						        			window.location.href = "/";
 						        			//header("Location:/");       			

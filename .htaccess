@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !=/index.php
+RewriteCond %{REQUEST_URI} !/pub/*
+RewriteRule .* /index.php [L]
+
+
+#Chuyen tat ca cac request den file, folder ko ton tai den index.php
