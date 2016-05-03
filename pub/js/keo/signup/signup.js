@@ -42,7 +42,7 @@ $( document ).ready(function() {
                     //msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
                 } else {	
 
-                	if ($lg_username_len == 0 || $lg_username_len < 2) {
+                	if ($lg_username_len == 0) {
 						alert("Please input username");
 						$('#login_username').focus();
 						return false;
@@ -61,9 +61,10 @@ $( document ).ready(function() {
 						        	data: dataLogin,
 						        	success: function(results){
 						        		var data = JSON.parse(results)
-						        		
+						        		console.log(data.code);
 						        		if (data.code == 0) {
-						        			window.location.href = "/";	        			
+						        			window.location.href = "/";
+						        			//header("Location:/");       			
 						        		} else if(data.code == 3){
 						        			alert("Username or password wrong !")
 						        		} else if (data.code == 2) {
@@ -88,39 +89,41 @@ $( document ).ready(function() {
 					
             case "lost-form":
             {
-                var $ls_email=$('#lost_email').val();
+            	var $ls_email=$('#lost_email').val();
+				var dataLostPass = {email: $ls_email};
 
-                if ($ls_email == "ERROR") {
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "error", "glyphicon-remove", "Send error");
-                } else {
-
+            	if ($ls_email == "ERROR") {
+                    //msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
+                } else {	
 					if ($ls_email.match($mailformat)) {
-						var dataLostPass = {email: $ls_email};
-								
-								$.ajax({
-						        	type: "POST",
-						        	url: "/lostpassword",
-						        	data: dataLostPass,
-						        	success: function(d){
-						        		var data_lostpass = JSON.parse(d)
-						        		
-						        		if (data_lostpass.code == 0) {
-						        			window.location.href = "/";	        			
-						        		} else if(data.code == 1){
-						        			alert(" wrong !")
-						        		}
-						        	}
-						        }); 
-						return true ;
+						$.ajax({
+							type: "GET",
+							url: "/user/resetpassword/"+ $ls_email,
+							data: "",
+							success: function(d){
+							        var data_lostpass = JSON.parse(d)
+							        console.log(data_lostpass.code);
+							        if (data_lostpass.code == 0) {
+							        	alert(data_lostpass.msg);	        			
+							        } else if(data_lostpass.code == 3){
+							        	alert(data_lostpass.msg);
+							        } else if (data_lostpass.code == 4) {
+							        	alert(data_lostpass.msg);
+							        } else if (data_lostpass.code == 5) {
+							        	alert(data_lostpass.msg);
+							        }
+							}
+						});
+						console.log(" /user/resetpassword/" +$ls_email);
+						return true;
 					} else {
 						alert("You have entered an invalid email address!");
-						email.focus();
+						$('#ls_email').focus();
 						return false;
 					}
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "success", "glyphicon-ok", "Send OK");
-                }
-                return false;
-                break;
+										
+	                break;
+	            }
             }
 
             case "registration_form":
@@ -169,11 +172,9 @@ $( document ).ready(function() {
 											        		console.log(code);
 											        		if (code.code == 0){
 											        		$("body").load("/").hide().fadeIn(1500).delay(6000);
-											        			//window.location.href = "/";		
-											        		} else if (code.code == 2) {
-											        			alert("Account already exit");
+											        			//window.location.href = "/";
 											        		} else if (code.code == 3) {
-											        			alert("Register Failed");
+											        			alert(code.msg);
 											        		}
 											        	}
 											        });
@@ -187,7 +188,7 @@ $( document ).ready(function() {
 												return true ;
 											} else {
 												alert("You have entered an invalid email address!");
-												email.focus();
+												$('#email').focus();
 												return false;
 											}
 											
