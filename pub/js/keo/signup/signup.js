@@ -132,16 +132,16 @@ $( document ).ready(function() {
 	            return false;
           	} else {
 	            if ($first_name.match($letters)) {
-	              	if ($last_name_len == 0 || $last_name_len > 30 || $last_name_len < 3) {
-		                alert("Last name should length be between 3 to 30");
+	              	if ($last_name_len == 0 || $last_name_len > 30 || $last_name_len < 2) {
+		                alert("Last name should length be between 2 to 30");
 		                $('#last_name').focus();
 		                return false;
 
 	              	} else {
 	                	if ($last_name.match($letters)) {
 
-		                  if ($display_name_len == 0 || $display_name_len > 30 || $display_name_len < 3) {
-		                    alert("Display name should length be between 3 to 30");
+		                  if ($display_name_len == 0 || $display_name_len > 30 || $display_name_len < 2) {
+		                    alert("Display name should length be between 2 to 30");
 		                    $('#display_name').focus();
 		                    return false;
 		                  } else {
