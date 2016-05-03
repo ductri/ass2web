@@ -54,5 +54,9 @@ class Utils {
 			return "";
 		}
 	}
+
+	public static function getUniqueName() {
+		return rand();
+	}
 }
  ?>

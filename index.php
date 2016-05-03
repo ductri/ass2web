@@ -289,20 +289,25 @@ $collector->post('/slide/upload/', function() {
 		$response["msg"] = "Have not logged in";
 		$response["data"] = [];
 	} else {
-		$userId = $_POST["userId"];
-		$topicId = $_POST["topicId"];
+		$userId = $_POST["userid"];
+		$topicId = $_POST["topicid"];
 		$title = $_POST["title"];
 		$description = $_POST["description"];
 
 		$temporary = explode(".", $_FILES["file"]["name"]);
 		$file_extension = end($temporary);
-		//echo utils::console_log($_FILES["avatar"]);
-		$slideURL = UPLOAD_DIR_SLIDE.$userId.".".$file_extension;
-		$slideFileName = move_uploaded_file($_FILES["file"]["tmp_name"], $slideURL);
+		$dir = UPLOAD_DIR_SLIDE.$userId;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777);
+		}
+		
+		$fileName = Utils::getUniqueName().".".$file_extension;
+		$slideURL = UPLOAD_DIR_SLIDE."/".$userId."/".$fileName;
 
+		move_uploaded_file($_FILES["file"]["tmp_name"], $slideURL);
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
-		$result = $slideDB->uploadSlide($userId, $topicId, $title, $description, $slideURL);
+		$result = $slideDB->uploadSlide($userId, $topicId, $title, $description, $fileName);
 		if ($result === true) {
 			$response["code"] = 0;
 			$response["msg"] = "Upload successfully";
