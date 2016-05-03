@@ -40,6 +40,10 @@ $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 	include('html/tri/index.php');
 });
 
+$collector->get('/admin', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin.php');
+});
 //***********************************
 // html render
 //***********************************

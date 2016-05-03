@@ -7,7 +7,7 @@ var SlideThumb = React.createClass({
                 <div  className="hover-group">
                   <div  className="image-wrapper">
                     <a  className="link-item" href={"/catalog/"+this.props.data.topicid+"/"+this.props.data.slideid}>
-                      <img  className="img-responsive center-block item-picture" src={"/slide/"+this.props.data.slideid+"/1"} alt="item" title="Sky temple"></img>
+                      <img  className="img-responsive center-block item-picture" src={"/slide/getslide/"+this.props.data.slideid+"/1"} alt="item" title="Sky temple"></img>
                     </a>
                     <div  className="hover-toggle btn-group-justified">
                     <div  className="btn-group btn-group-justified" role="group" aria-label="...">
@@ -16,11 +16,14 @@ var SlideThumb = React.createClass({
                           <img src="/pub/img/Thumb-Up-48.png" width="24" alt="like"></img>
                         </button>
                       </div>
-                      <div  className="btn-group" role="group">
-                        <button type="button"  className="btn btn-default" title="Download" >
-                          <img src="/pub/img/Download-48.png" width="24" alt="download"></img>
-                        </button>
-                      </div>
+
+                        <div  className="btn-group" role="group">
+                        <a href={this.props.data.url}>
+                          <button type="button"  className="btn btn-default" title="Download" >
+                            <img src="/pub/img/Download-48.png" width="24" alt="download"></img>
+                          </button>
+                          </a>
+                        </div>
                       <div  className="btn-group" role="group">
                         <button type="button"  className="btn btn-default" title="Share">
                           <img src="/pub/img/Share-48.png" width="24" alt="share"></img>
@@ -34,10 +37,12 @@ var SlideThumb = React.createClass({
                     <span  className="glyphicon glyphicon-star span-item"></span> 2.3k
                   </p>
                   <hr></hr>
-                  <div  className="col-md-12 text-left no-padding">
-                    <p  className="title-temple">{this.props.data.title}<br></br>{this.props.data.description}</p>
-                    <p  className="author-temple">Kun</p>
-                  </div>
+                  <a href={"/catalog/"+this.props.data.topicid+"/"+this.props.data.slideid}>
+                    <div  className="col-md-12 text-left no-padding">
+                      <p  className="title-temple">{this.props.data.title}<br></br>{this.props.data.description}</p>
+                      <p  className="author-temple">Kun</p>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
