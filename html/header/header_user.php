@@ -16,7 +16,7 @@
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       </button>
       <img class="navbar-brand" src="/pub/img/logo.png" alt="logo" style="height: 45px;width: auto;padding: 0px;padding-right: 5px;">
-      <a href="../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
+      <a href="/" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
     </div>
     <div class="collapse navbar-collapse" id="ss">
       <div class="input-group stylish-input-group" id="search1">
