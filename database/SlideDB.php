@@ -36,7 +36,17 @@ class SlideDB  {
 			}
 			return $response[0];
 		} else return null;
-		
+	}
+
+	public function uploadSlide($userId, $topicId, $title, $description, $slideURL) {
+		$sql = "INSERT INTO SLIDE(userid, topicid, title, description, timeupload, filename, noslide) VALUES('$userId', '$topicId', '$title', '$description', now(), '$slideURL', 10);";
+		$result = $this->conn->query($sql);
+
+		if ($result === true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
