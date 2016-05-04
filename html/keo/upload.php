@@ -21,55 +21,82 @@
 ?>
 <body>
 <div class="container"> <br />
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3" style="position: relative; margin-top: 100px">
+      <div class="panel panel-default">
+        <div class="panel-heading"><strong> Upload files </strong></div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="document-name">Name of Document:</label>
+              <input type="text" class="form-control" id="name" placeholder="Filename" required>
+            </div>
 
- <div class="row">
-  <div class="col-md-6 col-md-offset-3" style="position: relative; margin-top: 100px">
-    <div class="panel panel-default">
-     <div class="panel-heading"><strong> Upload files </strong></div>
-     <div class="panel-body">
-       <div class="form-group">
-         <label for="document-name">Name of Document:</label>
-         <input type="text" class="form-control" id="document-name" placeholder="">
-       </div>
 
-      <form role="form_type">
-        <div class="form-group">
-          <label for="sel1">Select Type (select one):</label>
-          <select class="form-control" id="sel1">
-            <option value="Technology">Technology</option>
-            <option value="Education">Education</option>
-            <option value="Mobile">Mobile</option>
-            <option value="Photograph">Photograph</option>
-            <option value="Food">Food</option>
-            <option value="Bussiness">Bussiness</option> <br>
-          </select>
 
-        </div>
-      </form>
-      <br>
+            <form role="form_type" name="formSelect">
+              <div class="form-group" name="Select">
+                <label for="sel1">Select Type of Template:</label>
+                <select class="form-control" id="mySelect" name="mySelect">
+                  <br>
+                </select>
+              </div>
+            </form>
+            <br>
 
-      <form role="form_comment">
-        <div class="form-group">
-          <label for="comment">Description:</label>
-          <textarea class="form-control" rows="4" id="comment"></textarea>
-        </div>
-      </form>			
 
-      <div class="kv-main">
-        <form enctype="multipart/form-data">
-          <div class="form-group">
-            <input id="file-5" class="file" type="file" multiple data-preview-file-type="any" data-upload-url="#">
+
+            <form role="form_comment">
+              <div class="form-group">
+                <label for="comment">Description:</label>
+                <textarea class="form-control" rows="4" id="description" placeholder="Please input description..." required></textarea>
+              </div>
+            </form>			
+
+            <div class="kv-main">
+              <form enctype="multipart/form-data">
+                <div class="form-group">
+                  <input id="file" class="file" type="file" data-preview-file-type="any" data-upload-url="#">
+                </div>
+              </form>
+              <br>
+            </div>    
+            
           </div>
-        </form>
-        <br>
-      </div>		
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-           </div>
-         </div>
-       </div>
-     </div>
+<script type="text/javascript">
 
-   </div>
- </div>
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost/topic/get",
+  "method": "GET",
+  "dataType": "json"
+}
+
+$.ajax(settings).done(function (response) {
+
+  for (var i = 0; i < response.length; ++i) {
+          $('#mySelect').append(
+              $('<option />')
+                  .text(response[i].name)
+                  .val(response[i].topicid)
+          );
+          
+      }
+      //console.log($('#mySelect :selected').text());
+      //console.log($('#mySelect').val());
+});
+
+
+
+
+
+</script>
+
 </body>
 </html>
