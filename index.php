@@ -45,6 +45,11 @@ $collector->get('/admin', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin.php');
 });
+
+$collector->get('/userinfo/{userId}', function($userId) {
+	//readfile('html/keo/signup.html');
+	include('html\tuanBD\userprofile.php');
+});
 //***********************************
 // html render
 //***********************************
@@ -80,7 +85,6 @@ $collector->post('/topic/delete', function(){
 	$response = $topicDB->deleteTopic($_POST['topicid']);
 	echo json_encode($response);
 });
-
 
 //////////////////
 // USER

@@ -9,7 +9,7 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="/pub/js/quang/index.js"></script>
   <link rel="stylesheet" type="text/css" href="/pub/css/tuan/style.css">
-  <link rel="stylesheet" type="text.css" href="userprofile.css">
+  <link rel="stylesheet" type="text.css" href="/pub/css/tuan/userprofile.css">
   <style type="text/css"></style>
 </head>
 <body>
@@ -125,38 +125,20 @@ include(dirname(__FILE__)."\..\header\index.php");
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td>Department:</td>
-                        <td id="department">Programming</td>
+                        <td>User Name</td>
+                        <td><input type="text" id="edit_username" name="edit_username"></td>
                       </tr>
-                      
-                      <tr>
-                        <td>Date of Birth</td>
-                        <td id="birthDay">18/12/1994</td>
-                      </tr>
-                   
-                         <tr>
-                      <tr>
-                        <td>Gender</td>
-                        <td id="gender">Male</td>
-                      </tr>
+                              
 
                       <tr>
                         <td>Email</td>
-                        <td id="email"><a href="https://www.gmail.com">nnductuan@gmail.com</a></td>
+                        <td><input type="text" id="edit_email" name="edit_email"> </td>
                       </tr>
-                        <td>Phone Number</td>
-                        <td id="phone">555-4567-890(Mobile)</td>
+                      <tr>
+                        <td>Password</td>
+                        <td><input type="password" name="edit_password" id="edit_password"  placeholder="Password" tabindex="5" required=""></td>
                            
                       </tr>
-                      </tr>
-                        <td>My slide</td>
-                        <td id="slide">
-                        <a id="slide1"></a><br>
-                        <a id="slide2"></a><br>
-                        <a id="slide3"></a><br>
-
-
-                        </td>
                            
                       </tr>
                     </tbody>
@@ -186,6 +168,13 @@ include(dirname(__FILE__)."\..\header\index.php");
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 
+	console.log(userid);
+	var e_email=document.getElementById("edit_email");
+	e_email.innerHTML="adfadsf";
+	e_email.placeholder="";
+
+	var e_username = document.getElementById("edit_username");
+	e_username.value="fdsaf";
 });
 	var a= document.getElementById('department');
 	a.innerHTML ="Computer Science and Engineering";
