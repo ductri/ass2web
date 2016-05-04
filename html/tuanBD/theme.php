@@ -20,6 +20,8 @@ if(!isset($_SESSION))
 include(dirname(__FILE__)."\..\header\index.php");
 ?>
 
+
+
 <div class="container " id="container">
   <div class="jumbotron" id="bottom">
   	<div id ="text">
