@@ -107,5 +107,94 @@
             }
         ],
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "aspose/storage-sdk-php",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/asposetotal/Aspose-Cloud-Storage-SDK-For-PHP.git",
+            "reference": "8357ed840fe5f31503c6119339ce641fa3153454"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/asposetotal/Aspose-Cloud-Storage-SDK-For-PHP/zipball/8357ed840fe5f31503c6119339ce641fa3153454",
+            "reference": "8357ed840fe5f31503c6119339ce641fa3153454",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "php": ">=5.3.2"
+        },
+        "time": "2016-03-26 17:43:31",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Aspose": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Imran Anwar",
+                "email": "imran.anwar@aspose.com"
+            }
+        ],
+        "description": "Aspose.Storage Cloud SDK for PHP lets users use Aspose Cloud Storage APIs in their PHP apps.",
+        "homepage": "https://github.com/asposetotal/Aspose_Storage_Cloud_SDK_For_PHP",
+        "keywords": [
+            "aspose",
+            "aspose cloud",
+            "php",
+            "storage"
+        ]
+    },
+    {
+        "name": "aspose/slides-sdk-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/asposeslides/Aspose.Slides-Cloud-SDK-for-PHP.git",
+            "reference": "26c8fdfde15df35c9f08f5e2d195ded5f602031b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/asposeslides/Aspose.Slides-Cloud-SDK-for-PHP/zipball/26c8fdfde15df35c9f08f5e2d195ded5f602031b",
+            "reference": "26c8fdfde15df35c9f08f5e2d195ded5f602031b",
+            "shasum": ""
+        },
+        "require": {
+            "aspose/storage-sdk-php": "1.0.*",
+            "ext-curl": "*",
+            "php": ">=5.3.2"
+        },
+        "time": "2016-03-26 18:11:53",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Aspose": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Imran Anwar",
+                "email": "imran.anwar@aspose.com"
+            }
+        ],
+        "description": "Aspose.Slides for Cloud is a Cloud API to work with Microsoft PowerPoint and OpenOffice Presentation files. This is the repository for Aspose.Slides Cloud SDK for PHP. Using this SDK, Aspose.Slides Cloud APIs can be easily used in PHP applications.",
+        "homepage": "https://github.com/asposeslides/Aspose_Slides_Cloud_SDK_For_PHP",
+        "keywords": [
+            "OpenOffice",
+            "PowerPoint",
+            "aspose",
+            "aspose cloud",
+            "php",
+            "presentation"
+        ]
     }
 ]

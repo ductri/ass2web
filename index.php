@@ -37,7 +37,9 @@ $collector->get('/catalog/{catalog}', function($catalog){
 $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 	//Asume
 	$catalog = "top-download";
-	$slideid = 1;
+	echo "<script>";
+	echo "slideid=".$slideid.";";
+	echo "</script>";
 	include('html/tri/index.php');
 });
 
@@ -230,6 +232,21 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 	echo json_encode($response);
 });
 
+$collector->get('/user/getlist/{startIndex}/{length}', function($email) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		
+	} else {
+		$response["code"] = 2;
+		$response["msg"] = "Already logged in";
+		$response["data"] = [];
+	}
+	echo json_encode($response);
+});
+
 //////////////////
 //SLIDE
 //////////////////
@@ -320,8 +337,12 @@ $collector->post('/slide/upload/', function() {
 		}
 	}
 	echo json_encode($response);
-
 });
+
+$collector->get('/slide/test', function() {
+	Utils::getSlideNo(UPLOAD_DIR_SLIDE.'1/2396.ppt');
+});
+
 //////////////////
 //COMMENT
 //////////////////

@@ -4,9 +4,94 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fe7886d3c36c666f30afba4fb8d74a08",
-    "content-hash": "62d349ee427be84931fa76089559e4ff",
+    "hash": "0835bb727d032a3ee99bef861a2407ab",
+    "content-hash": "9e4f1a022670c5a0fa13fdfefc806367",
     "packages": [
+        {
+            "name": "aspose/slides-sdk-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asposeslides/Aspose.Slides-Cloud-SDK-for-PHP.git",
+                "reference": "26c8fdfde15df35c9f08f5e2d195ded5f602031b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/asposeslides/Aspose.Slides-Cloud-SDK-for-PHP/zipball/26c8fdfde15df35c9f08f5e2d195ded5f602031b",
+                "reference": "26c8fdfde15df35c9f08f5e2d195ded5f602031b",
+                "shasum": ""
+            },
+            "require": {
+                "aspose/storage-sdk-php": "1.0.*",
+                "ext-curl": "*",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Aspose": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Imran Anwar",
+                    "email": "imran.anwar@aspose.com"
+                }
+            ],
+            "description": "Aspose.Slides for Cloud is a Cloud API to work with Microsoft PowerPoint and OpenOffice Presentation files. This is the repository for Aspose.Slides Cloud SDK for PHP. Using this SDK, Aspose.Slides Cloud APIs can be easily used in PHP applications.",
+            "homepage": "https://github.com/asposeslides/Aspose_Slides_Cloud_SDK_For_PHP",
+            "keywords": [
+                "OpenOffice",
+                "PowerPoint",
+                "aspose",
+                "aspose cloud",
+                "php",
+                "presentation"
+            ],
+            "time": "2016-03-26 18:11:53"
+        },
+        {
+            "name": "aspose/storage-sdk-php",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asposetotal/Aspose-Cloud-Storage-SDK-For-PHP.git",
+                "reference": "8357ed840fe5f31503c6119339ce641fa3153454"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/asposetotal/Aspose-Cloud-Storage-SDK-For-PHP/zipball/8357ed840fe5f31503c6119339ce641fa3153454",
+                "reference": "8357ed840fe5f31503c6119339ce641fa3153454",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Aspose": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Imran Anwar",
+                    "email": "imran.anwar@aspose.com"
+                }
+            ],
+            "description": "Aspose.Storage Cloud SDK for PHP lets users use Aspose Cloud Storage APIs in their PHP apps.",
+            "homepage": "https://github.com/asposetotal/Aspose_Storage_Cloud_SDK_For_PHP",
+            "keywords": [
+                "aspose",
+                "aspose cloud",
+                "php",
+                "storage"
+            ],
+            "time": "2016-03-26 17:43:31"
+        },
         {
             "name": "phpmailer/phpmailer",
             "version": "v5.2.14",
@@ -116,7 +201,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "aspose/slides-sdk-php": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

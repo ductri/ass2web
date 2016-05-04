@@ -44,6 +44,8 @@ class Slide {
 		$this->description = $description;
 		$this->timeUpload = $timeUpload;
 	}
+
+	
 }
 
  ?>

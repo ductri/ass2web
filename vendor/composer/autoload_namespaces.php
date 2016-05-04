@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Aspose' => array($vendorDir . '/aspose/storage-sdk-php/src', $vendorDir . '/aspose/slides-sdk-php/src'),
 );
