@@ -20,6 +20,8 @@ if(!isset($_SESSION))
 include(dirname(__FILE__)."\..\header\index.php");
 ?>
 
+
+
 <div class="container " id="container">
   <div class="jumbotron" id="bottom">
   	<div id ="text">
@@ -121,6 +123,11 @@ include(dirname(__FILE__)."\..\header\index.php");
 }, function() {
   $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
 });
+
+$(document).ready(function(){
+  console.log(userid);
+});
+
 </script>
 
 </body>

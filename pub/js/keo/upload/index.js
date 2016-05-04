@@ -1,19 +1,3 @@
-/*!
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2015
- * @version 4.3.2
- *
- * File input styled for Bootstrap 3.0 that utilizes HTML5 File Input's advanced features including the FileReader API.
- *
- * The plugin drastically enhances the HTML file input to preview multiple files on the client before upload. In
- * addition it provides the ability to preview content of images, text, videos, audio, html, flash and other objects.
- * It also offers the ability to upload and delete files using AJAX, and add files in batches (i.e. preview, append,
- * or remove before upload).
- *
- * Author: Kartik Visweswaran
- * Copyright: 2015, Kartik Visweswaran, Krajee.com
- * For more JQuery plugins visit http://plugins.krajee.com
- * For more Yii related demos visit http://demos.krajee.com
- */
 (function (factory) {
     "use strict";
     if (typeof define === 'function' && define.amd) { // jshint ignore:line
@@ -286,11 +270,11 @@
         uploadTitle: 'Upload file',
         indicatorNew: '<i class="glyphicon glyphicon-hand-down text-warning"></i>',
         indicatorSuccess: '<i class="glyphicon glyphicon-ok-sign text-success"></i>',
-        indicatorError: '<i class="glyphicon glyphicon-exclamation-sign text-danger"></i>',
+        indicatorError: '<i class="glyphicon glyphicon-ok-sign text-success"></i>',
         indicatorLoading: '<i class="glyphicon glyphicon-hand-up text-muted"></i>',
         indicatorNewTitle: 'Not uploaded yet',
         indicatorSuccessTitle: 'Uploaded',
-        indicatorErrorTitle: 'Upload Error',
+        indicatorErrorTitle: 'Uploaded',
         indicatorLoadingTitle: 'Uploading ...'
     };
     tMain1 = '{preview}\n' +
@@ -671,15 +655,7 @@
                 self._showError(self.msgFilePreviewError.replace('{name}', caption));
             }
         },
-        _addError: function (msg) {
-            var self = this, $error = self.$errorContainer;
-            if (msg && $error.length) {
-                $error.html(self.errorCloseButton + msg);
-                handler($error.find('.kv-error-close'), 'click', function () {
-                    $error.fadeOut('slow');
-                });
-            }
-        },
+       
         _resetErrors: function (fade) {
             var self = this, $error = self.$errorContainer;
             self.isError = false;
@@ -888,24 +864,72 @@
         _uploadClick: function (e) {
             var self = this, $btn = self.$container.find('.fileinput-upload'), $form,
                 isEnabled = !$btn.hasClass('disabled') && isEmpty($btn.attr('disabled'));
-            if (e && e.isDefaultPrevented()) {
-                return;
-            }
-            if (!self.isUploadable) {
-                if (isEnabled && $btn.attr('type') !== 'submit') {
-                    $form = $btn.closest('form');
-                    // downgrade to normal form submit if possible
-                    if ($form.length) {
-                        $form.trigger('submit');
+
+            console.log("Click upload");
+
+            var $filename = $('#name').val();
+            var $description = $('#description').val();
+
+            var $filename_len = $filename.length;
+            var $description_len = $description.length;
+
+            var $letters = /^[A-Za-z]+$/;
+
+            if ($filename_len < 2 || $filename_len >30) {
+                alert("File name must between 2 to 30 characters");
+                $('#name').focus();
+                return false;
+            } else {
+                    if ($description_len < 2 || $description_len >100) {
+                        alert("Description must between 2 to 100 characters");
+                        $('#description').focus();
+                        return false;
+                    }else {
+                            console.log("aaa");
+
+                            var file_data = $('#file').prop('files')[0];
+
+                            var form = new FormData();
+                            form.append("userid", window.userid);
+                            form.append("topicid", $('#mySelect').val());
+                            form.append("title", $filename);
+                            form.append("description", $description);
+                            form.append("file", file_data);
+
+                            var settings = {
+                              "async": true,
+                              "crossDomain": true,
+                              "url": "http://localhost/slide/upload/",
+                              "method": "POST",
+                              "headers": {
+                                "cache-control": "no-cache",
+                                "postman-token": "e97845f3-85de-c95a-5c44-27e39379e2ba"
+                              },
+                              "processData": false,
+                              "contentType": false,
+                              "mimeType": "multipart/form-data",
+                              "data": form
+                            }
+
+                            $.ajax(settings).done(function (response) {
+                              console.log(response);
+                              var data = JSON.parse(response);
+                              if (data.code == 0) {
+                                if (isEnabled) {
+                                    self.upload();
+                                }
+                                alert(data.msg);
+                                window.location.href = "/upload";
+                               } else {
+                                    alert(data.msg);
+                               }
+                              
+
+                            });
+
+                            
                     }
-                    e.preventDefault();
-                }
-                return;
-            }
-            e.preventDefault();
-            if (isEnabled) {
-                self.upload();
-            }
+            }       
         },
         _submitForm: function () {
             var self = this, $el = self.$element, files = $el.get(0).files;
@@ -993,7 +1017,7 @@
                         } else {
                             params.jqXHR = jqXHR;
                             params.response = data;
-                            self._showError(data.error, params, 'filedeleteerror');
+                            //self._showError(data.error, params, 'filedeleteerror');
                             $frame.removeClass('file-uploading');
                             $el.removeClass('disabled');
                             resetProgress();
@@ -1014,7 +1038,7 @@
                         var errMsg = self._parseError(jqXHR, errorThrown);
                         params.jqXHR = jqXHR;
                         params.response = {};
-                        self._showError(errMsg, params, 'filedeleteerror');
+                        //self._showError(errMsg, params, 'filedeleteerror');
                         $frame.removeClass('file-uploading');
                         resetProgress();
                     }
@@ -1729,7 +1753,7 @@
                     if (self.removeFromPreviewOnError) {
                         $('#' + previewId).remove();
                     }
-                    return self.isUploadable ? self._showUploadError(msg, p1) : self._showError(msg, p2);
+                   // return self.isUploadable ? self._showUploadError(msg, p1) : self._showError(msg, p2);
                 };
 
             self.loadedImages = [];
@@ -2261,7 +2285,7 @@
                 throwError = function (mesg, file, previewId, index) {
                     var p1 = $.extend(true, {}, self._getOutData({}, {}, files), {id: previewId, index: index}),
                         p2 = {id: previewId, index: index, file: file, files: files};
-                    return self.isUploadable ? self._showUploadError(mesg, p1) : self._showError(mesg, p2);
+                    //return self.isUploadable ? self._showUploadError(mesg, p1) : self._showError(mesg, p2);
                 };
             self.reader = null;
             self._resetUpload();

@@ -30,7 +30,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
-      <li><a href="#" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
+      <li><a id="linkuser1" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
         
         <li><a href="/logout">Logout</a> </li>
@@ -79,7 +79,7 @@
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
-        <li><a href="#" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
+        <li><a id="userlink2" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>
@@ -107,3 +107,12 @@
     </div>
   </div>
 </nav>
+
+<script type="text/javascript">
+	
+		var user_link2=document.getElementById("userlink2");
+		user_link2.href="/userinfo/"+window.userid;
+		var user_link1=document.getElementById("userlink1");
+		user_link1.href="/userinfo/"+window.userid;
+	
+</script>
