@@ -6,7 +6,7 @@ DATABASE
 define("DB_NAME", "ass2");
 // For localhost
 define("DB_USERNAME", "root");
-define("DB_PASSWORD", "ductri");
+define("DB_PASSWORD", "");
 define("DB_HOSTNAME", "localhost");
 
 // For openshift

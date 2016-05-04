@@ -29,15 +29,8 @@ include(dirname(__FILE__)."\..\header\index.php");
 			<div class='col-ex-12 col-sm-12 col-md-7 col-lg-7'>
 				<div class='media-middle' id='slides'>
 					<div id='slide-wrap'>
-						<img class="img-responsive image-slide" src="/slide/1/1" alt="Slide1">
-						<img class="img-responsive image-slide" src="/slide/1/2" alt="Slide2">
-						<img class="img-responsive image-slide" src="/slide/1/3" alt="Slide3">
-						<img class="img-responsive image-slide" src="/slide/1/4" alt="Slide4">
-						<img class="img-responsive image-slide" src="/slide/1/5" alt="Slide5">
-						<img class="img-responsive image-slide" src="/slide/1/6" alt="Slide6">
-						<img class="img-responsive image-slide" src="/slide/1/7" alt="Slide7">
-						<img class="img-responsive image-slide" src="/slide/1/8" alt="Slide8">
-						<img class="img-responsive image-slide" src="/slide/1/9" alt="Slide9">
+						<img class="img-responsive image-slide" id="slide1" src="/slide/1/1" alt="Slide1">
+						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
 						
 						<div class="progress">
 							<div id="progressbar" class="progress-bar active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
@@ -221,105 +214,8 @@ include(dirname(__FILE__)."\..\header\index.php");
 				<h3 style="font-family: initial;">
 					Recommended
 				</h3>
-				<div class="list-group">
-					<a href="#" class="list-group-item list-group-item-custom" title="Content Marketing Training by Christa Sabathaly">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-2.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4 class="">
-										Content Marketing Training by Christa Sabathaly
-									</h4>
-								</div>
-								<small class="item-detail small">
-									Growth Hacking Asia
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-custom" title="The Workforce Engages">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-3.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4>The Workforce Engages</h4>
-								</div>
-								<small class="item-detail">
-									Webtrends
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-custom" title="Valentine's Day Traditions">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-4.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4>Valentine's Day Traditions</h4>
-								</div>
-								<small class="item-detail">
-									Rudolph Kirkland
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-custom" title="Your Guide to Brand Tracking: Exploring Social Collaboration Software">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-5.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4>Your Guide to Brand Tracking: Exploring Social Collaboration Software</h4>
-								</div>
-								<small class="item-detail">
-									SurveyMonkey for Business
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-custom" title="Why Are Amazon, Apple, Facebook and Google The Gang Of 4? Who Are Their Victi...">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-6.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4>Why Are Amazon, Apple, Facebook and Google The Gang Of 4? Who Are Their Victi...</h4>
-								</div>
-								<small class="item-detail">
-									Dr. William J. Ward
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-custom" title="7 Ways Soft-Skills Power Organizational Performance">
-						<div class="thumbnail-custom">
-							<div class="image-wrap">
-								<img src="resources/slide-demo-7.jpg" alt="Slide demo">	
-							</div>
-							<div class="text-wrap">
-								<div class="item-title">
-									<h4>7 Ways Soft-Skills Power Organizational Performance</h4>
-								</div>
-								<small class="item-detail">
-									BambooHR
-								</small>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					</a>
+				<div class="list-group" id="recommendList">
+					
 				</div>
 			</div>
 		</div>
@@ -328,52 +224,8 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		 var obj;
-	
-		console.log("ahihi");
-			i=2;
-			$.ajax({
-				url:'/comment/getlist/'+i+'/0/2',
-				//url:"/user/getinfo/1",
-				type: 'get',
-
-				success: function(data) {
-					console.log(data);
-	              data1=data;
-	              obj= JSON.parse(data);
-	              console.log(obj.data[0]);
-	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<2;index++){
-	              	console.log("dsafds" +index);
-	              	 $.ajax({
-	              	 	//console.log(obj.data[index].userid);
-	              		url:'/user/getinfo/1',
-	              		type:"get",
-
-	              		success: function(data){
-	              			
-	     
-	              			console.log("datab" +data);
-	              			obj1= JSON.parse(data);
-	              			console.log("ten "+obj1.data.username);
-	              			showComment(obj1.src,obj1.data.username,obj.data[index].content,obj.data[index].time);
-	              		},
-	              		async: false
-	              });
-
-	              	 
-	              }
-	             
-
-
-	            }
-			});
-			t1="src";
-			t2="daf";
-			t3="adf";
-			t4="fadf";
-			showComment(t1,t2,t3,t4);
-
+			showListComment(0,2);
+			showrecommend();
 		}
 
 	);
@@ -422,8 +274,98 @@ include(dirname(__FILE__)."\..\header\index.php");
 	//t.appendChild(cmt);
 	t.insertBefore(cmt,before);
 }	
+ 
+ function showListComment(start, end){
+ 	 var obj;
+			i=2;
+			$.ajax({
+				url:'/comment/getlist/'+i+'/'+ start +'/' +end,
+				//url:"/user/getinfo/1",
+				type: 'get',
 
-	
+				success: function(data) {
+					console.log(data);
+	              data1=data;
+	              obj= JSON.parse(data);
+	              console.log(obj.data[0]);
+	              //obj_data= JSON.parse(obj.data[0]);
+	              for(index=0;index<2;index++){
+	              	
+	              	 $.ajax({
+
+	              		url:'/user/getinfo/' +obj.data[index].userid,
+	              		type:"get",
+
+	              		success: function(data){
+	              			console.log("datab" +data);
+	              			obj1= JSON.parse(data);
+	              			console.log("ten "+obj1.data.username);
+	              			showComment(obj1.data.avatar,obj1.data.username,obj.data[index].content,obj.data[index].time);
+	              		},
+	              		async: false
+	              });
+
+	              	 
+	              }
+	             
+
+
+	            }
+			});
+ }
+
+ 	function showrecommend(){
+ 		var a = document.createElement("A");
+	a.className="list-group-item list-group-item-custom";
+	a.title="test";
+	a.href="#";
+    var t = document.createTextNode("This is a paragraph.");
+    //a.appendChild(t);
+
+    var custom = document.createElement("div");
+    custom.className="thumbnail-custom";
+    a.appendChild(custom);
+
+    var image_wrap= document.createElement("div");
+    image_wrap.className="image-wrap";
+
+    var src_image = document.createElement("IMG");
+    src_image.setAttribute("src","adsf")
+    src_image.setAttribute("alt","adfdsa");
+    image_wrap.appendChild(src_image);
+    custom.appendChild(image_wrap);
+
+    var text_wrap = document.createElement("div");
+    text_wrap.className="text-wrap";
+
+    var item_title= document.createElement("div");
+    item_title.className="item-title";
+
+    text_wrap.appendChild(item_title);
+    var h4=document.createElement("H4");
+    var t = document.createTextNode("This is a paragraph.");
+    h4.appendChild(t);
+    item_title.appendChild(h4);
+
+    var small = document.createElement("small");
+    small.className="item-detail small";
+    var t_small = document.createTextNode("author.");
+    small.appendChild(t_small);
+    text_wrap.appendChild(small);
+
+
+    var clear = document.createElement("div");
+  	clear.className="clear";
+
+
+
+
+    custom.appendChild(text_wrap);
+    var r= document.getElementById("recommendList");
+    //document.getElementById("recommendList").appendChild(para);
+    r.appendChild(a);
+    custom.appendChild(clear);
+ 	}
 </script>
 
 

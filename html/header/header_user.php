@@ -16,7 +16,7 @@
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       </button>
       <img class="navbar-brand" src="/pub/img/logo.png" alt="logo" style="height: 45px;width: auto;padding: 0px;padding-right: 5px;">
-      <a href="../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
+      <a href="/" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
     </div>
     <div class="collapse navbar-collapse" id="ss">
       <div class="input-group stylish-input-group" id="search1">
@@ -30,8 +30,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
+      <li><a href="#" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
-        <li><span>Welcome, <?php echo $_SESSION["username"]?></li>
+        
+        <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>
   </div>
@@ -77,7 +79,7 @@
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
-        <li><a style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
+        <li><a href="#" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>

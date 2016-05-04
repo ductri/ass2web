@@ -18,7 +18,8 @@ $collector->get('/', function(){
 });
 
 $collector->get('/upload', function(){
-	readfile('html/keo/upload.html');
+	//readfile('html/keo/upload.html');
+	include('html/keo/upload.php');
 });
 
 $collector->get('/signup', function(){
