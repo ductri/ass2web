@@ -27,10 +27,11 @@ $collector->get('/signup', function(){
 	include('html/keo/signup.php');
 });
 
-$collector->get('/catalog/{catalog}', function($catalog){
+$collector->get('/catalog/{id}', function($id){
 	//Asume
-	$catalog = "top-download";
-	//readfile('html/quang/catalog.html');
+	echo "<script>";
+	echo "catalogid=".$id.";";
+	echo "</script>";
 	include('html/quang/catalog.php');
 });
 

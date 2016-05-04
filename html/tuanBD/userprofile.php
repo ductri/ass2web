@@ -96,7 +96,7 @@ include(dirname(__FILE__)."\..\header\index.php");
       <div id="div-forms">
 
         <!-- Begin # Login Form -->
-        <form id="login-form">
+        <form id="edit-form">
            <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title", id="name"></h3>
@@ -131,11 +131,7 @@ include(dirname(__FILE__)."\..\header\index.php");
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Sent Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
-                          
-                        </span>
+                       <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change</button>
                     </div>
             
           </div>
@@ -168,6 +164,22 @@ $(document).ready(function(){
 		}
 
 
+	});
+
+
+	$("#edit-form").submit(function(e){
+
+		tuan11=$("#edit-form").serialize();
+		$.ajax({
+			url:'chua biet',
+			type: 'get',
+			dataType:'json',
+			data:$("#edit-form").serialize(),
+
+			success: function(data){
+
+			}
+		});
 	});
 });
 	

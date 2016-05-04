@@ -30,7 +30,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
-      <li><a id="linkuser1" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
+      <li><a id="userlink1" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
         
         <li><a href="/logout">Logout</a> </li>
@@ -109,10 +109,9 @@
 </nav>
 
 <script type="text/javascript">
-	
-		var user_link2=document.getElementById("userlink2");
-		user_link2.href="/userinfo/"+window.userid;
-		var user_link1=document.getElementById("userlink1");
-		user_link1.href="/userinfo/"+window.userid;
-	
+	userlink22=document.getElementById("userlink2");
+	userlink22.href="/userinfo/"+userid;
+	userlink11=document.getElementById("userlink1");
+	userlink11.href="/userinfo/"+userid;
+
 </script>

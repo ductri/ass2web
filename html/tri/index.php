@@ -92,7 +92,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 								
 								
 								<div  id="show-more" class='text-center'>
-									<a href="https://google.com.vn">	
+									<a onclick="showMore()">	
 											Show more
 									</a>
 								</div>
@@ -224,8 +224,12 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			showListComment(0,2);
-			showrecommend();
+			start_cmt=0;
+			end_cmt=2;
+			showListComment(start_cmt,end_cmt);
+			showRecommend();
+			showListRecommend();
+
 		}
 
 	);
@@ -275,11 +279,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 	t.insertBefore(cmt,before);
 }	
  
- function showListComment(start, end){
- 	 var obj;
-			i=2;
+ function showListComment(start, end){			
 			$.ajax({
-				url:'/comment/getlist/'+i+'/'+ start +'/' +end,
+				url:'/comment/getlist/'+slideid+'/'+ start +'/' +end,
 				//url:"/user/getinfo/1",
 				type: 'get',
 
@@ -289,7 +291,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<2;index++){
+	              for(index=0;index<(end-start);index++){
 	              	
 	              	 $.ajax({
 
@@ -313,13 +315,18 @@ include(dirname(__FILE__)."\..\header\index.php");
 	            }
 			});
  }
+  function showMore(){
+ 	start_cmt+=3;
+ 	end_cmt+=3;
+ 	showListComment(start_cmt,end_cmt);
+ }
 
- 	function showrecommend(){
- 		var a = document.createElement("A");
+ function showRecommend(){
+ 	var a = document.createElement("A");
 	a.className="list-group-item list-group-item-custom";
 	a.title="test";
 	a.href="#";
-    var t = document.createTextNode("This is a paragraph.");
+    var t = document.createTextNode("Name of slide");
     //a.appendChild(t);
 
     var custom = document.createElement("div");
@@ -330,7 +337,7 @@ include(dirname(__FILE__)."\..\header\index.php");
     image_wrap.className="image-wrap";
 
     var src_image = document.createElement("IMG");
-    src_image.setAttribute("src","adsf")
+    src_image.setAttribute("src","Source image")
     src_image.setAttribute("alt","adfdsa");
     image_wrap.appendChild(src_image);
     custom.appendChild(image_wrap);
@@ -358,14 +365,29 @@ include(dirname(__FILE__)."\..\header\index.php");
   	clear.className="clear";
 
 
-
-
     custom.appendChild(text_wrap);
     var r= document.getElementById("recommendList");
     //document.getElementById("recommendList").appendChild(para);
     r.appendChild(a);
     custom.appendChild(clear);
  	}
+
+
+
+
+
+ function showListRecommend(){
+ 	$.ajax({
+ 		url: "/slide/getlist/"+slideid,
+ 		type: "get",
+
+ 		success: function(data){
+ 			slide_data=JSON.parse(data);
+ 			
+ 		},
+
+ 	});
+ }
 </script>
 
 
