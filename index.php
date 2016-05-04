@@ -58,7 +58,6 @@ $collector->post('/topic/add', function(){
 	echo json_encode($response);
 });
 
-
 $collector->get('/topic/get', function(){
 	global $DBManager;
 	$topicDB = $DBManager->getTable("topic");
@@ -97,6 +96,7 @@ $collector->post('/login', function(){
 			$response["msg"] = "Login success";
 			$_SESSION["username"] = $response["data"]["username"];
 			$_SESSION["type"] = $response["data"]["userright"];
+			$_SESSION["userid"] = $response["data"]["userid"];
 		} else {
 			$response["code"] = 3;
 			$response["msg"] = "Login fail";

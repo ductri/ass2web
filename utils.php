@@ -45,6 +45,7 @@ class Utils {
 	 */
 	public static function encrypt($password) {
 		return sha1($password);
+		//return $password;
 	}
 
 	public static function checkLogin() {

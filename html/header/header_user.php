@@ -105,3 +105,9 @@
     </div>
   </div>
 </nav>
+<?php 
+echo "<script>
+window.userid = $_SESSION['userid'];
+</script>
+"
+ ?>
