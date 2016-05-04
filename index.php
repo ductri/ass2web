@@ -39,6 +39,7 @@ $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 	$catalog = "top-download";
 	echo "<script>";
 	echo "slideid=".$slideid.";";
+	echo "topicid=".$catalog.";";
 	echo "</script>";
 	include('html/tri/index.php');
 });
