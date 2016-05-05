@@ -31,7 +31,6 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
-        <li><a href="/upload">Up load</a></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
         <li><a href="/signup">Sign up</a></li>
       </ul>
@@ -42,15 +41,8 @@
       <li><a href="/">Home</a></li>
       <li>
         <a href="" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="/catalog/top-rate">Top Rate</a></li>
-          <li><a href="/catalog/top-download">Top Download</a></li>
-          <li><a href="/catalog/technology">Technology</a></li>
-          <li><a href="/catalog/education">Education</a></li>
-          <li><a href="/catalog/mobile">Mobile</a></li>
-          <li><a href="/catalog/photograph">Photograph</a></li>
-          <li><a href="/catalog/food">Food</a></li>
-          <li><a href="/catalog/business">Business</a></li>
+        <ul class="dropdown-menu" id="nav_mobile">
+        
         </ul>
       </li>
     </ul>
@@ -78,7 +70,6 @@
         </span>
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
-        <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
         <li><a href="/signup">Sign up</a></li>
       </ul>
@@ -87,21 +78,8 @@
 
   <div id="bellow2" class="hidden-xs">
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block">
-       <li><a href="/">Home</a></li>
-        <li><a href="/catalog/top-rate">Top Rate</a></li>
-        <li><a href="/catalog/top-download">Top Download</a></li>
-        <li><a href="/catalog/technology">Technology</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="/catalog/education">Education</a></li>
-            <li><a href="/catalog/mobile">Mobile</a></li>
-            <li><a href="/catalog/photograph">Photograph</a></li>
-            <li><a href="/catalog/food">Food</a></li>
-            <li><a href="/catalog/business">Business</a></li>
-          </ul>
-        </li>
+      <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block" id="nav">
+        <li><a href="/">Home</a></li>
 
       </ul>
     </div>
@@ -172,5 +150,46 @@
     </div>
   </div>
 </div>
+
+<script>
+  var $id_web = "nav";
+  var $id_mobile = "nav_mobile";
+  function appendTopic($topic_id,$topic_name,$id){
+            var li = document.createElement("LI");
+
+            var a = document.createElement("A");
+            
+            a.href = "/catalog/" + $topic_id; 
+
+            var ul = document.getElementById($id);  
+
+            var data = document.createTextNode($topic_name);
+
+            a.appendChild(data);
+
+            li.appendChild(a);
+
+            ul.appendChild(li);
+        }
+
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost/topic/get",
+  "method": "GET",
+  "dataType": "json"
+}
+
+$.ajax(settings).done(function (response) {
+
+
+  for (var i = 0; i < response.length; ++i) {
+          appendTopic(response[i].topicid,response[i].name,$id_web);
+          appendTopic(response[i].topicid,response[i].name,$id_mobile);
+      }
+});
+
+</script>
+
 </body>
 <!-- END # MODAL LOGIN -->

@@ -1930,16 +1930,7 @@
             }
         },
         _setFileDropZoneTitle: function () {
-            var self = this, $zone = self.$container.find('.file-drop-zone');
-            $zone.find('.' + self.dropZoneTitleClass).remove();
-            if (!self.isUploadable || !self.showPreview || $zone.length === 0 || self.getFileStack().length > 0 || !self.dropZoneEnabled) {
-                return;
-            }
-            if ($zone.find('.file-preview-frame').length === 0 && isEmpty(self.defaultPreviewContent)) {
-                $zone.prepend('<div class="' + self.dropZoneTitleClass + '">' + self.dropZoneTitle + '</div>');
-            }
-            self.$container.removeClass('file-input-new');
-            addCss(self.$container, 'file-input-ajax-new');
+            
         },
         _setAsyncUploadStatus: function (previewId, pct, total) {
             var self = this, sum = 0;
