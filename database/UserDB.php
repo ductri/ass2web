@@ -151,17 +151,12 @@ class UserDB {
 			return "not_exist";
 		} else {
 			$sql = "DELETE FROM USER WHERE userid='$userId'";
-			echo $sql;
 			$result = $this->conn->query($sql);
-			$response = [];
-			if ($result===true) {
-				$response["result"] = "success";
-				$response["msg"] = "Delete user successfully";
+			if ($result=== true) {
+				return "success";
 			} else {
-				$response["result"] = "fail";
-				$response["msg"] = "Delete user failure";
+				return "failure";
 			}
-			return $response;
 		}
 	}
 
@@ -176,6 +171,16 @@ class UserDB {
 			}
 		}
 		return $response;
+	}
+
+	function deleteSlide($userId, $slideId) {
+		$sql = "DELETE FROM SLIDE WHERE slideid='$slideId' AND userid='$userid'";
+		$result = $this->conn->query($sql);
+		if ($result=== true) {
+			return "success";
+		} else {
+			return "failure";
+		}
 	}
 
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {

@@ -48,6 +48,30 @@ class SlideDB  {
 			return false;
 		}
 	}
+
+	public function searchSlide($keyword) {
+		$sql = "SELECT * from SLIDE where title like '%{$keyword}%'";
+		$result = $this->conn->query($sql);
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$row['url'] = "/slide/download/".$row['slideid'];
+				array_push($response, $row) ;
+			}
+		}
+		return $response;
+	}
+
+	public function deleteSlide($slideId) {
+		$sql = "DELETE FROM SLIDE WHERE slideid='$slideId'";
+		echo $sql;
+		$result = $this->conn->query($sql);
+		if ($result=== true) {
+			return "success";
+		} else {
+			return "failure";
+		}
+	}
 }
 
  ?>
