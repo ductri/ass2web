@@ -1,5 +1,12 @@
 var SlideThumb = React.createClass({
     displayName: 'slideThumb',
+    onClickDownload(event){
+      if(typeof typeUser !== 'undefined'){
+        alert('You need to login to download file!');
+      } else {
+        window.location = this.props.data.url;
+      }
+    },
     render() {
         return (
             <div  className="col-md-4 text-center">
@@ -18,11 +25,11 @@ var SlideThumb = React.createClass({
                       </div>
 
                         <div  className="btn-group" role="group">
-                        <a href={this.props.data.url}>
-                          <button type="button"  className="btn btn-default" title="Download" >
+
+                          <button type="button" onClick={this.onClickDownload}  className="btn btn-default" title="Download" >
                             <img src="/pub/img/Download-48.png" width="24" alt="download"></img>
                           </button>
-                          </a>
+
                         </div>
                       <div  className="btn-group" role="group">
                         <button type="button"  className="btn btn-default" title="Share">
@@ -61,7 +68,7 @@ var ExampleApplication = React.createClass({
     };
   },
   componentWillMount: function () {
-    $.getJSON("/slide/getlist/1", function(data) {
+    $.getJSON("/slide/getlist/"+topicId, function(data) {
       this.setState({items : data.data});
     }.bind(this));
   },
