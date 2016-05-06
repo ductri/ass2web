@@ -50,7 +50,14 @@ $collector->get('/admin', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin.php');
 });
-
+$collector->get('/admin/topics', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin.php');
+});
+$collector->get('/admin/users', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin_user.php');
+});
 $collector->get('/userinfo/{userId}', function($userId) {
 	//readfile('html/keo/signup.html');
 	include('html\tuanBD\userprofile.php');
@@ -339,19 +346,20 @@ $collector->post('/user/changeavatar/{userId}', function($userId) {
 				$file_extension = end($temporary);
 				$avatarFileName = $userId.".".$file_extension;
 				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
-			}
-			global $DBManager;
-			$userDB = $DBManager->getTable("user");
-			$result = $userDB->changeAvatar($userId, $avatarFileName);
+			
+				global $DBManager;
+				$userDB = $DBManager->getTable("user");
+				$result = $userDB->changeAvatar($userId, $avatarFileName);
 
-			if ($result==="success") {
-				$response["code"] = 0;
-				$response["msg"] = "Update info successfully";
-				$response["data"] = [];
-			} else {
-				$response["code"] = 4;
-				$response["msg"] = "Update failure";
-				$response["data"] = [];
+				if ($result==="success") {
+					$response["code"] = 0;
+					$response["msg"] = "Update info successfully";
+					$response["data"] = [];
+				} else {
+					$response["code"] = 4;
+					$response["msg"] = "Update failure";
+					$response["data"] = [];
+				}
 			}
 		}
 	}
@@ -401,6 +409,38 @@ $collector->get('/user/getlist/{startIndex}/{length}', function($startIndex, $le
 			$response["code"] = 3;
 			$response["msg"] = "Get list failure";
 			$response["data"] = $result;
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/user/delete/{userId}', function($userId) {
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 2;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->deleteUser($userId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Delete successfully";
+			$response["data"] = [];
+		} else if ($result === "not_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Userid not exist";
+			$response["data"] = [];
+		} else {
+			$response["code"] = 4;
+			$response["msg"] = "Delete failure";
+			$response["data"] = [];
 		}
 	}
 	echo json_encode($response);
@@ -502,6 +542,57 @@ $collector->get('/slide/test', function() {
 	Utils::getSlideNo(UPLOAD_DIR_SLIDE.'1/2396.ppt');
 });
 
+$collector->get('/slide/search/{keyword}', function($keyword) {
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->searchSlide($keyword);
+	echo json_encode($response);
+});
+
+$collector->get('/slide/delete/{slideId}', function($slideId){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->deleteSlide($_SESSION["userid"], $slideId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Success";
+			$response["data"] = [];	
+		} else {
+			$response["code"] = 2;
+			$response["msg"] = "Failure";
+			$response["data"] = [];	
+		}
+		
+	} else {
+		$slideDB = $DBManager->getTable("slide");
+		$result = $slideDB->deleteSlide($slideId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Success";
+			$response["data"] = [];	
+		} else {
+			$response["code"] = 2;
+			$response["msg"] = "Failure";
+			$response["data"] = [];	
+		}
+	}
+	echo json_encode($response);
+});
 //////////////////
 //COMMENT
 //////////////////

@@ -152,6 +152,7 @@
 </div>
 
 <script>
+  var typeUser = 'guest';
   var $id_web = "nav";
   var $id_mobile = "nav_mobile";
   function appendTopic($topic_id,$topic_name,$id){

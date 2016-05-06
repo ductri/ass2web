@@ -899,7 +899,7 @@
                             var settings = {
                               "async": true,
                               "crossDomain": true,
-                              "url": "http://localhost/slide/upload/",
+                              "url": "/slide/upload/",
                               "method": "POST",
                               "headers": {
                                 "cache-control": "no-cache",
