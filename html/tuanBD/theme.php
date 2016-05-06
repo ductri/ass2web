@@ -124,9 +124,9 @@ include(dirname(__FILE__)."\..\header\index.php");
   $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
 });
 
-$(document).ready(function(){
+/*$(document).ready(function(){
   console.log(userid);
-});
+});*/
 
 </script>
 
