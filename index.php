@@ -27,19 +27,21 @@ $collector->get('/signup', function(){
 	include('html/keo/signup.php');
 });
 
-$collector->get('/catalog/{catalog}', function($catalog){
-	//Asume
-	$catalog = "top-download";
-	//readfile('html/quang/catalog.html');
-	include('html/quang/catalog.php');
-});
-
-$collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
+$collector->get('/catalog/{catalogId}', function($catalogId){
 	//Asume
 	$catalog = "top-download";
 	echo "<script>";
+	echo "topicId=".$catalogId.";";
+	echo "</script>";
+
+	include('html/quang/catalog.php');
+});
+
+$collector->get('/catalog/{catalogId}/{slideid}', function($catalogId, $slideid){
+	//Asume
+	echo "<script>";
 	echo "slideid=".$slideid.";";
-	echo "topicid=".$catalog.";";
+	echo "topicid=".$catalogId.";";
 	echo "</script>";
 	include('html/tri/index.php');
 });
@@ -237,6 +239,7 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 	echo json_encode($response);
 });
 
+//TODO chua xong ne
 $collector->get('/user/getlist/{startIndex}/{length}', function($email) {
 	$response = array();
 
@@ -252,6 +255,90 @@ $collector->get('/user/getlist/{startIndex}/{length}', function($email) {
 	echo json_encode($response);
 });
 
+$collector->post('/user/editinfo/{userId}', function($userId) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not edit info of another user";
+			$response["data"] = [];
+		} else {
+			$firstName = $_POST["firstname"];
+			$lastName = $_POST["lastname"];
+			
+			if (isset($_FILES["avatar"])) {
+				$temporary = explode(".", $_FILES["avatar"]["name"]);
+				$file_extension = end($temporary);
+				$avatarFileName = $userId.".".$file_extension;
+				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+			}
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+			$result = $userDB->updateInfo($userId, $firstName, $lastName, $avatarFileName);
+
+			if ($result==="success") {
+				$response["code"] = 0;
+				$response["msg"] = "Update info successfully";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 4;
+				$response["msg"] = "Update failure";
+				$response["data"] = [];
+			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->post('/user/changepass/{userId}', function($userId) {
+	$oldPass = $_POST["oldpass"];
+	$newPass1 = $_POST["newpass1"];
+	$newPass2 = $_POST["newpass2"];
+
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not change password of another user";
+			$response["data"] = [];
+		} else {
+			$oldPass = $_POST["oldpass"];
+			$newPass = $_POST["newpass"];
+			
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+			$result = $userDB->changePass($userId, $oldPass, $newPass1, $newPass2);
+
+			if ($result==="success") {
+				$response["code"] = 0;
+				$response["msg"] = "Change password successfully";
+				$response["data"] = [];
+			} else if ($result === "two_pass_not_same") {
+				$response["code"] = 3;
+				$response["msg"] = "New passwords are not the same";
+				$response["data"] = [];
+			} else if ($result === "wrong_pass") {
+				$response["code"] = 4;
+				$response["msg"] = "Password is wrong";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 5;
+				$response["msg"] = "Change password failure";
+				$response["data"] = [];
+			}
+		}
+	}
+	echo json_encode($response);
+});
 //////////////////
 //SLIDE
 //////////////////
