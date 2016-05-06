@@ -11,6 +11,12 @@
   <link rel="stylesheet" type="text/css" href="/pub/css/tuan/style.css">
   <link rel="stylesheet" type="text.css" href="/pub/css/tuan/userprofile.css">
   <style type="text/css"></style>
+  <style>
+  img {
+    max-width: 100%;
+    max-height: 100%;
+}
+  </style>
 </head>
 <body>
 
@@ -72,7 +78,7 @@ include(dirname(__FILE__)."\..\header\index.php");
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Sent Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <a data-original-title="Change Password" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                         <span class="pull-right">
                             <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
                           
@@ -87,9 +93,14 @@ include(dirname(__FILE__)."\..\header\index.php");
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header text-center">
+      <div class="modal-header text-center row">
       
-        <img class="img-circle" id="img_logo" src="/pub/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
+
+        <div class="col-md-3 col-lg-3 " align="center">  <img class="img-circle" id="img_logo" src="/pub/img/quang/user.png" alt="img" class="img-circle img-responsive"> </div>
+
+
+
+        <!-- http://bootsnipp.com/img/logo.jpg -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
@@ -102,8 +113,6 @@ include(dirname(__FILE__)."\..\header\index.php");
       
        <form id="form-avatar" >
           <input type="file" name="avatar" id="avatar">
-         <input type="submit">change </button>
-      </form>
       </div>
         <!-- Begin # Login Form -->
         <form id="edit-form">
@@ -144,7 +153,10 @@ include(dirname(__FILE__)."\..\header\index.php");
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 
-	
+	document.getElementById("userpic").setAttribute("src","/user/"+userid+"/avatar");
+   ava = document.getElementById('img_logo');
+                ava.setAttribute('src',"/user/"+userid+"/avatar");
+
 
 	$.ajax({
 		url:"/user/getinfo/"+userid,
@@ -166,6 +178,14 @@ $(document).ready(function(){
 
 	});
 
+    $.ajax({
+      url: "/user/"+userid+"/getslides",
+      type: "get",
+      success: function(data){
+        console.log(data);
+      }
+    });
+
 
 	$("#edit-form").submit(function(e){
 
@@ -183,25 +203,38 @@ $(document).ready(function(){
 	});
 
    
-  $("#form-avatar").submit(function(e){
-    var av=$(this).serialize();
-   $.ajax({
-      url: '/user/changeavatar/'+userid,
-      type: 'post',
-      dataType:'json',
-      data: av,
-      acsyn: false,
-      cache: false,
-      contentType: false,
-      proccessData: false,
-    
-      success: function(data){
-        console.log(data);
-        
+  $(document).ready(function (e) {
+    $('#form-avatar').on('submit',(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
 
-      }
+        $.ajax({
+            type:'POST',
+            url: "/user/changeavatar/"+userid,
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                console.log("success");
+                console.log(data);
+                ava = document.getElementById('img_logo');
+                ava.setAttribute('src',"/user/"+userid+"/avatar");
+                document.getElementById("userpic").setAttribute("src","/user/"+userid+"/avatar");
+
+            },
+            error: function(data){
+                console.log("error");
+                console.log(data);
+            }
+        });
+    }));
+
+    $("#avatar").on("change", function() {
+        $("#form-avatar").submit();
+
     });
-  });
+});
 
 
 
