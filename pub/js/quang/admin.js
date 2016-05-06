@@ -98,8 +98,8 @@ var ExampleApplication = React.createClass({
               <div>
                 <h4>Add topic</h4>
                 <form  role="form" id="addForm"  onSubmit={this.submitAdd}>
-                  <input id="nameA" name="name" type="text" size="25" placeholder="name"></input>
-                  <input type="submit" name="action" value="Add"></input>
+                  <input className="form-control" id="nameA" name="name" type="text" size="25" placeholder="name"></input>
+                  <input className="btn btn-default" type="submit" name="action" value="Add"></input>
                 </form>
                 <br></br>
                 <h4>Edit topic</h4>

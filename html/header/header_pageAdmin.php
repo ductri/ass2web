@@ -31,7 +31,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
-        <li><span>Welcome, <?php echo $_SESSION["name"]?></li>
+        <li><span>Welcome, <?php echo $_SESSION["username"]?></li>
       </ul>
     </div>
   </div>
@@ -71,7 +71,7 @@
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
-        <li><a style="color: white;"><strong><?php $_SESSION["name"]?></strong></a></li>
+        <li><a style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>
