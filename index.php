@@ -50,7 +50,14 @@ $collector->get('/admin', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin.php');
 });
-
+$collector->get('/admin/topics', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin.php');
+});
+$collector->get('/admin/users', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin_user.php');
+});
 $collector->get('/userinfo/{userId}', function($userId) {
 	//readfile('html/keo/signup.html');
 	include('html\tuanBD\userprofile.php');
@@ -338,7 +345,7 @@ $collector->post('/user/changeavatar/{userId}', function($userId) {
 				$temporary = explode(".", $_FILES["avatar"]["name"]);
 				$file_extension = end($temporary);
 				$avatarFileName = $userId.".".$file_extension;
-				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);
 			}
 			global $DBManager;
 			$userDB = $DBManager->getTable("user");

@@ -46,7 +46,7 @@ if(!isset($_SESSION["username"])){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
 
 
-<script src="/pub/js/quang/admin.js" type="text/babel"></script>
+<script src="/pub/js/quang/admin_user.js" type="text/babel"></script>
 <!-- <script scr="/pub/js/quang/catalog.js"></script> -->
 
 </body>
