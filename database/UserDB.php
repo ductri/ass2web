@@ -82,10 +82,23 @@ class UserDB {
 		}
 	}
 
-	function updateInfo($userId, $firstName, $lastName, $avatarFileName) {
+	function updateInfo($userId, $firstName, $lastName) {
 
 		$sql = "UPDATE USER
-		SET firstname='$firstName', lastname='$lastName', avatar='$avatarFileName'
+		SET firstname='$firstName', lastname='$lastName'
+		WHERE userid='$userId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+	function changeAvatar($userId, $avatarFileName) {
+		$sql = "UPDATE USER
+		SET avatar='$avatarFileName'
 		WHERE userid='$userId'";
 		
 		$result = $this->conn->query($sql);
@@ -97,10 +110,10 @@ class UserDB {
 	}
 
 	function changePass($userId, $oldPass, $newPass1, $newPass2) {
-		if ($newPass1 === $newPass2) {
+		if ($newPass1 !== $newPass2) {
 			return "two_pass_not_same";
 		} else {
-			$userInfo = getInfo($userId);
+			$userInfo = $this->getInfo($userId);
 			if (Utils::encrypt($oldPass) !== $userInfo["password"]) {
 				return "wrong_pass";
 			} else {
@@ -115,6 +128,54 @@ class UserDB {
 				}
 			}
 		}
+	}
+
+	function getList($startIndex, $length) {
+		$sql = "SELECT * from USER";
+		$result = $this->conn->query($sql);
+		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+			return array_splice($response, $startIndex, $length);
+		} else {
+			return null;
+		}
+	}
+
+	function deleteUser($userId) {
+		$userInfo = $this->getInfo($userId);
+		if ($userId === null) {
+			return "not_exist";
+		} else {
+			$sql = "DELETE FROM USER WHERE userid='$userId'";
+			echo $sql;
+			$result = $this->conn->query($sql);
+			$response = [];
+			if ($result===true) {
+				$response["result"] = "success";
+				$response["msg"] = "Delete user successfully";
+			} else {
+				$response["result"] = "fail";
+				$response["msg"] = "Delete user failure";
+			}
+			return $response;
+		}
+	}
+
+	function getListSlide($userId) {
+		$sql = "SELECT * from SLIDE where userid='$userId'";
+		$result = $this->conn->query($sql);
+		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+		}
+		return $response;
 	}
 
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
@@ -156,8 +217,6 @@ class UserDB {
 		    return true;
 		}
 	}
-
-
 }
 
  ?>

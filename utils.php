@@ -58,6 +58,18 @@ class Utils {
 		}
 	}
 
+	public static function checkAdminLogin() {
+		if (isset($_SESSION["username"])) {
+			if ($_SESSION["type"] === "admin") {
+				return "success";
+			} else {
+				return "not_admin";
+			}
+		} else {
+			return "not_login";
+		}
+	}
+
 	public static function getUniqueName() {
 		return rand();
 	}

@@ -49,7 +49,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 							</div>
 						</nav>
 					</div>
-					<h3 id='slide-title'> How to boost inbound marketing success with content marketing, SEO and social media marketing</h3>
+					<h3 id='slide-title'></h3>
 					<div class="pull-right">
 						<div id='like-share' class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default">
@@ -92,7 +92,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 								
 								
 								<div  id="show-more" class='text-center'>
-									<a href="https://google.com.vn">	
+									<a onclick="showMore()">	
 											Show more
 									</a>
 								</div>
@@ -224,15 +224,20 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			showListComment(0,2);
-			showrecommend();
+			$("#slide-title").html("ahihi");
+			//document.getElementById("slide-title").innerHTML="ahihi";
+			start_cmt=0;
+			lend_cmt=2;
+			showListComment(start_cmt,lend_cmt);
+			showRecommend();
+		//	showListRecommend();
+
 		}
 
 	);
 
 
-
-	function showComment(_src,_name,_cmt,_time){
+function showComment(_src,_name,_cmt,_time){
 	var cmt= document.createElement('div');
 	cmt.className= "list-group-item";
 
@@ -275,11 +280,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 	t.insertBefore(cmt,before);
 }	
  
- function showListComment(start, end){
- 	 var obj;
-			i=2;
+ function showListComment(start, lend){			
 			$.ajax({
-				url:'/comment/getlist/'+i+'/'+ start +'/' +end,
+				url:'/comment/getlist/'+slideid+'/'+ start +'/' +lend,
 				//url:"/user/getinfo/1",
 				type: 'get',
 
@@ -289,7 +292,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<2;index++){
+	              for(index=0;index<lend;index++){
 	              	
 	              	 $.ajax({
 
@@ -313,13 +316,18 @@ include(dirname(__FILE__)."\..\header\index.php");
 	            }
 			});
  }
+  function showMore(){
+ 	start_cmt+=2;
+ 	lend_cmt+=2;
+ 	showListComment(start_cmt,lend_cmt);
+ }
 
- 	function showrecommend(){
- 		var a = document.createElement("A");
+function showRecommend(r_href,r_name,r_src,r_des){
+ 	var a = document.createElement("A");
 	a.className="list-group-item list-group-item-custom";
 	a.title="test";
-	a.href="#";
-    var t = document.createTextNode("This is a paragraph.");
+	a.href=r_href;
+    
     //a.appendChild(t);
 
     var custom = document.createElement("div");
@@ -330,7 +338,7 @@ include(dirname(__FILE__)."\..\header\index.php");
     image_wrap.className="image-wrap";
 
     var src_image = document.createElement("IMG");
-    src_image.setAttribute("src","adsf")
+    src_image.setAttribute("src",r_src)
     src_image.setAttribute("alt","adfdsa");
     image_wrap.appendChild(src_image);
     custom.appendChild(image_wrap);
@@ -343,13 +351,13 @@ include(dirname(__FILE__)."\..\header\index.php");
 
     text_wrap.appendChild(item_title);
     var h4=document.createElement("H4");
-    var t = document.createTextNode("This is a paragraph.");
+    var t = document.createTextNode(r_name);
     h4.appendChild(t);
     item_title.appendChild(h4);
 
     var small = document.createElement("small");
     small.className="item-detail small";
-    var t_small = document.createTextNode("author.");
+    var t_small = document.createTextNode(r_des);
     small.appendChild(t_small);
     text_wrap.appendChild(small);
 
@@ -358,14 +366,42 @@ include(dirname(__FILE__)."\..\header\index.php");
   	clear.className="clear";
 
 
-
-
     custom.appendChild(text_wrap);
     var r= document.getElementById("recommendList");
     //document.getElementById("recommendList").appendChild(para);
     r.appendChild(a);
     custom.appendChild(clear);
- 	}
+ }
+
+
+
+
+
+ function showListRecommend(){
+ 	$.ajax({
+ 		url: "/slide/getlist/"+slideid,
+ 		type: "get",
+
+ 		success: function(data){
+ 			slide_data=JSON.parse(data);
+ 			for(i=0;i<slide_data.data.length;i++){
+ 				//showRecommend(slide_data[i].)
+ 			}
+ 		},
+
+ 	});
+ }
+
+
+function showSlideTitle(){
+	$.ajax({
+		url: "/slideid",
+		type: 'get',
+		success: function(data){
+			$("#slide-title").html(data);
+		}
+	});
+}
 </script>
 
 
