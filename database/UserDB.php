@@ -82,6 +82,41 @@ class UserDB {
 		}
 	}
 
+	function updateInfo($userId, $firstName, $lastName, $avatarFileName) {
+
+		$sql = "UPDATE USER
+		SET firstname='$firstName', lastname='$lastName', avatar='$avatarFileName'
+		WHERE userid='$userId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+	function changePass($userId, $oldPass, $newPass1, $newPass2) {
+		if ($newPass1 !== $newPass2) {
+			return "two_pass_not_same";
+		} else {
+			$userInfo = $this->getInfo($userId);
+			if (Utils::encrypt($oldPass) !== $userInfo["password"]) {
+				return "wrong_pass";
+			} else {
+				$sql = "UPDATE USER
+					SET password='$newPass1'
+					WHERE userid='$userId'";
+				$result = $this->conn->query($sql);
+				if ($result === true) {
+					return "success";
+				} else {
+					return "fail";
+				}
+			}
+		}
+	}
+
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
 		//require './../PHPMailerAutoload.php';
 
@@ -121,6 +156,8 @@ class UserDB {
 		    return true;
 		}
 	}
+
+
 }
 
  ?>

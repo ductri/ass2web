@@ -175,7 +175,7 @@
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost/topic/get",
+  "url": "/topic/get",
   "method": "GET",
   "dataType": "json"
 }
