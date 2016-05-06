@@ -131,6 +131,7 @@ $collector->get('/logout', function() {
 		$response["msg"] = "Have not logged in";
 		$response["data"] = [];
 	} else {
+		header("Location: /");
 		$response["code"] = 0;
 		$response["msg"] = "Logout success";
 		$response["data"] = [];

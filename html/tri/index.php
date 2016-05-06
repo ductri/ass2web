@@ -321,12 +321,12 @@ include(dirname(__FILE__)."\..\header\index.php");
  	showListComment(start_cmt,end_cmt);
  }
 
- function showRecommend(){
+ function showRecommend(r_href,r_name,r_src,r_des){
  	var a = document.createElement("A");
 	a.className="list-group-item list-group-item-custom";
 	a.title="test";
-	a.href="#";
-    var t = document.createTextNode("Name of slide");
+	a.href=r_href;
+    
     //a.appendChild(t);
 
     var custom = document.createElement("div");
@@ -337,7 +337,7 @@ include(dirname(__FILE__)."\..\header\index.php");
     image_wrap.className="image-wrap";
 
     var src_image = document.createElement("IMG");
-    src_image.setAttribute("src","Source image")
+    src_image.setAttribute("src",r_src)
     src_image.setAttribute("alt","adfdsa");
     image_wrap.appendChild(src_image);
     custom.appendChild(image_wrap);
@@ -350,13 +350,13 @@ include(dirname(__FILE__)."\..\header\index.php");
 
     text_wrap.appendChild(item_title);
     var h4=document.createElement("H4");
-    var t = document.createTextNode("This is a paragraph.");
+    var t = document.createTextNode(r_name);
     h4.appendChild(t);
     item_title.appendChild(h4);
 
     var small = document.createElement("small");
     small.className="item-detail small";
-    var t_small = document.createTextNode("author.");
+    var t_small = document.createTextNode(r_des);
     small.appendChild(t_small);
     text_wrap.appendChild(small);
 
@@ -383,9 +383,11 @@ include(dirname(__FILE__)."\..\header\index.php");
 
  		success: function(data){
  			slide_data=JSON.parse(data);
- 			
+ 			for(i=0;i<slide_data.data.length;i++){
+ 				showRecommend(slide_data[i].)
+ 			}
  		},
-
+showRecommend(r_href,r_name,r_src,r_des){
  	});
  }
 </script>
