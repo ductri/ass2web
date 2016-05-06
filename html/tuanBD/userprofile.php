@@ -44,7 +44,10 @@ include(dirname(__FILE__)."\..\header\index.php");
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>
-                   
+                       <tr>
+                        <td>Dislay Name</td>
+                        <td id="dislay_name"></td>
+                      </tr>
 
                       <tr>
                         <td>Email</td>
@@ -97,44 +100,36 @@ include(dirname(__FILE__)."\..\header\index.php");
 
         <!-- Begin # Login Form -->
         <form id="edit-form">
-           <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title", id="name"></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                
-               
-                <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>User Name</td>
-                        <td><input type="text" id="edit_username" name="edit_username"></td>
-                      </tr>
-                              
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
 
-                      <tr>
-                        <td>Email</td>
-                        <td><input type="text" id="edit_email" name="edit_email"> </td>
-                      </tr>
-                      <tr>
-                        <td>Password</td>
-                        <td><input type="password" name="edit_password" id="edit_password"  placeholder="Password" tabindex="5" required=""></td>
-                           
-                      </tr>
-                           
-                      </tr>
-                    </tbody>
-                  </table>
-                  
-              </div>
+              <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" required>
+
             </div>
-                 <div class="panel-footer">
-                       <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change</button>
-                    </div>
-            
           </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+
+              <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" required>
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+
+          <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3" required>
+
+        </div>
+       
+
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change and Save</button>
+          </div>
+        </div>
         </form>
       
       </div>
@@ -156,11 +151,13 @@ $(document).ready(function(){
 		success: function(data){
 			userInfo=JSON.parse(data);
 			email.innerHTML=userInfo.data.email;
-
-			document.getElementById("name").innerHTML=userInfo.data.username;
-			document.getElementById("edit_username").value=userInfo.data.username;
-			document.getElementById("edit_email").value=userInfo.data.email;
-			document.getElementById("edit_password").value=userInfo.data.password;
+      $('#dislay_name').html(userInfo.data.username);
+      fullName= userInfo.data.firstname;
+      fullName+=" "+userInfo.data.lastname;
+			document.getElementById("name").innerHTML=fullName;
+			
+			//document.getElementById("edit_email").value=userInfo.data.email;
+			//document.getElementById("edit_password").value=userInfo.data.password;
 		}
 
 

@@ -87,13 +87,6 @@
 </nav>
 
 <script type="text/javascript">
-<<<<<<< HEAD
-	userlink22=document.getElementById("userlink2");
-	userlink22.href="/userinfo/"+userid;
-	userlink11=document.getElementById("userlink1");
-	userlink11.href="/userinfo/"+userid;
-
-=======
 
 var $id_web = "nav";
       var $id_mobile = "nav_mobile";
@@ -139,5 +132,4 @@ var $id_web = "nav";
 
 
 	
->>>>>>> b68f6f724926313164acb7dbd229fe7e9b7eee7a
 </script>

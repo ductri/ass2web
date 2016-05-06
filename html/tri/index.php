@@ -49,7 +49,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 							</div>
 						</nav>
 					</div>
-					<h3 id='slide-title'> How to boost inbound marketing success with content marketing, SEO and social media marketing</h3>
+					<h3 id='slide-title'></h3>
 					<div class="pull-right">
 						<div id='like-share' class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default">
@@ -224,19 +224,20 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
+			$("#slide-title").html("ahihi");
+			//document.getElementById("slide-title").innerHTML="ahihi";
 			start_cmt=0;
-			end_cmt=2;
-			showListComment(start_cmt,end_cmt);
+			lend_cmt=2;
+			showListComment(start_cmt,lend_cmt);
 			showRecommend();
-			showListRecommend();
+		//	showListRecommend();
 
 		}
 
 	);
 
 
-
-	function showComment(_src,_name,_cmt,_time){
+function showComment(_src,_name,_cmt,_time){
 	var cmt= document.createElement('div');
 	cmt.className= "list-group-item";
 
@@ -279,9 +280,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 	t.insertBefore(cmt,before);
 }	
  
- function showListComment(start, end){			
+ function showListComment(start, lend){			
 			$.ajax({
-				url:'/comment/getlist/'+slideid+'/'+ start +'/' +end,
+				url:'/comment/getlist/'+slideid+'/'+ start +'/' +lend,
 				//url:"/user/getinfo/1",
 				type: 'get',
 
@@ -291,7 +292,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<(end-start);index++){
+	              for(index=0;index<lend;index++){
 	              	
 	              	 $.ajax({
 
@@ -316,12 +317,12 @@ include(dirname(__FILE__)."\..\header\index.php");
 			});
  }
   function showMore(){
- 	start_cmt+=3;
- 	end_cmt+=3;
- 	showListComment(start_cmt,end_cmt);
+ 	start_cmt+=2;
+ 	lend_cmt+=2;
+ 	showListComment(start_cmt,lend_cmt);
  }
 
- function showRecommend(r_href,r_name,r_src,r_des){
+function showRecommend(r_href,r_name,r_src,r_des){
  	var a = document.createElement("A");
 	a.className="list-group-item list-group-item-custom";
 	a.title="test";
@@ -370,7 +371,7 @@ include(dirname(__FILE__)."\..\header\index.php");
     //document.getElementById("recommendList").appendChild(para);
     r.appendChild(a);
     custom.appendChild(clear);
- 	}
+ }
 
 
 
@@ -384,12 +385,23 @@ include(dirname(__FILE__)."\..\header\index.php");
  		success: function(data){
  			slide_data=JSON.parse(data);
  			for(i=0;i<slide_data.data.length;i++){
- 				showRecommend(slide_data[i].)
+ 				//showRecommend(slide_data[i].)
  			}
  		},
-showRecommend(r_href,r_name,r_src,r_des){
+
  	});
  }
+
+
+function showSlideTitle(){
+	$.ajax({
+		url: "/slideid",
+		type: 'get',
+		success: function(data){
+			$("#slide-title").html(data);
+		}
+	});
+}
 </script>
 
 

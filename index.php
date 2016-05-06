@@ -37,7 +37,6 @@ $collector->get('/catalog/{id}', function($id){
 
 $collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
 	//Asume
-	$catalog = "top-download";
 	echo "<script>";
 	echo "slideid=".$slideid.";";
 	echo "topicid=".$catalog.";";
