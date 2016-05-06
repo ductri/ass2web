@@ -97,10 +97,10 @@ class UserDB {
 	}
 
 	function changePass($userId, $oldPass, $newPass1, $newPass2) {
-		if ($newPass1 === $newPass2) {
+		if ($newPass1 !== $newPass2) {
 			return "two_pass_not_same";
 		} else {
-			$userInfo = getInfo($userId);
+			$userInfo = $this->getInfo($userId);
 			if (Utils::encrypt($oldPass) !== $userInfo["password"]) {
 				return "wrong_pass";
 			} else {

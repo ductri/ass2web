@@ -312,8 +312,6 @@ $collector->post('/user/changepass/{userId}', function($userId) {
 			$response["msg"] = "Can not change password of another user";
 			$response["data"] = [];
 		} else {
-			$oldPass = $_POST["oldpass"];
-			$newPass = $_POST["newpass"];
 			
 			global $DBManager;
 			$userDB = $DBManager->getTable("user");
