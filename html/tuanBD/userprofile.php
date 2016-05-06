@@ -44,7 +44,10 @@ include(dirname(__FILE__)."\..\header\index.php");
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>
-                   
+                       <tr>
+                        <td>Dislay Name</td>
+                        <td id="dislay_name"></td>
+                      </tr>
 
                       <tr>
                         <td>Email</td>
@@ -96,49 +99,37 @@ include(dirname(__FILE__)."\..\header\index.php");
       <div id="div-forms">
 
         <!-- Begin # Login Form -->
-        <form id="login-form">
-           <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title", id="name"></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                
-               
-                <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>User Name</td>
-                        <td><input type="text" id="edit_username" name="edit_username"></td>
-                      </tr>
-                              
+        <form id="edit-form">
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
 
-                      <tr>
-                        <td>Email</td>
-                        <td><input type="text" id="edit_email" name="edit_email"> </td>
-                      </tr>
-                      <tr>
-                        <td>Password</td>
-                        <td><input type="password" name="edit_password" id="edit_password"  placeholder="Password" tabindex="5" required=""></td>
-                           
-                      </tr>
-                           
-                      </tr>
-                    </tbody>
-                  </table>
-                  
-              </div>
+              <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" required>
+
             </div>
-                 <div class="panel-footer">
-                        <a data-original-title="Sent Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
-                          
-                        </span>
-                    </div>
-            
           </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+
+              <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" required>
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+
+          <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3" required>
+
+        </div>
+       
+
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change and Save</button>
+          </div>
+        </div>
         </form>
       
       </div>
@@ -160,14 +151,32 @@ $(document).ready(function(){
 		success: function(data){
 			userInfo=JSON.parse(data);
 			email.innerHTML=userInfo.data.email;
-
-			document.getElementById("name").innerHTML=userInfo.data.username;
-			document.getElementById("edit_username").value=userInfo.data.username;
-			document.getElementById("edit_email").value=userInfo.data.email;
-			document.getElementById("edit_password").value=userInfo.data.password;
+      $('#dislay_name').html(userInfo.data.username);
+      fullName= userInfo.data.firstname;
+      fullName+=" "+userInfo.data.lastname;
+			document.getElementById("name").innerHTML=fullName;
+			
+			//document.getElementById("edit_email").value=userInfo.data.email;
+			//document.getElementById("edit_password").value=userInfo.data.password;
 		}
 
 
+	});
+
+
+	$("#edit-form").submit(function(e){
+
+		tuan11=$("#edit-form").serialize();
+		$.ajax({
+			url:'chua biet',
+			type: 'get',
+			dataType:'json',
+			data:$("#edit-form").serialize(),
+
+			success: function(data){
+
+			}
+		});
 	});
 });
 	

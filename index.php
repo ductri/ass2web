@@ -321,6 +321,63 @@ $collector->post('/user/changepass/{userId}', function($userId) {
 	echo json_encode($response);
 });
 
+$collector->post('/user/changeavatar/{userId}', function($userId) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not edit info of another user";
+			$response["data"] = [];
+		} else {
+			if (isset($_FILES["avatar"])) {
+				$temporary = explode(".", $_FILES["avatar"]["name"]);
+				$file_extension = end($temporary);
+				$avatarFileName = $userId.".".$file_extension;
+				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+			}
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+			$result = $userDB->changeAvatar($userId, $avatarFileName);
+
+			if ($result==="success") {
+				$response["code"] = 0;
+				$response["msg"] = "Update info successfully";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 4;
+				$response["msg"] = "Update failure";
+				$response["data"] = [];
+			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/user/{userId}/getslides', function($userId) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->getListSlide($userId);
+		$response["code"] = 0;
+		$response["msg"] = "Successfully";
+		$response["data"] = $result;
+	}
+	
+	echo json_encode($response);
+});
+
+//Admin
 $collector->get('/user/getlist/{startIndex}/{length}', function($startIndex, $length) {
 	$response = array();
 	$checkLogin = Utils::checkAdminLogin();
@@ -349,33 +406,6 @@ $collector->get('/user/getlist/{startIndex}/{length}', function($startIndex, $le
 	echo json_encode($response);
 });
 
-$collector->detele('/user/delete/{userId}', function($userId) {
-	$response = array();
-	$checkLogin = Utils::checkAdminLogin();
-	if ($checkLogin === "not_login") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else if ($checkLogin === "not_admin") {
-		$response["code"] = 2;
-		$response["msg"] = "You are not admin";
-		$response["data"] = [];
-	} else {
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-		$result = $userDB->deleteUser($userId);
-		if ($result === "success") {
-			$response["code"] = 0;
-			$response["msg"] = "Delete user successfully";
-			$response["data"] = [];
-		} else {
-			$response["code"] = 3;
-			$response["msg"] = "Get list failure";
-			$response["data"] = $result;
-		}
-	}
-	echo json_encode($response);
-});
 //////////////////
 //SLIDE
 //////////////////

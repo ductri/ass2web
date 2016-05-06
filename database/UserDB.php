@@ -96,6 +96,19 @@ class UserDB {
 		}
 	}
 
+	function changeAvatar($userId, $avatarFileName) {
+		$sql = "UPDATE USER
+		SET avatar='$avatarFileName'
+		WHERE userid='$userId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
 	function changePass($userId, $oldPass, $newPass1, $newPass2) {
 		if ($newPass1 !== $newPass2) {
 			return "two_pass_not_same";
@@ -132,8 +145,28 @@ class UserDB {
 		}
 	}
 
-	function delete() {
+	function deleteUser($userId) {
+		$userInfo = $this->getInfo($userId);
+		if ($userId === null) {
+			return "not_exist";
+		} else {
+			$sql = "DELETE FROM USER WHERE userid='$userId'";
+			echo $sql;
+			$result = $this->conn->query($sql);
+			$response = [];
+			if ($result===true) {
+				$response["result"] = "success";
+				$response["msg"] = "Delete user successfully";
+			} else {
+				$response["result"] = "fail";
+				$response["msg"] = "Delete user failure";
+			}
+			return $response;
+		}
+	}
 
+	function getListSlide($userId) {
+		
 	}
 
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
@@ -175,8 +208,6 @@ class UserDB {
 		    return true;
 		}
 	}
-
-
 }
 
  ?>
