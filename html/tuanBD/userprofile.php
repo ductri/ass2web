@@ -95,9 +95,16 @@ include(dirname(__FILE__)."\..\header\index.php");
         </button>
       </div>
 
+      
       <!-- Begin # DIV Form -->
       <div id="div-forms">
-
+        <div class="modal-header text-center">
+      
+       <form id="form-avatar" >
+          <input type="file" name="avatar" id="avatar">
+         <input type="submit">change </button>
+      </form>
+      </div>
         <!-- Begin # Login Form -->
         <form id="edit-form">
         <hr>
@@ -117,12 +124,6 @@ include(dirname(__FILE__)."\..\header\index.php");
             </div>
           </div>
         </div>
-        <div class="form-group">
-
-          <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3" required>
-
-        </div>
-       
 
         <hr>
         <div class="row">
@@ -155,7 +156,9 @@ $(document).ready(function(){
       fullName= userInfo.data.firstname;
       fullName+=" "+userInfo.data.lastname;
 			document.getElementById("name").innerHTML=fullName;
-			
+     
+      $('#first_name').val(userInfo.data.firstname);
+      $("#last_name").val(userInfo.data.lastname);
 			//document.getElementById("edit_email").value=userInfo.data.email;
 			//document.getElementById("edit_password").value=userInfo.data.password;
 		}
@@ -168,7 +171,7 @@ $(document).ready(function(){
 
 		tuan11=$("#edit-form").serialize();
 		$.ajax({
-			url:'chua biet',
+			url:'/user/editinfo/'+userid,
 			type: 'get',
 			dataType:'json',
 			data:$("#edit-form").serialize(),
@@ -178,9 +181,34 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+   
+  $("#form-avatar").submit(function(e){
+    var av=$(this).serialize();
+   $.ajax({
+      url: '/user/changeavatar/'+userid,
+      type: 'post',
+      dataType:'json',
+      data: av,
+      acsyn: false,
+      cache: false,
+      contentType: false,
+      proccessData: false,
+    
+      success: function(data){
+        console.log(data);
+        
+
+      }
+    });
+  });
+
+
+
 });
 	
-	
+
+
 
 
 </script>
