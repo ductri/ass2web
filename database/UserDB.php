@@ -166,7 +166,16 @@ class UserDB {
 	}
 
 	function getListSlide($userId) {
+		$sql = "SELECT * from SLIDE where userid='$userId'";
+		$result = $this->conn->query($sql);
 		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+		}
+		return $response;
 	}
 
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
