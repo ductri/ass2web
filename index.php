@@ -161,7 +161,6 @@ $collector->get('/user/getinfo/{userId}', function($userId) {
 
 	$response["data"] = $userDB->getInfo($userId);;
 	echo json_encode($response);
-	
 });
 
 $collector->post('/user/register', function() {
@@ -205,7 +204,6 @@ $collector->post('/user/register', function() {
 		$response["data"] = [];
 	}
 	echo json_encode($response);
-	
 });
 
 $collector->get('/user/resetpassword/{email}', function($email) {
@@ -240,22 +238,6 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 	echo json_encode($response);
 });
 
-//TODO chua xong ne
-$collector->get('/user/getlist/{startIndex}/{length}', function($email) {
-	$response = array();
-
-	if (Utils::checkLogin() === "") {
-		global $DBManager;
-		$userDB = $DBManager->getTable("user");
-		
-	} else {
-		$response["code"] = 2;
-		$response["msg"] = "Already logged in";
-		$response["data"] = [];
-	}
-	echo json_encode($response);
-});
-
 $collector->post('/user/editinfo/{userId}', function($userId) {
 	$response = array();
 
@@ -272,15 +254,15 @@ $collector->post('/user/editinfo/{userId}', function($userId) {
 			$firstName = $_POST["firstname"];
 			$lastName = $_POST["lastname"];
 			
-			if (isset($_FILES["avatar"])) {
-				$temporary = explode(".", $_FILES["avatar"]["name"]);
-				$file_extension = end($temporary);
-				$avatarFileName = $userId.".".$file_extension;
-				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
-			}
+			// if (isset($_FILES["avatar"])) {
+			// 	$temporary = explode(".", $_FILES["avatar"]["name"]);
+			// 	$file_extension = end($temporary);
+			// 	$avatarFileName = $userId.".".$file_extension;
+			// 	move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+			// }
 			global $DBManager;
 			$userDB = $DBManager->getTable("user");
-			$result = $userDB->updateInfo($userId, $firstName, $lastName, $avatarFileName);
+			$result = $userDB->updateInfo($userId, $firstName, $lastName);
 
 			if ($result==="success") {
 				$response["code"] = 0;
@@ -322,18 +304,74 @@ $collector->post('/user/changepass/{userId}', function($userId) {
 				$response["msg"] = "Change password successfully";
 				$response["data"] = [];
 			} else if ($result === "two_pass_not_same") {
-				$response["code"] = 3;
+				$response["code"] = 4;
 				$response["msg"] = "New passwords are not the same";
 				$response["data"] = [];
 			} else if ($result === "wrong_pass") {
-				$response["code"] = 4;
+				$response["code"] = 5;
 				$response["msg"] = "Password is wrong";
 				$response["data"] = [];
 			} else {
-				$response["code"] = 5;
+				$response["code"] = 6;
 				$response["msg"] = "Change password failure";
 				$response["data"] = [];
 			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/user/getlist/{startIndex}/{length}', function($startIndex, $length) {
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 2;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->getList($startIndex, $length);
+		if ($result !== null) {
+			$response["code"] = 0;
+			$response["msg"] = "Get list successfully";
+			$response["data"] = $result;
+		} else {
+			$response["code"] = 3;
+			$response["msg"] = "Get list failure";
+			$response["data"] = $result;
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->detele('/user/delete/{userId}', function($userId) {
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 2;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->deleteUser($userId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Delete user successfully";
+			$response["data"] = [];
+		} else {
+			$response["code"] = 3;
+			$response["msg"] = "Get list failure";
+			$response["data"] = $result;
 		}
 	}
 	echo json_encode($response);

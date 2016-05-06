@@ -82,10 +82,10 @@ class UserDB {
 		}
 	}
 
-	function updateInfo($userId, $firstName, $lastName, $avatarFileName) {
+	function updateInfo($userId, $firstName, $lastName) {
 
 		$sql = "UPDATE USER
-		SET firstname='$firstName', lastname='$lastName', avatar='$avatarFileName'
+		SET firstname='$firstName', lastname='$lastName'
 		WHERE userid='$userId'";
 		
 		$result = $this->conn->query($sql);
@@ -115,6 +115,25 @@ class UserDB {
 				}
 			}
 		}
+	}
+
+	function getList($startIndex, $length) {
+		$sql = "SELECT * from USER";
+		$result = $this->conn->query($sql);
+		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+			return array_splice($response, $startIndex, $length);
+		} else {
+			return null;
+		}
+	}
+
+	function delete() {
+
 	}
 
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
