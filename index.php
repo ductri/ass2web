@@ -512,7 +512,7 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
 		$slide = $slideDB->getSlide($slideId);
-		$file = "./resources/slideupload/slide".$slide['slideid']."/".$slide['filename'];
+		$file = UPLOAD_DIR_SLIDE.$slide['userid']."/".$slide['filename'];
 		header("Content-disposition: attachment;filename=".$slide['filename']);
 		header("Content-Length: " . filesize($file));
 		header("Content-Type: application/octet-stream;");
