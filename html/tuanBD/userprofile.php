@@ -169,6 +169,13 @@ include(dirname(__FILE__)."\..\header\index.php");
         <div class="row">
      
           <div class="col-xs-12 col-sm-6 col-md-6">
+           <div class="form-group">
+
+              <input type="password" id="oldpassword" class="form-control input-lg" placeholder="Password" tabindex="5" required>
+
+            </div>
+
+            <br>
             <div class="form-group">
 
               <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5" required>
@@ -260,6 +267,8 @@ $(document).ready(function(){
 		});
 
 
+	});
+
     $('#form-avatar').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -290,9 +299,6 @@ $(document).ready(function(){
         $("#form-avatar").submit();
 
     });
-
-
-	});
 
    
 
@@ -330,6 +336,7 @@ function changePassword(){
 function changeInfo(){
   $.ajax({
     url: "/user/editinfo/"+userid,
+    type: "post",
     data: {
       "firstname":$('#first_name').val(),
       "lastname":$("#last_name").val(),
