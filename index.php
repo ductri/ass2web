@@ -493,7 +493,10 @@ $collector->get('/slide/getinfo/{slideId}', function($slideId){
 });
 
 $collector->get('/slide/getslide/{slideId}/{id}', function($slideId, $id){
-	readfile("./resources/slideupload/slide".$slideId."/slide".$id.".png");
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$slideInfo = $slideDB->getSlide($slideId);
+	readfile(UPLOAD_DIR_SLIDE.$userId."/".$slideInfo["filename"]);
 });
 
 $collector->get('/slide/download/{slideId}', function($slideId) {
@@ -526,7 +529,7 @@ $collector->post('/slide/upload/', function() {
 		$topicId = $_POST["topicid"];
 		$title = $_POST["title"];
 		$description = $_POST["description"];
-
+		
 		$temporary = explode(".", $_FILES["file"]["name"]);
 		$file_extension = end($temporary);
 		$dir = UPLOAD_DIR_SLIDE.$userId;
@@ -536,8 +539,9 @@ $collector->post('/slide/upload/', function() {
 		
 		$fileName = Utils::getUniqueName().".".$file_extension;
 		$slideURL = UPLOAD_DIR_SLIDE."/".$userId."/".$fileName;
-
+		
 		move_uploaded_file($_FILES["file"]["tmp_name"], $slideURL);
+
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
 		$result = $slideDB->uploadSlide($userId, $topicId, $title, $description, $fileName);
@@ -550,6 +554,7 @@ $collector->post('/slide/upload/', function() {
 			$response["msg"] = "Upload failure";
 			$response["data"] = [];
 		}
+		$response["msg"] = $_FILES["file"]["tmp_name"];
 	}
 	echo json_encode($response);
 });
