@@ -115,7 +115,10 @@ include(dirname(__FILE__)."\..\header\index.php");
       
        <form id="form-avatar" >
           <input type="file" name="avatar" id="avatar">
+          <input type="submit">
+        </form>
       </div>
+
         <!-- Begin # Login Form -->
         <form id="edit-form">
         <hr>
@@ -139,7 +142,7 @@ include(dirname(__FILE__)."\..\header\index.php");
         <hr>
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change and Save</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" onclick="changeInfo()">Change and Save</button>
           </div>
         </div>
         </form>
@@ -255,10 +258,8 @@ $(document).ready(function(){
 
 			}
 		});
-	});
 
-   
-  $(document).ready(function (e) {
+
     $('#form-avatar').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -289,7 +290,12 @@ $(document).ready(function(){
         $("#form-avatar").submit();
 
     });
-});
+
+
+	});
+
+   
+
 
 function showSlide(title,link){
   var a= document.createElement("a");
@@ -314,7 +320,6 @@ function changePassword(){
       },
 
       success: function(res){
-        console.log(res);
         alert(res.msg);
       
       }
@@ -322,7 +327,19 @@ function changePassword(){
   
 }
 
+function changeInfo(){
+  $.ajax({
+    url: "/user/editinfo/"+userid,
+    data: {
+      "firstname":$('#first_name').val(),
+      "lastname":$("#last_name").val(),
+    },
 
+    success: function(res){
+      console.log(res);
+    }
+  });
+}
 
 </script>
 </body>
