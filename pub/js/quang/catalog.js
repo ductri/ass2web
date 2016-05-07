@@ -2,10 +2,32 @@ var SlideThumb = React.createClass({
     displayName: 'slideThumb',
     onClickDownload(event){
       if(typeof typeUser !== 'undefined'){
-        alert('You need to login to download file!');
-      } else {
         window.location = this.props.data.url;
+      } else {
+        alert('You need to login to download file!');
       }
+    },
+    shareClick(event){
+/*      FB.ui(
+      {
+      method: 'feed',
+      name: 'ABC',
+      link: 'https://localhost:8080/',
+      picture: 'https://gamecount-number-bk.herokuapp.com/images/ScreenShot.png',
+      caption: 'Let\'s play Count Number.',
+      description: '',
+      message: '',
+      display: 'popup'
+      });*/
+      FB.ui({
+            method: 'feed',
+            link: "http://localhost:8080/",
+            name: "The name who will be displayed on the post",
+            description: "The description who will be displayed"
+          }, function(response){
+              console.log(response);
+          }
+      );
     },
     render() {
         return (
@@ -32,7 +54,7 @@ var SlideThumb = React.createClass({
 
                         </div>
                       <div  className="btn-group" role="group">
-                        <button type="button"  className="btn btn-default" title="Share">
+                        <button type="button" onClick={this.shareClick}  className="btn btn-default share_button" title="Share">
                           <img src="/pub/img/Share-48.png" width="24" alt="share"></img>
                         </button>
                       </div>
@@ -72,6 +94,7 @@ var ExampleApplication = React.createClass({
   componentWillMount: function () {
     $.getJSON("/slide/getlist/"+topicId, function(data) {
       this.setState({items : data.data});
+      $('#loadAni').hide();
     }.bind(this));
 
     $.getJSON("/topic/get", function(data) {
@@ -100,10 +123,17 @@ var ExampleApplication = React.createClass({
 
               </div>
               <hr></hr>
-              <span  className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+              <span id='loadAni' className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+              <div
+                className="fb-like"
+                data-share="true"
+                data-width="450"
+                data-show-faces="true">
+              </div>
             </div>
           </div>
         </div>
+
       );
   }
 });
@@ -114,4 +144,30 @@ $( document ).ready(function() {
     <ExampleApplication/>,
     document.getElementById('root')//document.getElementById('container')
   );
+
+/*  window.fbAsyncInit = function() {
+  FB.init({appId: '1597825477138674', status: true, cookie: true,
+  xfbml: true});
+  };*/
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1597825477138674',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+/*  (function() {
+  var e = document.createElement('script'); e.async = true;
+  e.src = document.location.protocol +
+  '//connect.facebook.net/en_US/all.js';
+  document.getElementById('fb-root').appendChild(e);
+  }());*/
 });
