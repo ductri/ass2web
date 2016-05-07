@@ -496,7 +496,10 @@ $collector->get('/slide/getslide/{slideId}/{id}', function($slideId, $id){
 	global $DBManager;
 	$slideDB = $DBManager->getTable("slide");
 	$slideInfo = $slideDB->getSlide($slideId);
-	readfile(UPLOAD_DIR_SLIDE.$userId."/".$slideInfo["filename"]);
+	$temporary = explode(".", $slideInfo["filename"]);
+	$fileName = $temporary[0];
+
+	readfile(UPLOAD_DIR_SLIDE.$slideInfo["userid"]."/".$fileName."/Slide".$id.".png");
 });
 
 $collector->get('/slide/download/{slideId}', function($slideId) {
@@ -541,10 +544,11 @@ $collector->post('/slide/upload/', function() {
 		$slideURL = UPLOAD_DIR_SLIDE."/".$userId."/".$fileName;
 
 		move_uploaded_file($_FILES["file"]["tmp_name"], $slideURL);
+		$noSlide = Utils::parseSlide($userId, $fileName);
 
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
-		$result = $slideDB->uploadSlide($userId, $topicId, $title, $description, $fileName);
+		$result = $slideDB->uploadSlide($userId, $topicId, $title, $description, $fileName, $noSlide);
 		if ($result === true) {
 			$response["code"] = 0;
 			$response["msg"] = "Upload successfully";
@@ -560,7 +564,7 @@ $collector->post('/slide/upload/', function() {
 });
 
 $collector->get('/slide/test', function() {
-	Utils::getSlideNo(UPLOAD_DIR_SLIDE.'1/2396.ppt');
+	Utils::parseSlide(UPLOAD_DIR_SLIDE."/14/", "3238.pptx");
 });
 
 $collector->get('/slide/search/{keyword}', function($keyword) {

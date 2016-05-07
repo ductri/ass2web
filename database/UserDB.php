@@ -117,8 +117,9 @@ class UserDB {
 			if (Utils::encrypt($oldPass) !== $userInfo["password"]) {
 				return "wrong_pass";
 			} else {
+				$newPass = Utils::encrypt($newPass1);
 				$sql = "UPDATE USER
-					SET password='$newPass1'
+					SET password='$newPass'
 					WHERE userid='$userId'";
 				$result = $this->conn->query($sql);
 				if ($result === true) {

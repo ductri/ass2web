@@ -106,5 +106,29 @@ class Utils {
 	public static function saveSlide($fileUrl, $destination) {
 		
 	}
+
+	public static function parseSlide($userId, $fileName) {
+
+	    $ppApp = new COM("PowerPoint.Application");
+	    $ppApp->Visible = True;
+
+	    //$strPath = realpath(basename(getenv($_SERVER["SCRIPT_NAME"]))); // C:/AppServ/www/myphp
+
+	    $ppName = $fileName;
+
+	    $temporary = explode(".", $fileName);
+		$fileNameWithoutEx = $temporary[0];
+
+	    //*** Open Document ***/
+	    $pres = $ppApp->Presentations->Open("C:\\xampp\htdocs\\resources\\slideupload\\".$userId."\\".$fileName);
+
+	    //*** Save Document ***//
+	    $ppApp->ActivePresentation->SaveAs("C:\\xampp\htdocs\\resources\\slideupload\\".$userId."\\".$fileNameWithoutEx, 18);  //'*** 18=PNG, 19=BMP **'
+	    //$ppApp->ActivePresentation->SaveAs(realpath($FileName),17);
+	    $count = (int)$pres->Slides->Count;
+	    $ppApp->Quit;
+	    $ppApp = null;
+	    return $count;
+	}
 }
  ?>
