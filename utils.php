@@ -130,5 +130,63 @@ class Utils {
 	    $ppApp = null;
 	    return $count;
 	}
+
+	public static function checkUsername($userName) {
+		$nameErr = "";
+		if (!preg_match("/^[a-zA-Z ]*$/",$userName)) {
+			$nameErr = "Only letters and white space allowed"; 
+			return $nameErr;
+		} else if (empty($userName)) {
+			$nameErr = "Username must be not empty";
+			return $nameErr;
+		} else return "";
+	}
+
+	public static function checkEmail($email) {
+		if (empty($email)) {
+			return "Must be not empty";
+		} else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			return "Invalid email format"; 
+		} else return "";
+	}
+
+	public static function checkPassword($password) {
+		if (strlen($password) < 6) {
+			return "Password must have length atleast 6";
+		} else  return "";
+	}
+
+	public static function checkFirstname($firstName) {
+		if (empty($firstName)) {
+			$nameErr = "First name must be not empty";
+			return $nameErr;
+		} else return "";
+	}
+
+	public static function checkLastname($lastName) {
+		if (empty($lastName)) {
+			$nameErr = "Last name must be not empty";
+			return $nameErr;
+		} else return "";
+	}
+
+	public static function checkStringNotEmpty($str) {
+		if (empty($str)) {
+			$nameErr = "This field must be not empty";
+			return $nameErr;
+		} else return "";
+	}
+
+	function is_image($path)
+	{
+	    $a = getimagesize($path);
+	    $image_type = $a[2];
+	     
+	    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+	    {
+	        return true;
+	    }
+	    return false;
+	}
 }
  ?>
