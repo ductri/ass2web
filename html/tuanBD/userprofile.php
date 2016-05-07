@@ -33,9 +33,10 @@ if(!isset($_SESSION))
 include(dirname(__FILE__)."\..\header\index.php");
 ?>
 
-<div class="container">
-    <div class="row adjust">
-      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+<div class="container ">
+    <div class="row " >
+       <div class="adjust" style="margin-top: 105px;">
+          <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
          
        <br>
           <p class=" text-info" id="time">May 01,2015,03:00 pm </p>
@@ -87,6 +88,7 @@ include(dirname(__FILE__)."\..\header\index.php");
           </div>
         </div>
       </div>
+    </div>
     </div>
 </div>
 <!--mockup -->
@@ -161,15 +163,11 @@ include(dirname(__FILE__)."\..\header\index.php");
       <div id="div-forms">
         <div class="modal-header text-center">
        
-     
-          <div class="col-xs-12 col-sm-6 col-md-6">
-           <div class="form-group" style:"display:block">
+            <div class="form-group" style:"display:block">
 
               <input type="password" id="oldpassword" class="form-control input-lg" placeholder="Old Password" tabindex="5" required>
-
             </div>
-
-            <br>
+          <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
 
               <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5" required>
@@ -313,14 +311,14 @@ function changePassword(){
       type: "POST",
       dataType: "json",
       data: {
-        "oldpass":"123456",
+        "oldpass": $('#oldpassword').val(),
         "newpass1": $("#password").val(),
         "newpass2": $("#password_confirmation").val(),
       },
 
       success: function(res){
         alert(res.msg);
-      
+        location.reload();
       }
     });
   
@@ -331,12 +329,14 @@ function changeInfo(){
     url: "/user/editinfo/"+userid,
     type: "post",
     data: {
+
       "firstname":$('#first_name').val(),
       "lastname":$("#last_name").val(),
     },
 
     success: function(res){
       console.log(res);
+      location.reload();
     }
   });
 }
