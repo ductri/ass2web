@@ -341,6 +341,14 @@ function changeInfo(){
   });
 }
 
+function onClickDownload(event){
+      if($("#linkuser1")==""){
+        alert('You need to login to download file!');
+      } else {
+        window.location = "/slide/download/"+slideid;
+      }
+    }
+
 </script>
 </body>
 </html>

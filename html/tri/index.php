@@ -55,7 +55,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 							<button type="button" class="btn btn-default">
 								<img src="/pub/img/Share-48.png" title="Share" width="24" alt="Share">
 							</button>
-							<button type="button" class="btn btn-default">
+							<button type="button" class="btn btn-default" onclick="onClickDownload()" >
 								<img src="/pub/img/Download-48.png" title="Download" width="24" alt="Download">
 							</button>
 						</div>
@@ -540,6 +540,16 @@ function submitCmt(){
 		}
 	});
 }
+
+
+function onClickDownload(event){
+     
+      	if(typeof $("#userlink2").val() == "undefined"){
+        alert('You need to login to download file!');
+      } else {
+        window.location = "/slide/download/"+slideid;
+      }
+    }
 </script>
 
 
