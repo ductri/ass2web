@@ -529,7 +529,7 @@ $collector->post('/slide/upload/', function() {
 		$topicId = $_POST["topicid"];
 		$title = $_POST["title"];
 		$description = $_POST["description"];
-		
+
 		$temporary = explode(".", $_FILES["file"]["name"]);
 		$file_extension = end($temporary);
 		$dir = UPLOAD_DIR_SLIDE.$userId;
@@ -539,7 +539,7 @@ $collector->post('/slide/upload/', function() {
 		
 		$fileName = Utils::getUniqueName().".".$file_extension;
 		$slideURL = UPLOAD_DIR_SLIDE."/".$userId."/".$fileName;
-		
+
 		move_uploaded_file($_FILES["file"]["tmp_name"], $slideURL);
 
 		global $DBManager;
@@ -554,7 +554,7 @@ $collector->post('/slide/upload/', function() {
 			$response["msg"] = "Upload failure";
 			$response["data"] = [];
 		}
-		$response["msg"] = $_FILES["file"]["tmp_name"];
+		
 	}
 	echo json_encode($response);
 });
