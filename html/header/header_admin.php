@@ -41,7 +41,8 @@
       <li>
         <a href="" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
         <ul class="dropdown-menu" id="nav_mobile">
-          
+          <li><a href="/catalog/1">Top Rate</a></li>
+          <li><a href="/catalog/2">Top Download</a></li>
         </ul>
       </li>
     </ul>
@@ -80,7 +81,8 @@
     <div class="collapse navbar-collapse">
      <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block" id="nav">
         <li><a href="/">Home</a></li>
-        
+        <li><a href="/catalog/1">Top Rate</a></li>
+        <li><a href="/catalog/2">Top Download</a></li>
       </ul>
     </div>
   </div>
