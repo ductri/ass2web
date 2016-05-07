@@ -72,6 +72,19 @@ class SlideDB  {
 			return "failure";
 		}
 	}
+
+	public function getAllSlide($startIndex, $length) {
+		$sql = "SELECT * from SLIDE";
+		$result = $this->conn->query($sql);
+		$response = [];
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$row['url'] = "/slide/download/".$row['slideid'];
+				array_push($response, $row) ;
+			}
+		}
+		return array_slice($response, $startIndex, $length);
+	}
 }
 
  ?>

@@ -663,6 +663,32 @@ $collector->post('/comment/add', function(){
 	echo json_encode($response);
 });
 
+$collector->get('/comment/getall/{startIndex}/{length}', function($startIndex, $length){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 3;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+		
+	} else {
+		$slideDB = $DBManager->getTable("slide");
+		$result = $slideDB->getAllSlide($startIndex, $length);
+		$response["msg"] = "Success";
+		$response["data"] = $result;	
+	}
+	echo json_encode($response);
+});
+
 $dispatcher =  new Dispatcher($collector->getData());
 
 echo $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));   // Home Page
