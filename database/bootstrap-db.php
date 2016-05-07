@@ -18,6 +18,7 @@ class DBManager {
 		if ($this->conn->connect_error) {
 			die("Connection failed" . $this->conn->connect_error);
 		}
+		$this->conn->set_charset("utf8");
 	}
 
 	function getTable($table_name) {

@@ -630,8 +630,9 @@ $collector->get('/comment/getlist/{slideId}/{startIndex}/{length}', function($sl
 	global $DBManager;
 	$commentDB = $DBManager->getTable("comment");
 	$response["data"] = $commentDB->getListComment($slideId, $startIndex, $lenght);
-
+	//$encodedArray = array_map(utf8_encode, $response["data"]);
 	echo json_encode($response);
+	
 });
 
 $collector->post('/comment/add', function(){
