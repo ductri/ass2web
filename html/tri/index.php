@@ -502,8 +502,8 @@ function showListRecommend(){
  			slide_data=JSON.parse(data);
  			for(i=0;i<slide_data.data.length;i++){
  				//showRecommend(slide_data[i].)
- 				if(slide_data.data.slideid!=slideid){
- 					showRecommend("/catalog/"+topicid+"/"+slide_data.data[i].slideid,slide_data.data[i].title,"/slide/getslide/"+slideid+"/1",slide_data.data[i].description );
+ 				if(slide_data.data[i].slideid!=slideid){
+ 					showRecommend("/catalog/"+topicid+"/"+slide_data.data[i].slideid,slide_data.data[i].title,"/slide/getslide/"+slide_data.data[i].slideid+"/1",slide_data.data[i].description );
  				}
  			}
  		},
