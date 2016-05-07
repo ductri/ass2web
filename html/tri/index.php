@@ -80,9 +80,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 										<span class="input-group-addon" id="sizing-addon1">
 											<img src="/pub/img/tri/Pencil-48.png" alt="Share your thought">
 										</span>
-										<input type="text" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
+										<input type="text" id="form-cmt" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
 										<span class="input-group-btn">
-											<button class="btn btn-default btn-success" type="button">Post</button>
+											<button class="btn btn-default btn-success" type="button" onclick="submitCmt()">Post</button>
 										</span>
 									</div>
 								</div>
@@ -292,7 +292,7 @@ function showComment(_src,_name,_cmt,_time){
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<lend;index++){
+	              for(index=0;index<obj.data.length;index++){
 	              	
 	              	 $.ajax({
 
@@ -303,7 +303,7 @@ function showComment(_src,_name,_cmt,_time){
 	              			console.log("datab" +data);
 	              			obj1= JSON.parse(data);
 	              			console.log("ten "+obj1.data.username);
-	              			showComment(obj1.data.avatar,obj1.data.username,obj.data[index].content,obj.data[index].time);
+	              			showComment("/user/"+obj1.data.userid+"/avatar",obj1.data.username,obj.data[index].content,obj.data[index].time);
 	              		},
 	              		async: false
 	              });
@@ -399,6 +399,25 @@ function showSlideTitle(){
 		type: 'get',
 		success: function(data){
 			$("#slide-title").html(data);
+		}
+	});
+}
+
+function submitCmt(){
+	$.ajax({
+		url: "/comment/add",
+		type: "post",
+		data: {
+			"slideid":slideid,
+			"userid":userid,
+			"content":$('#form-cmt').val(),
+		},
+
+		success: function(data){
+			console.log("cmt" +data);
+			showComment("/user/"+userid+"/avatar","tuan",$('#form-cmt').val(),"time");
+			$('#form-cmt').val("");
+
 		}
 	});
 }

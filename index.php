@@ -46,6 +46,14 @@ $collector->get('/catalog/{catalogId}/{slideid}', function($catalogId, $slideid)
 	include('html/tri/index.php');
 });
 
+$collector->get('/search', function(){
+	echo "<script>";
+	echo 'keyword="'.$_GET['keyword'].'";';
+	echo "</script>";
+	include('html/quang/catalog_search.php');
+
+});
+
 $collector->get('/admin', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin.php');
@@ -57,6 +65,10 @@ $collector->get('/admin/topics', function(){
 $collector->get('/admin/users', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin_user.php');
+});
+$collector->get('/admin/slides', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin_slide.php');
 });
 $collector->get('/userinfo/{userId}', function($userId) {
 	//readfile('html/keo/signup.html');
