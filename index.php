@@ -511,6 +511,9 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 	} else {
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
+
+		$slideDB->increaseNoDownload($slideId);
+
 		$slide = $slideDB->getSlide($slideId);
 		$file = UPLOAD_DIR_SLIDE.$slide['userid']."/".$slide['filename'];
 		header("Content-disposition: attachment;filename=".$slide['filename']);
@@ -616,6 +619,17 @@ $collector->get('/slide/delete/{slideId}', function($slideId){
 			$response["data"] = [];	
 		}
 	}
+	echo json_encode($response);
+});
+
+$collector->get('/slide/topdownload/{count}', function($count){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getTopDownload($count);
 	echo json_encode($response);
 });
 //////////////////

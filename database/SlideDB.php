@@ -85,6 +85,34 @@ class SlideDB  {
 		}
 		return array_slice($response, $startIndex, $length);
 	}
+
+	public function increaseNoDownload($slideId) {
+		$slideInfo = $this->getSlide($slideId);
+		$noDownload = $slideInfo["nodownload"] + 1;
+		$sql = "UPDATE SLIDE
+		SET nodownload=$noDownload
+		WHERE slideid='$slideId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+	public function getTopDownload($count) {
+		$sql = "SELECT * from SLIDE order by nodownload DESC";
+		$result = $this->conn->query($sql);
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$row['url'] = "/slide/download/".$row['slideid'];
+				array_push($response, $row) ;
+			}
+			return array_slice($response, 0, $count);
+		} else return null;
+	}
 }
 
  ?>
