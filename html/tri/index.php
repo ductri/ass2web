@@ -30,9 +30,13 @@ include(dirname(__FILE__)."\..\header\index.php");
 				<div class='media-middle' id='slides'>
 					<div id='slide-wrap'>
 						<img class="img-responsive image-slide" id="slide1" src="/slide/1/1" alt="Slide1">
-						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
 						
-						<div class="progress">
+						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
+
+
+						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
+
+						<div class="progress" id="progressBar">
 							<div id="progressbar" class="progress-bar active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
 						</div>
 						<nav>
@@ -224,7 +228,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			$("#slide-title").html("ahihi");
+			
 			//document.getElementById("slide-title").innerHTML="ahihi";
 			start_cmt=0;
 			lend_cmt=2;
@@ -232,6 +236,31 @@ include(dirname(__FILE__)."\..\header\index.php");
 			showRecommend();
 		//	showListRecommend();
 
+		$.ajax({
+			url: "/slide/getinfo/"+slideid,
+			type: "get",
+
+			success: function(res){
+				
+
+				var obj=JSON.parse(res);
+				console.log(obj);
+				$("#slide-title").html(obj.data.title);
+				for(i=0;i<obj.data.noslide;i++){
+
+					
+					var showSlide = document.createElement("IMG");
+					showSlide.setAttribute("class","img-responsive image-slide");
+					showSlide.setAttribute("src","/slide/getslide/"+slideid+"/"+i);
+					var slide_wrap = document.getElementById("slide-wrap");
+					var progress = document.getElementById("progressBar");
+					slide_wrap.insertBefore(showSlide,progress);
+					
+				}
+				
+			}
+
+		});
 		}
 
 	);
@@ -415,7 +444,7 @@ function submitCmt(){
 
 		success: function(data){
 			console.log("cmt" +data);
-			showComment("/user/"+userid+"/avatar","tuan",$('#form-cmt').val(),"time");
+			showComment("/user/"+userid+"/avatar",$('#userlink1').html(),$('#form-cmt').val(),"just now");
 			$('#form-cmt').val("");
 
 		}
