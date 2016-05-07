@@ -1,9 +1,12 @@
 <?php
 session_start();
-
+echo "1";
 include 'utils.php';
+echo "2";
 include "config/config.php";
+echo "3";
 include 'vendor/autoload.php';
+echo "4";
 require('bootstrap.php');
 
 use Phroute\Phroute\RouteCollector;
