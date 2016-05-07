@@ -11,6 +11,17 @@
   <link rel="stylesheet" type="text/css" href="/pub/css/tuan/style.css">
   <link rel="stylesheet" type="text.css" href="/pub/css/tuan/userprofile.css">
   <style type="text/css"></style>
+  <style>
+  img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#slide a {
+  display:block;
+}
+
+  </style>
 </head>
 <body>
 
@@ -44,7 +55,10 @@ include(dirname(__FILE__)."\..\header\index.php");
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>
-                   
+                       <tr>
+                        <td>Dislay Name</td>
+                        <td id="dislay_name"></td>
+                      </tr>
 
                       <tr>
                         <td>Email</td>
@@ -55,10 +69,7 @@ include(dirname(__FILE__)."\..\header\index.php");
                       </tr>
                         <td>My slide</td>
                         <td id="slide">
-                        <a id="slide1"></a><br>
-                        <a id="slide2"></a><br>
-                        <a id="slide3"></a><br>
-
+            
 
                         </td>
                            
@@ -69,7 +80,7 @@ include(dirname(__FILE__)."\..\header\index.php");
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Sent Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                       <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-password"><i class="glyphicon glyphicon-edit"></i></a>
                         <span class="pull-right">
                             <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
                           
@@ -84,61 +95,53 @@ include(dirname(__FILE__)."\..\header\index.php");
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header text-center">
+      <div class="modal-header text-center row">
       
-        <img class="img-circle" id="img_logo" src="/pub/img/quang/user.png" alt="img"> <!-- http://bootsnipp.com/img/logo.jpg -->
+
+        <div class="col-md-3 col-lg-3 " align="center">  <img class="img-circle" id="img_logo" src="/pub/img/quang/user.png" alt="img" class="img-circle img-responsive"> </div>
+
+
+
+        <!-- http://bootsnipp.com/img/logo.jpg -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
       </div>
 
+      
       <!-- Begin # DIV Form -->
       <div id="div-forms">
-
+        <div class="modal-header text-center">
+      
+       <form id="form-avatar" >
+          <input type="file" name="avatar" id="avatar">
+      </div>
         <!-- Begin # Login Form -->
-        <form id="login-form">
-           <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title", id="name"></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                
-               
-                <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>User Name</td>
-                        <td><input type="text" id="edit_username" name="edit_username"></td>
-                      </tr>
-                              
+        <form id="edit-form">
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
 
-                      <tr>
-                        <td>Email</td>
-                        <td><input type="text" id="edit_email" name="edit_email"> </td>
-                      </tr>
-                      <tr>
-                        <td>Password</td>
-                        <td><input type="password" name="edit_password" id="edit_password"  placeholder="Password" tabindex="5" required=""></td>
-                           
-                      </tr>
-                           
-                      </tr>
-                    </tbody>
-                  </table>
-                  
-              </div>
+              <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" required>
+
             </div>
-                 <div class="panel-footer">
-                        <a data-original-title="Sent Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
-                          
-                        </span>
-                    </div>
-            
           </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+
+              <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" required>
+
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" id="btnRegister">Change and Save</button>
+          </div>
+        </div>
         </form>
       
       </div>
@@ -148,11 +151,61 @@ include(dirname(__FILE__)."\..\header\index.php");
   </div>
 </div>
 
+
+
+<div class="modal fade" id="edit-password" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+          
+      <!-- Begin # DIV Form -->
+      <div id="div-forms">
+        <div class="modal-header text-center">
+      
+       
+       
+        <div class="row">
+     
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+
+              <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5" required>
+
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+
+              <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6" required>
+
+            </div>
+          </div>
+    
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="7" onclick="changePassword()">Change Password</button>
+          </div>
+        </div>
+        </form>
+      
+      </div>
+      <!-- End # DIV Form -->
+
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 
-	
+	document.getElementById("userpic").setAttribute("src","/user/"+userid+"/avatar");
+   ava = document.getElementById('img_logo');
+                ava.setAttribute('src',"/user/"+userid+"/avatar");
+
 
 	$.ajax({
 		url:"/user/getinfo/"+userid,
@@ -160,18 +213,115 @@ $(document).ready(function(){
 		success: function(data){
 			userInfo=JSON.parse(data);
 			email.innerHTML=userInfo.data.email;
-
-			document.getElementById("name").innerHTML=userInfo.data.username;
-			document.getElementById("edit_username").value=userInfo.data.username;
-			document.getElementById("edit_email").value=userInfo.data.email;
-			document.getElementById("edit_password").value=userInfo.data.password;
+      $('#dislay_name').html(userInfo.data.username);
+      fullName= userInfo.data.firstname;
+      fullName+=" "+userInfo.data.lastname;
+			document.getElementById("name").innerHTML=fullName;
+     
+      $('#first_name').val(userInfo.data.firstname);
+      $("#last_name").val(userInfo.data.lastname);
+			//document.getElementById("edit_email").value=userInfo.data.email;
+			//document.getElementById("edit_password").value=userInfo.data.password;
 		}
 
 
 	});
+
+    $.ajax({
+      url: "/user/"+userid+"/getslides",
+      type: "get",
+      success: function(data){
+        console.log(data);
+        obj= JSON.parse(data);
+          for(i=0;i<obj.data.length;i++){
+
+            showSlide(obj.data[i].title,'/catalog/'+obj.data[i].topicid+'/'+obj.data[i].slideid);
+          }
+
+      }
+    });
+
+
+	$("#edit-form").submit(function(e){
+
+		tuan11=$("#edit-form").serialize();
+		$.ajax({
+			url:'/user/editinfo/'+userid,
+			type: 'get',
+			dataType:'json',
+			data:$("#edit-form").serialize(),
+
+			success: function(data){
+
+			}
+		});
+	});
+
+   
+  $(document).ready(function (e) {
+    $('#form-avatar').on('submit',(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            type:'POST',
+            url: "/user/changeavatar/"+userid,
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                console.log("success");
+                console.log(data);
+                ava = document.getElementById('img_logo');
+                ava.setAttribute('src',"/user/"+userid+"/avatar");
+                document.getElementById("userpic").setAttribute("src","/user/"+userid+"/avatar");
+
+            },
+            error: function(data){
+                console.log("error");
+                console.log(data);
+            }
+        });
+    }));
+
+    $("#avatar").on("change", function() {
+        $("#form-avatar").submit();
+
+    });
+});
+
+function showSlide(title,link){
+  var a= document.createElement("a");
+  a.href=link;
+  a.innerHTML=title;
+  document.getElementById("slide").appendChild(a);
+
+}
+
 });
 	
-	
+function changePassword(){
+  
+    $.ajax({
+      url: "/user/changepass/"+userid,
+      type: "POST",
+      dataType: "json",
+      data: {
+        "oldpass":"123456",
+        "newpass1": $("#password").val(),
+        "newpass2": $("#password_confirmation").val(),
+      },
+
+      success: function(res){
+        console.log(res);
+        alert(res.msg);
+      
+      }
+    });
+  
+}
+
 
 
 </script>

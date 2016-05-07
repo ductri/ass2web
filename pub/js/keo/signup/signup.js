@@ -165,7 +165,9 @@ $( document ).ready(function() {
 		                                  if (code.code == 0){
 		                                  	alert("Sign up successed.");
 		                                  $("body").load("/").hide().fadeIn(1500).delay(6000);
-		                                    //window.location.href = "/";
+
+		                                    //$("body").load("/").hide().fadeIn(1500).delay(6000);
+		                                    window.location.href = "/";
 		                                  } else if (code.code == 3) {
 		                                    alert(code.msg);
 		                                  }

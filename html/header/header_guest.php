@@ -1,4 +1,5 @@
 <script src="/pub/js/keo/signup/signup.js"></script>
+<script src="/pub/js/quang/search.js"></script>
 <body>
 <!-- Header -->
 <nav class="navbar navbar-inverse nonedis visible-xs" id="navadd1">
@@ -63,12 +64,14 @@
     </div>
     <div class="collapse navbar-collapse">
       <div class="input-group stylish-input-group" id="search">
-        <input type="text" class="form-control"  placeholder="Search" >
+
+        <input id="keywordInput" type="text" class="form-control"  placeholder="Search" >
         <span class="input-group-addon">
-          <button type="submit">
+          <button type="submit" onClick="clickS1()">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </span>
+
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal">Sign in</a></li>
@@ -154,6 +157,7 @@
 </div>
 
 <script>
+  var typeUser = 'guest';
   var $id_web = "nav";
   var $id_mobile = "nav_mobile";
   function appendTopic($topic_id,$topic_name,$id){
@@ -177,7 +181,7 @@
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost/topic/get",
+  "url": "/topic/get",
   "method": "GET",
   "dataType": "json"
 }

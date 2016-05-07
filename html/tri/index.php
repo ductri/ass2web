@@ -30,9 +30,12 @@ include(dirname(__FILE__)."\..\header\index.php");
 				<div class='media-middle' id='slides'>
 					<div id='slide-wrap'>
 						<img class="img-responsive image-slide" id="slide1" src="/slide/1/1" alt="Slide1">
-						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
 						
-						<div class="progress">
+						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
+
+						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
+
+						<div class="progress" id="progressBar">
 							<div id="progressbar" class="progress-bar active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
 						</div>
 						<nav>
@@ -49,7 +52,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 							</div>
 						</nav>
 					</div>
-					<h3 id='slide-title'> How to boost inbound marketing success with content marketing, SEO and social media marketing</h3>
+					<h3 id='slide-title'></h3>
 					<div class="pull-right">
 						<div id='like-share' class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default">
@@ -80,9 +83,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 										<span class="input-group-addon" id="sizing-addon1">
 											<img src="/pub/img/tri/Pencil-48.png" alt="Share your thought">
 										</span>
-										<input type="text" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
+										<input type="text" id="form-cmt" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
 										<span class="input-group-btn">
-											<button class="btn btn-default btn-success" type="button">Post</button>
+											<button class="btn btn-default btn-success" type="button" onclick="submitCmt()">Post</button>
 										</span>
 									</div>
 								</div>
@@ -92,7 +95,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 								
 								
 								<div  id="show-more" class='text-center'>
-									<a href="https://google.com.vn">	
+									<a onclick="showMore()">	
 											Show more
 									</a>
 								</div>
@@ -224,15 +227,141 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			showListComment(0,2);
-			showrecommend();
+			
+			//document.getElementById("slide-title").innerHTML="ahihi";
+			start_cmt=0;
+			lend_cmt=2;
+			showListComment(start_cmt,lend_cmt);
+			showRecommend();
+		//	showListRecommend();
+
+		$.ajax({
+			url: "/slide/getinfo/"+slideid,
+			type: "get",
+
+			success: function(res){
+				
+
+				var obj=JSON.parse(res);
+				console.log(obj);
+				$("#slide-title").html(obj.data.title);
+				for(i=0;i<obj.data.noslide;i++){
+
+					
+					var showSlide = document.createElement("IMG");
+					showSlide.setAttribute("class","img-responsive image-slide");
+					showSlide.setAttribute("src","/slide/getslide/"+slideid+"/"+i);
+					var slide_wrap = document.getElementById("slide-wrap");
+					var progress = document.getElementById("progressBar");
+					slide_wrap.insertBefore(showSlide,progress);
+
+					
+				}
+				
+				currentItem = 0;
+				items = $('.image-slide');
+				items.hide();
+				items.eq(currentItem).show();
+
+				progressBar = document.getElementById('progressbar');
+				progressBarValue = 0;
+				progressBar.style.width = progressBarValue+"%";
+
+				progressStep = 100/(items.length-1);
+				slideNumber = document.getElementById('slideNumber');
+				slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+				function showNext() {
+					currentItem++;
+					if (currentItem == items.length) {
+						currentItem = 0;
+						progressBar.style.width = "0%";
+						progressBarValue = 0;
+						items.hide();
+						items.eq(currentItem).show();
+						slideNumber.innerHTML = (currentItem+1) + "/"+items.length;;
+						return;
+					}
+					progressBarValue += progressStep;
+					progressBar.style.width = progressBarValue+"%";
+					items.hide();
+					items.eq(currentItem).show();
+					slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+				}
+
+				function showPrevious() {
+					currentItem--;
+					if (currentItem<0) {
+						currentItem = items.length-1;
+						progressBar.style.width = "100%";
+						progressBarValue = 100;
+						items.hide();
+						items.eq(currentItem).show();
+						slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+						return;
+					}
+					progressBarValue -= progressStep;
+					if (progressBarValue<0) {
+						progressBarValue = 0;
+					}
+					progressBar.style.width = progressBarValue+"%";
+					slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+					items.hide();
+					items.eq(currentItem).show();			
+
+				}
+
+				slideExtras = $('#wrap-slide-extra>div');
+				slideExtraNav = $('#wrap-slide-extra li');
+				for (var i=0; i<slideExtras.length;i++) {
+					slideExtraNav[i].className = "";
+				}
+				slideExtraNav[0].className="active";
+				function getCommentPage() {
+					slideExtras.hide();
+					slideExtras.eq(1).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[0].className="active";
+				}
+
+				function getStatisticsPage() {
+					slideExtras.hide();
+					slideExtras.eq(2).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[1].className="active";
+				}
+
+				function getNotesPage() {
+					
+					slideExtras.hide();
+					slideExtras.eq(3).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[2].className="active";
+				}
+
+				function getAboutAuthorPage() {
+					
+					slideExtras.hide();
+					slideExtras.eq(2).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[3].className="active";
+				}
+			}
+
+		});
 		}
 
 	);
 
 
-
-	function showComment(_src,_name,_cmt,_time){
+function showComment(_src,_name,_cmt,_time){
 	var cmt= document.createElement('div');
 	cmt.className= "list-group-item";
 
@@ -275,11 +404,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 	t.insertBefore(cmt,before);
 }	
  
- function showListComment(start, end){
- 	 var obj;
-			i=2;
+ function showListComment(start, lend){			
 			$.ajax({
-				url:'/comment/getlist/'+i+'/'+ start +'/' +end,
+				url:'/comment/getlist/'+slideid+'/'+ start +'/' +lend,
 				//url:"/user/getinfo/1",
 				type: 'get',
 
@@ -289,7 +416,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<2;index++){
+	              for(index=0;index<obj.data.length;index++){
 	              	
 	              	 $.ajax({
 
@@ -300,7 +427,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 	              			console.log("datab" +data);
 	              			obj1= JSON.parse(data);
 	              			console.log("ten "+obj1.data.username);
-	              			showComment(obj1.data.avatar,obj1.data.username,obj.data[index].content,obj.data[index].time);
+	              			showComment("/user/"+obj1.data.userid+"/avatar",obj1.data.username,obj.data[index].content,obj.data[index].time);
 	              		},
 	              		async: false
 	              });
@@ -313,13 +440,18 @@ include(dirname(__FILE__)."\..\header\index.php");
 	            }
 			});
  }
+  function showMore(){
+ 	start_cmt+=2;
+ 	lend_cmt+=2;
+ 	showListComment(start_cmt,lend_cmt);
+ }
 
- 	function showrecommend(){
- 		var a = document.createElement("A");
+function showRecommend(r_href,r_name,r_src,r_des){
+ 	var a = document.createElement("A");
 	a.className="list-group-item list-group-item-custom";
 	a.title="test";
-	a.href="#";
-    var t = document.createTextNode("This is a paragraph.");
+	a.href=r_href;
+    
     //a.appendChild(t);
 
     var custom = document.createElement("div");
@@ -330,7 +462,7 @@ include(dirname(__FILE__)."\..\header\index.php");
     image_wrap.className="image-wrap";
 
     var src_image = document.createElement("IMG");
-    src_image.setAttribute("src","adsf")
+    src_image.setAttribute("src",r_src)
     src_image.setAttribute("alt","adfdsa");
     image_wrap.appendChild(src_image);
     custom.appendChild(image_wrap);
@@ -343,13 +475,13 @@ include(dirname(__FILE__)."\..\header\index.php");
 
     text_wrap.appendChild(item_title);
     var h4=document.createElement("H4");
-    var t = document.createTextNode("This is a paragraph.");
+    var t = document.createTextNode(r_name);
     h4.appendChild(t);
     item_title.appendChild(h4);
 
     var small = document.createElement("small");
     small.className="item-detail small";
-    var t_small = document.createTextNode("author.");
+    var t_small = document.createTextNode(r_des);
     small.appendChild(t_small);
     text_wrap.appendChild(small);
 
@@ -358,14 +490,61 @@ include(dirname(__FILE__)."\..\header\index.php");
   	clear.className="clear";
 
 
-
-
     custom.appendChild(text_wrap);
     var r= document.getElementById("recommendList");
     //document.getElementById("recommendList").appendChild(para);
     r.appendChild(a);
     custom.appendChild(clear);
- 	}
+ }
+
+
+
+
+
+ function showListRecommend(){
+ 	$.ajax({
+ 		url: "/slide/getlist/"+slideid,
+ 		type: "get",
+
+ 		success: function(data){
+ 			slide_data=JSON.parse(data);
+ 			for(i=0;i<slide_data.data.length;i++){
+ 				//showRecommend(slide_data[i].)
+ 			}
+ 		},
+
+ 	});
+ }
+
+
+function showSlideTitle(){
+	$.ajax({
+		url: "/slideid",
+		type: 'get',
+		success: function(data){
+			$("#slide-title").html(data);
+		}
+	});
+}
+
+function submitCmt(){
+	$.ajax({
+		url: "/comment/add",
+		type: "post",
+		data: {
+			"slideid":slideid,
+			"userid":userid,
+			"content":$('#form-cmt').val(),
+		},
+
+		success: function(data){
+			console.log("cmt" +data);
+			showComment("/user/"+userid+"/avatar",$('#userlink1').html(),$('#form-cmt').val(),"just now");
+			$('#form-cmt').val("");
+
+		}
+	});
+}
 </script>
 
 

@@ -82,6 +82,107 @@ class UserDB {
 		}
 	}
 
+	function updateInfo($userId, $firstName, $lastName) {
+
+		$sql = "UPDATE USER
+		SET firstname='$firstName', lastname='$lastName'
+		WHERE userid='$userId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+	function changeAvatar($userId, $avatarFileName) {
+		$sql = "UPDATE USER
+		SET avatar='$avatarFileName'
+		WHERE userid='$userId'";
+		
+		$result = $this->conn->query($sql);
+		if ($result === true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+	function changePass($userId, $oldPass, $newPass1, $newPass2) {
+		if ($newPass1 !== $newPass2) {
+			return "two_pass_not_same";
+		} else {
+			$userInfo = $this->getInfo($userId);
+			if (Utils::encrypt($oldPass) !== $userInfo["password"]) {
+				return "wrong_pass";
+			} else {
+				$sql = "UPDATE USER
+					SET password='$newPass1'
+					WHERE userid='$userId'";
+				$result = $this->conn->query($sql);
+				if ($result === true) {
+					return "success";
+				} else {
+					return "fail";
+				}
+			}
+		}
+	}
+
+	function getList($startIndex, $length) {
+		$sql = "SELECT * from USER";
+		$result = $this->conn->query($sql);
+		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+			return array_splice($response, $startIndex, $length);
+		} else {
+			return null;
+		}
+	}
+
+	function deleteUser($userId) {
+		$userInfo = $this->getInfo($userId);
+		if ($userId === null) {
+			return "not_exist";
+		} else {
+			$sql = "DELETE FROM USER WHERE userid='$userId'";
+			$result = $this->conn->query($sql);
+			if ($result=== true) {
+				return "success";
+			} else {
+				return "failure";
+			}
+		}
+	}
+
+	function getListSlide($userId) {
+		$sql = "SELECT * from SLIDE where userid='$userId'";
+		$result = $this->conn->query($sql);
+		
+		$response = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				array_push($response, $row);
+			}
+		}
+		return $response;
+	}
+
+	function deleteSlide($userId, $slideId) {
+		$sql = "DELETE FROM SLIDE WHERE slideid='$slideId' AND userid='$userid'";
+		$result = $this->conn->query($sql);
+		if ($result=== true) {
+			return "success";
+		} else {
+			return "failure";
+		}
+	}
+
 	private function sendEmail($email, $firstName, $lastName, $userName, $newPassword) {
 		//require './../PHPMailerAutoload.php';
 

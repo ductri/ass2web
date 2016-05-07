@@ -46,8 +46,8 @@ class Utils {
 	 * @return type
 	 */
 	public static function encrypt($password) {
-		//return sha1($password);
-		return $password;
+		return sha1($password);
+		//return $password;
 	}
 
 	public static function checkLogin() {
@@ -55,6 +55,18 @@ class Utils {
 			return $_SESSION["username"];
 		} else {
 			return "";
+		}
+	}
+
+	public static function checkAdminLogin() {
+		if (isset($_SESSION["username"])) {
+			if ($_SESSION["type"] === "admin") {
+				return "success";
+			} else {
+				return "not_admin";
+			}
+		} else {
+			return "not_login";
 		}
 	}
 

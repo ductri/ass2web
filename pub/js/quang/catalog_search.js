@@ -60,37 +60,25 @@ var SlideThumb = React.createClass({
 //module.exports = slideThumb;
 var ExampleApplication = React.createClass({
   propTypes: {
-    items: React.PropTypes.array,
-    topic: React.PropTypes.string
+    items: React.PropTypes.array
   },
   getInitialState: function() {
     return {
-      items: (this.props.items || []),
-      topic: (this.props.topic || "Topic")
+      items: (this.props.items || [])
     };
   },
   componentWillMount: function () {
-    $.getJSON("/slide/getlist/"+topicId, function(data) {
+    console.log(keyword);
+    $.getJSON("/slide/search/"+keyword, function(data) {
       this.setState({items : data.data});
-    }.bind(this));
-
-    $.getJSON("/topic/get", function(data) {
-      console.log(data);
-      for (var i = data.length - 1; i >= 0; i--) {
-        if(Number(data[i].topicid) == topicId){
-          this.setState({topic : data[i].name});
-          break;
-        }
-      };
     }.bind(this));
   },
   render: function() {
-    console.log(this.state.topic)
     return (
         <div className="container">
           <div  className="row text-center center-items">
             <div id="center"  className="col-md-12">
-              <h2>{this.state.topic} Topic</h2>
+              <h2>Search Result</h2>
               <hr  className="catalog"/>
               <div  className="row">
 

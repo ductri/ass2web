@@ -16,7 +16,7 @@
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       </button>
       <img class="navbar-brand" src="/pub/img/logo.png" alt="logo" style="height: 45px;width: auto;padding: 0px;padding-right: 5px;">
-      <a href="../tuanBD/theme.html" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
+      <a href="/" class="navbar-brand" style="color: white;font-size: 17px;padding-left: 5px;">T-Share</a>
     </div>
     <div class="collapse navbar-collapse" id="ss">
       <div class="input-group stylish-input-group" id="search1">
@@ -30,8 +30,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
+      <li><a id="userlink1" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
+        <li><a href="/admin">Admin Page</a></li>
         <li><a href="../keo/Upload/upload.html">Up load</a></li>
-        <li><span>Welcome, <?php echo $_SESSION["name"]?></li>
+        <li><a href="/logout">Logout</a> </li>
       </ul>
     </div>
   </div>
@@ -70,9 +72,11 @@
         </span>
       </div>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 10%; display: block">
+
         <li><button type="button" class="btn btn-danger" style="margin-top: 10%" onclick="location.href='/upload';">Upload</button></li>
-        <li><a style="color: white;"><strong><?php $_SESSION["name"]?></strong></a></li>
+        <li><a id="userlink2" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
         <li><a href="/logout">Logout</a> </li>
+        <li><a href="/admin">AdPage</a> </li>
       </ul>
     </div>
   </div>
@@ -88,44 +92,50 @@
   </div>
 </nav>
 
-<script>
-  var $id_web = "nav";
-  var $id_mobile = "nav_mobile";
-  function appendTopic($topic_id,$topic_name,$id){
-            var li = document.createElement("LI");
+<script type="text/javascript">
 
-            var a = document.createElement("A");
-            
-            a.href = "/catalog/" + $topic_id; 
+var $id_web = "nav";
+      var $id_mobile = "nav_mobile";
+      function appendTopic($topic_id,$topic_name,$id){
+                var li = document.createElement("LI");
 
-            var ul = document.getElementById($id);  
+                var a = document.createElement("A");
 
-            var data = document.createTextNode($topic_name);
+                a.href = "/catalog/" + $topic_id;
 
-            a.appendChild(data);
+                var ul = document.getElementById($id);
 
-            li.appendChild(a);
+                var data = document.createTextNode($topic_name);
 
-            ul.appendChild(li);
-        }
+                a.appendChild(data);
 
-  var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost/topic/get",
-  "method": "GET",
-  "dataType": "json"
-}
+                li.appendChild(a);
 
-$.ajax(settings).done(function (response) {
+                ul.appendChild(li);
+            }
+
+      var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "/topic/get",
+      "method": "GET",
+      "dataType": "json"
+    }
+
+    $.ajax(settings).done(function (response) {
 
 
-  for (var i = 0; i < response.length; ++i) {
-          appendTopic(response[i].topicid,response[i].name,$id_web);
-          appendTopic(response[i].topicid,response[i].name,$id_mobile);
-      }
-});
+      for (var i = 0; i < response.length; ++i) {
+              appendTopic(response[i].topicid,response[i].name,$id_web);
+              appendTopic(response[i].topicid,response[i].name,$id_mobile);
+          }
+    });
+
+    var user_link2=document.getElementById("userlink2");
+    user_link2.href="/userinfo/"+window.userid;
+    var user_link1=document.getElementById("userlink1");
+    user_link1.href="/userinfo/"+window.userid;
+
+
 
 </script>
-
-</body>

@@ -2,21 +2,25 @@
 session_start();
 
 include 'utils.php';
+#echo "2";
 include "config/config.php";
+#echo "3";
 include 'vendor/autoload.php';
+#echo "4";
 require('bootstrap.php');
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 $collector = new RouteCollector();
-
+#echo "1";
 //***********************************
 // html render
 //***********************************
 $collector->get('/', function(){
+	#echo "2";
 	include('html/tuanBD/theme.php');
 });
-
+#echo "3";
 $collector->get('/upload', function(){
 	//readfile('html/keo/upload.html');
 	include('html/keo/upload.php');
@@ -27,28 +31,49 @@ $collector->get('/signup', function(){
 	include('html/keo/signup.php');
 });
 
-$collector->get('/catalog/{catalog}', function($catalog){
-	//Asume
-	$catalog = "top-download";
-	//readfile('html/quang/catalog.html');
-	include('html/quang/catalog.php');
-});
-
-$collector->get('/catalog/{catalog}/{slideid}', function($catalog, $slideid){
+$collector->get('/catalog/{catalogId}', function($catalogId){
 	//Asume
 	$catalog = "top-download";
 	echo "<script>";
+	echo "topicId=".$catalogId.";";
+	echo "</script>";
+
+	include('html/quang/catalog.php');
+});
+
+$collector->get('/catalog/{catalogId}/{slideid}', function($catalogId, $slideid){
+	//Asume
+	echo "<script>";
 	echo "slideid=".$slideid.";";
-	echo "topicid=".$catalog.";";
+	echo "topicid=".$catalogId.";";
 	echo "</script>";
 	include('html/tri/index.php');
+});
+
+$collector->get('/search', function(){
+	echo "<script>";
+	echo 'keyword="'.$_GET['keyword'].'";';
+	echo "</script>";
+	include('html/quang/catalog_search.php');
+
 });
 
 $collector->get('/admin', function(){
 	//readfile('html/keo/signup.html');
 	include('html/quang/admin.php');
 });
-
+$collector->get('/admin/topics', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin.php');
+});
+$collector->get('/admin/users', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin_user.php');
+});
+$collector->get('/admin/slides', function(){
+	//readfile('html/keo/signup.html');
+	include('html/quang/admin_slide.php');
+});
 $collector->get('/userinfo/{userId}', function($userId) {
 	//readfile('html/keo/signup.html');
 	include('html\tuanBD\userprofile.php');
@@ -159,7 +184,6 @@ $collector->get('/user/getinfo/{userId}', function($userId) {
 
 	$response["data"] = $userDB->getInfo($userId);;
 	echo json_encode($response);
-	
 });
 
 $collector->post('/user/register', function() {
@@ -203,7 +227,6 @@ $collector->post('/user/register', function() {
 		$response["data"] = [];
 	}
 	echo json_encode($response);
-	
 });
 
 $collector->get('/user/resetpassword/{email}', function($email) {
@@ -238,17 +261,203 @@ $collector->get('/user/resetpassword/{email}', function($email) {
 	echo json_encode($response);
 });
 
-$collector->get('/user/getlist/{startIndex}/{length}', function($email) {
+$collector->post('/user/editinfo/{userId}', function($userId) {
 	$response = array();
 
 	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not edit info of another user";
+			$response["data"] = [];
+		} else {
+			$firstName = $_POST["firstname"];
+			$lastName = $_POST["lastname"];
+			
+			// if (isset($_FILES["avatar"])) {
+			// 	$temporary = explode(".", $_FILES["avatar"]["name"]);
+			// 	$file_extension = end($temporary);
+			// 	$avatarFileName = $userId.".".$file_extension;
+			// 	move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+			// }
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+			$result = $userDB->updateInfo($userId, $firstName, $lastName);
+
+			if ($result==="success") {
+				$response["code"] = 0;
+				$response["msg"] = "Update info successfully";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 4;
+				$response["msg"] = "Update failure";
+				$response["data"] = [];
+			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->post('/user/changepass/{userId}', function($userId) {
+	$oldPass = $_POST["oldpass"];
+	$newPass1 = $_POST["newpass1"];
+	$newPass2 = $_POST["newpass2"];
+
+	$response = array();
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not change password of another user";
+			$response["data"] = [];
+		} else {
+			
+			global $DBManager;
+			$userDB = $DBManager->getTable("user");
+			$result = $userDB->changePass($userId, $oldPass, $newPass1, $newPass2);
+
+			if ($result==="success") {
+				$response["code"] = 0;
+				$response["msg"] = "Change password successfully";
+				$response["data"] = [];
+			} else if ($result === "two_pass_not_same") {
+				$response["code"] = 4;
+				$response["msg"] = "New passwords are not the same";
+				$response["data"] = [];
+			} else if ($result === "wrong_pass") {
+				$response["code"] = 5;
+				$response["msg"] = "Password is wrong";
+				$response["data"] = [];
+			} else {
+				$response["code"] = 6;
+				$response["msg"] = "Change password failure";
+				$response["data"] = [];
+			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->post('/user/changeavatar/{userId}', function($userId) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
+		if ($_SESSION["userid"] !== $userId) {
+			$response["code"] = 3;
+			$response["msg"] = "Can not edit info of another user";
+			$response["data"] = [];
+		} else {
+			if (isset($_FILES["avatar"])) {
+				$temporary = explode(".", $_FILES["avatar"]["name"]);
+				$file_extension = end($temporary);
+				$avatarFileName = $userId.".".$file_extension;
+				move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
+			
+				global $DBManager;
+				$userDB = $DBManager->getTable("user");
+				$result = $userDB->changeAvatar($userId, $avatarFileName);
+
+				if ($result==="success") {
+					$response["code"] = 0;
+					$response["msg"] = "Update info successfully";
+					$response["data"] = [];
+				} else {
+					$response["code"] = 4;
+					$response["msg"] = "Update failure";
+					$response["data"] = [];
+				}
+			}
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/user/{userId}/getslides', function($userId) {
+	$response = array();
+
+	if (Utils::checkLogin() === "") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else {
 		global $DBManager;
 		$userDB = $DBManager->getTable("user");
-		
-	} else {
-		$response["code"] = 2;
-		$response["msg"] = "Already logged in";
+		$result = $userDB->getListSlide($userId);
+		$response["code"] = 0;
+		$response["msg"] = "Successfully";
+		$response["data"] = $result;
+	}
+	
+	echo json_encode($response);
+});
+
+//Admin
+$collector->get('/user/getlist/{startIndex}/{length}', function($startIndex, $length) {
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
 		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 2;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->getList($startIndex, $length);
+		if ($result !== null) {
+			$response["code"] = 0;
+			$response["msg"] = "Get list successfully";
+			$response["data"] = $result;
+		} else {
+			$response["code"] = 3;
+			$response["msg"] = "Get list failure";
+			$response["data"] = $result;
+		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/user/delete/{userId}', function($userId) {
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 2;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+	} else {
+		global $DBManager;
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->deleteUser($userId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Delete successfully";
+			$response["data"] = [];
+		} else if ($result === "not_exist") {
+			$response["code"] = 3;
+			$response["msg"] = "Userid not exist";
+			$response["data"] = [];
+		} else {
+			$response["code"] = 4;
+			$response["msg"] = "Delete failure";
+			$response["data"] = [];
+		}
 	}
 	echo json_encode($response);
 });
@@ -349,6 +558,57 @@ $collector->get('/slide/test', function() {
 	Utils::getSlideNo(UPLOAD_DIR_SLIDE.'1/2396.ppt');
 });
 
+$collector->get('/slide/search/{keyword}', function($keyword) {
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->searchSlide($keyword);
+	echo json_encode($response);
+});
+
+$collector->get('/slide/delete/{slideId}', function($slideId){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$userDB = $DBManager->getTable("user");
+		$result = $userDB->deleteSlide($_SESSION["userid"], $slideId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Success";
+			$response["data"] = [];	
+		} else {
+			$response["code"] = 2;
+			$response["msg"] = "Failure";
+			$response["data"] = [];	
+		}
+		
+	} else {
+		$slideDB = $DBManager->getTable("slide");
+		$result = $slideDB->deleteSlide($slideId);
+		if ($result === "success") {
+			$response["code"] = 0;
+			$response["msg"] = "Success";
+			$response["data"] = [];	
+		} else {
+			$response["code"] = 2;
+			$response["msg"] = "Failure";
+			$response["data"] = [];	
+		}
+	}
+	echo json_encode($response);
+});
 //////////////////
 //COMMENT
 //////////////////

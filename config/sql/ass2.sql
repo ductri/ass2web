@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2016 at 05:35 AM
+-- Generation Time: May 07, 2016 at 10:48 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -34,20 +34,6 @@ CREATE TABLE `comment` (
   `commentid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `comment`
---
-
-INSERT INTO `comment` (`slideid`, `userid`, `content`, `time`, `commentid`) VALUES
-(2, 4, 'Nice', '2016-04-14 00:00:00', 1),
-(2, 4, 'Nice', '2016-04-14 00:00:00', 2),
-(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 3),
-(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 4),
-(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 5),
-(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 6),
-(1, 3, 'Duc tri la vo dich', '0000-00-00 00:00:00', 7),
-(1, 3, 'Duc tri la vo dich', '2016-04-19 11:30:23', 8);
-
 -- --------------------------------------------------------
 
 --
@@ -62,7 +48,7 @@ CREATE TABLE `slide` (
   `description` text NOT NULL,
   `timeupload` datetime NOT NULL,
   `filename` char(50) NOT NULL,
-  `noslide` int(11) NOT NULL
+  `noslide` int(11) NOT NULL DEFAULT '10'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Info about slide';
 
 --
@@ -70,10 +56,7 @@ CREATE TABLE `slide` (
 --
 
 INSERT INTO `slide` (`slideid`, `userid`, `topicid`, `title`, `description`, `timeupload`, `filename`, `noslide`) VALUES
-(1, 1, 1, 'Slide 1', 'DES s1', '2016-04-05 00:00:00', 'slide.pptx', 9),
-(2, 1, 1, 'Slide 2', 'DES s2', '2016-04-06 00:00:00', 'slide.pptx', 9),
-(3, 3, 3, 'Slide 3', 'DES s3', '2016-04-21 00:00:00', 'slide.pptx', 9),
-(4, 5, 4, 'Slide 4', 'DES s4', '2016-04-21 00:00:00', 'slide.pptx', 9);
+(20, 14, 1, 'Radial Basis Function', 'Slide from Subject Machine Learning', '2016-05-07 14:59:24', '8303.pptx', 10);
 
 -- --------------------------------------------------------
 
@@ -94,9 +77,9 @@ INSERT INTO `topic` (`topicid`, `name`) VALUES
 (1, 'Education'),
 (3, 'Science'),
 (4, 'Economy'),
-(5, 'conghoa'),
-(7, 'ductri'),
-(8, 'ductri topic');
+(5, 'Entertainment'),
+(7, 'Military'),
+(8, 'Others');
 
 -- --------------------------------------------------------
 
@@ -110,8 +93,8 @@ CREATE TABLE `user` (
   `password` char(40) DEFAULT NULL,
   `userright` char(10) DEFAULT 'user',
   `avatar` char(255) NOT NULL,
-  `firstname` char(30) NOT NULL,
-  `lastname` char(30) NOT NULL,
+  `firstname` char(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `lastname` char(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `email` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,14 +103,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userid`, `username`, `password`, `userright`, `avatar`, `firstname`, `lastname`, `email`) VALUES
-(1, 'ductridsadsadsa', '123456', 'user', 'av1.jpg', '', '', 'w'),
-(3, 'qwerty', '123456', 'user', 'av2.jpg', '', '', 'dsa'),
-(4, 'aaaaa', '123456', 'user', 'av3.jpg', '', '', 'fdsfd'),
-(5, 'admin', '123456', 'admin', 'av4.jpg', '', '', 'fdasfdsa'),
-(6, 'ductriabc', '1234567', 'user', 'ductriabc.png', 'nguyen', 'tri', 'ductricse1@gmail.com'),
-(7, 'ductri123456', '1234', 'user', 'default.png', 'tri', 'nguyen', 'ductricse@gmail.com23'),
-(10, 'ductridsad', '58c7c56ec7be47b0e1f2a7eb0cfa8dc5931cb6a1', 'user', 'default.png', 'tri', 'nguyen', 'ductricse@gmail.com321'),
-(11, 'ductri', 'bbac13e46ee672ad04cbfa2dc7681885c836ae4f', 'user', 'default.png', 'Nguyen', 'Tri', 'ductricse@gmail.com');
+(14, 'ductri', 'bb90e17bfa3087d2f920e09cbf1214e8b191c3fe', 'user', 'default.png', 'Nguyen', 'Tri', 'ductricse@gmail.com'),
+(15, 'ductuan', '8ec7012ae70b511012d280dba6ae3df3b0ace935', 'user', 'default.png', 'Nguyen', 'Tuan', 'ductuan@gmail.com'),
+(16, 'quangpham', '409ac02bd065f4bb96f5b9afdc7b3f5e8950b2ae', 'user', 'default.png', 'Pham', 'Quang', 'quangpham@gmail.com'),
+(17, 'keophuong', 'bd88e0b64d178fe63a0e538f9b31243215b7e8c0', 'user', 'default.png', 'Keo', 'Phuong', 'keophuong@gmail.com'),
+(19, 'admin', 'd4e8e6deaa7b1f8381e09e3e6b83e36f0b681c5c', 'admin', 'default.png', 'Naruto', 'Kun', 'admin@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -173,12 +153,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `commentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `slide`
 --
 ALTER TABLE `slide`
-  MODIFY `slideid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `slideid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `topic`
 --
@@ -188,7 +168,7 @@ ALTER TABLE `topic`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- Constraints for dumped tables
 --
@@ -197,15 +177,15 @@ ALTER TABLE `user`
 -- Constraints for table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `FK_comment_slide` FOREIGN KEY (`slideid`) REFERENCES `slide` (`slideid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_comment_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_comment_slide` FOREIGN KEY (`slideid`) REFERENCES `slide` (`slideid`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_comment_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `slide`
 --
 ALTER TABLE `slide`
-  ADD CONSTRAINT `FK_slide_topic` FOREIGN KEY (`topicid`) REFERENCES `topic` (`topicid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_slide_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_slide_topic` FOREIGN KEY (`topicid`) REFERENCES `topic` (`topicid`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_slide_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
