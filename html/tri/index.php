@@ -29,10 +29,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 			<div class='col-ex-12 col-sm-12 col-md-7 col-lg-7'>
 				<div class='media-middle' id='slides'>
 					<div id='slide-wrap'>
-						<img class="img-responsive image-slide" id="slide1" src="/slide/1/1" alt="Slide1">
-						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
-						
-						<div class="progress">
+						<div class="progress" id="progressBar">
 							<div id="progressbar" class="progress-bar active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
 						</div>
 						<nav>
@@ -80,9 +77,9 @@ include(dirname(__FILE__)."\..\header\index.php");
 										<span class="input-group-addon" id="sizing-addon1">
 											<img src="/pub/img/tri/Pencil-48.png" alt="Share your thought">
 										</span>
-										<input type="text" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
+										<input type="text" id="form-cmt" class="form-control" placeholder="Share your thought..." aria-describedby="sizing-addon1">
 										<span class="input-group-btn">
-											<button class="btn btn-default btn-success" type="button">Post</button>
+											<button class="btn btn-default btn-success" type="button" onclick="submitCmt()">Post</button>
 										</span>
 									</div>
 								</div>
@@ -224,14 +221,134 @@ include(dirname(__FILE__)."\..\header\index.php");
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			$("#slide-title").html("ahihi");
+			
 			//document.getElementById("slide-title").innerHTML="ahihi";
 			start_cmt=0;
 			lend_cmt=2;
 			showListComment(start_cmt,lend_cmt);
-			showRecommend();
-		//	showListRecommend();
+			showListRecommend();
 
+		$.ajax({
+			url: "/slide/getinfo/"+slideid,
+			type: "get",
+
+			success: function(res){
+				
+
+				var obj=JSON.parse(res);
+				console.log(obj);
+				$("#slide-title").html(obj.data.title);
+				for(i=0;i<obj.data.noslide;i++){
+
+					
+					var showSlide = document.createElement("IMG");
+					showSlide.setAttribute("class","img-responsive image-slide");
+					showSlide.setAttribute("src","/slide/getslide/"+slideid+"/"+(i+1));
+					var slide_wrap = document.getElementById("slide-wrap");
+					var progress = document.getElementById("progressBar");
+					slide_wrap.insertBefore(showSlide,progress);
+
+					
+				}
+				
+				currentItem = 0;
+				items = $('.image-slide');
+				items.hide();
+				items.eq(currentItem).show();
+
+				progressBar = document.getElementById('progressbar');
+				progressBarValue = 0;
+				progressBar.style.width = progressBarValue+"%";
+
+				progressStep = 100/(items.length-1);
+				slideNumber = document.getElementById('slideNumber');
+				slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+				function showNext() {
+					currentItem++;
+					if (currentItem == items.length) {
+						currentItem = 0;
+						progressBar.style.width = "0%";
+						progressBarValue = 0;
+						items.hide();
+						items.eq(currentItem).show();
+						slideNumber.innerHTML = (currentItem+1) + "/"+items.length;;
+						return;
+					}
+					progressBarValue += progressStep;
+					progressBar.style.width = progressBarValue+"%";
+					items.hide();
+					items.eq(currentItem).show();
+					slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+				}
+
+				function showPrevious() {
+					currentItem--;
+					if (currentItem<0) {
+						currentItem = items.length-1;
+						progressBar.style.width = "100%";
+						progressBarValue = 100;
+						items.hide();
+						items.eq(currentItem).show();
+						slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+						return;
+					}
+					progressBarValue -= progressStep;
+					if (progressBarValue<0) {
+						progressBarValue = 0;
+					}
+					progressBar.style.width = progressBarValue+"%";
+					slideNumber.innerHTML = (currentItem+1)+ "/"+items.length;
+					items.hide();
+					items.eq(currentItem).show();			
+
+				}
+
+				slideExtras = $('#wrap-slide-extra>div');
+				slideExtraNav = $('#wrap-slide-extra li');
+				for (var i=0; i<slideExtras.length;i++) {
+					slideExtraNav[i].className = "";
+				}
+				slideExtraNav[0].className="active";
+				function getCommentPage() {
+					slideExtras.hide();
+					slideExtras.eq(1).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[0].className="active";
+				}
+
+				function getStatisticsPage() {
+					slideExtras.hide();
+					slideExtras.eq(2).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[1].className="active";
+				}
+
+				function getNotesPage() {
+					
+					slideExtras.hide();
+					slideExtras.eq(3).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[2].className="active";
+				}
+
+				function getAboutAuthorPage() {
+					
+					slideExtras.hide();
+					slideExtras.eq(2).show();
+					for (var i=0; i<slideExtras.length;i++) {
+						slideExtraNav[i].className = "";
+					}
+					slideExtraNav[3].className="active";
+				}
+			}
+
+		});
 		}
 
 	);
@@ -292,7 +409,7 @@ function showComment(_src,_name,_cmt,_time){
 	              obj= JSON.parse(data);
 	              console.log(obj.data[0]);
 	              //obj_data= JSON.parse(obj.data[0]);
-	              for(index=0;index<lend;index++){
+	              for(index=0;index<obj.data.length;index++){
 	              	
 	              	 $.ajax({
 
@@ -303,7 +420,7 @@ function showComment(_src,_name,_cmt,_time){
 	              			console.log("datab" +data);
 	              			obj1= JSON.parse(data);
 	              			console.log("ten "+obj1.data.username);
-	              			showComment(obj1.data.avatar,obj1.data.username,obj.data[index].content,obj.data[index].time);
+	              			showComment("/user/"+obj1.data.userid+"/avatar",obj1.data.username,obj.data[index].content,obj.data[index].time);
 	              		},
 	              		async: false
 	              });
@@ -376,16 +493,18 @@ function showRecommend(r_href,r_name,r_src,r_des){
 
 
 
-
- function showListRecommend(){
+function showListRecommend(){
  	$.ajax({
- 		url: "/slide/getlist/"+slideid,
+ 		url: "/slide/getlist/"+topicid,
  		type: "get",
 
  		success: function(data){
  			slide_data=JSON.parse(data);
  			for(i=0;i<slide_data.data.length;i++){
  				//showRecommend(slide_data[i].)
+ 				if(slide_data.data.slideid!=slideid){
+ 					showRecommend("/catalog/"+topicid+"/"+slide_data.data[i].slideid,slide_data.data[i].title,"/slide/getslide/"+slideid+"/1",slide_data.data[i].description );
+ 				}
  			}
  		},
 
@@ -399,6 +518,25 @@ function showSlideTitle(){
 		type: 'get',
 		success: function(data){
 			$("#slide-title").html(data);
+		}
+	});
+}
+
+function submitCmt(){
+	$.ajax({
+		url: "/comment/add",
+		type: "post",
+		data: {
+			"slideid":slideid,
+			"userid":userid,
+			"content":$('#form-cmt').val(),
+		},
+
+		success: function(data){
+			console.log("cmt" +data);
+			showComment("/user/"+userid+"/avatar",$('#userlink1').html(),$('#form-cmt').val(),"just now");
+			$('#form-cmt').val("");
+
 		}
 	});
 }

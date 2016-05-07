@@ -67,7 +67,7 @@ $( document ).ready(function() {
       	var $ls_email=$('#lost_email').val();
         var dataLostPass = {email: $ls_email};
 
-        var $letters = /^[A-Za-z]+$/;
+        var $letters = /^[A-Za-z0-9]+$/;
         var $mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if ($ls_email == "ERROR") {
@@ -131,21 +131,18 @@ $( document ).ready(function() {
 	            $('#first_name').focus();
 	            return false;
           	} else {
-	            if ($first_name.match($letters)) {
 	              	if ($last_name_len == 0 || $last_name_len > 30 || $last_name_len < 2) {
 		                alert("Last name should length be between 2 to 30");
 		                $('#last_name').focus();
 		                return false;
 
 	              	} else {
-	                	if ($last_name.match($letters)) {
 
 		                  if ($display_name_len == 0 || $display_name_len > 30 || $display_name_len < 2) {
 		                    alert("Display name should length be between 2 to 30");
 		                    $('#display_name').focus();
 		                    return false;
 		                  } else {
-		                    if ($display_name.match($letters)) {
 
 		                      if ($email.match($mailformat)) {
 		                        if ($password_len < 5) {
@@ -166,6 +163,9 @@ $( document ).ready(function() {
 		                                  var code = JSON.parse(res)
 		                                  console.log(code);
 		                                  if (code.code == 0){
+		                                  	alert("Sign up successed.");
+		                                  $("body").load("/").hide().fadeIn(1500).delay(6000);
+
 		                                    //$("body").load("/").hide().fadeIn(1500).delay(6000);
 		                                    window.location.href = "/";
 		                                  } else if (code.code == 3) {
@@ -186,28 +186,8 @@ $( document ).ready(function() {
 		                        $('#email').focus();
 		                        return false;
 		                      }
-
-		                    } else {
-		                      alert("Display name must have alphabet characters only");
-		                      $('#display_name').focus();
-		                      return false;
-		                    }
 		                  }
-
-
-	                } else {
-	                  alert("Last name must have alphabet characters only");
-	                  $('#last_name').focus();
-	                  return false;
-	                }
 	              }
-
-	            } else {
-	              alert("First name must have alphabet characters only");
-	              $('#first_name').focus();
-	              return false;
-	            }
-
 
                       //msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
          	}

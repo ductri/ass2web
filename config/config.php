@@ -12,7 +12,7 @@ define("DB_HOSTNAME", "localhost");
 // For openshift
 // define("DB_USERNAME", "adminYHxmQA9");
 // define("DB_PASSWORD", "EWVI3RILgLzB");
-// define("DB_HOSTNAME", "https://ass2-webhcmut.rhcloud.com");
+// define("DB_HOSTNAME", "127.10.48.130:3306");
 
 
 /*****************************************************************
