@@ -511,6 +511,9 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 	} else {
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
+
+		$slideDB->increaseNoDownload($slideId);
+
 		$slide = $slideDB->getSlide($slideId);
 		$file = UPLOAD_DIR_SLIDE.$slide['userid']."/".$slide['filename'];
 		header("Content-disposition: attachment;filename=".$slide['filename']);
@@ -618,6 +621,17 @@ $collector->get('/slide/delete/{slideId}', function($slideId){
 	}
 	echo json_encode($response);
 });
+
+$collector->get('/slide/topdownload/{count}', function($count){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getTopDownload($count);
+	echo json_encode($response);
+});
 //////////////////
 //COMMENT
 //////////////////
@@ -630,8 +644,9 @@ $collector->get('/comment/getlist/{slideId}/{startIndex}/{length}', function($sl
 	global $DBManager;
 	$commentDB = $DBManager->getTable("comment");
 	$response["data"] = $commentDB->getListComment($slideId, $startIndex, $lenght);
-
+	//$encodedArray = array_map(utf8_encode, $response["data"]);
 	echo json_encode($response);
+	
 });
 
 $collector->post('/comment/add', function(){
@@ -658,6 +673,32 @@ $collector->post('/comment/add', function(){
 			$response["code"] = 2;
 			$response["msg"] = "Add comment fail";
 		}
+	}
+	echo json_encode($response);
+});
+
+$collector->get('/comment/getall/{startIndex}/{length}', function($startIndex, $length){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 3;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+		
+	} else {
+		$slideDB = $DBManager->getTable("slide");
+		$result = $slideDB->getAllSlide($startIndex, $length);
+		$response["msg"] = "Success";
+		$response["data"] = $result;	
 	}
 	echo json_encode($response);
 });

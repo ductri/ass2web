@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2016 at 06:09 PM
+-- Generation Time: May 07, 2016 at 07:14 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -67,12 +67,12 @@ CREATE TABLE `slide` (
 --
 
 INSERT INTO `slide` (`slideid`, `userid`, `topicid`, `title`, `description`, `timeupload`, `filename`, `noslide`) VALUES
-(44, 15, 1, 'GiÃ¡o Ã¡n Ä‘iá»‡n tá»­ Slide PowerPoint Ä‘áº¹p', 'GiÃ¡o Ã¡n Ä‘iá»‡n tá»­ Slide PowerPoint Ä‘áº¹p', '2016-05-07 23:04:41', '15932.ppt', 7),
-(45, 15, 3, 'Download Slide PowerPoint Äáº¹p Thuyáº¿t trÃ¬nh O', 'Download Slide PowerPoint Äáº¹p Thuyáº¿t trÃ¬nh Office 2003 2010', '2016-05-07 23:05:27', '1973.pptx', 5),
-(48, 17, 3, 'Download Máº«u PowerPoint Ä‘áº¹p, chuyÃªn nghiá»‡p', 'Download Máº«u PowerPoint Ä‘áº¹p, chuyÃªn nghiá»‡p lÃ m giÃ¡o Ã¡n, thuyáº¿t trÃ¬nh 2003', '2016-05-07 23:06:16', '27185.ppt', 12),
-(51, 19, 1, 'Máº«u PowerPoint Äáº¹p Office 2003', 'Máº«u PowerPoint Äáº¹p Office 2003', '2016-05-07 23:06:53', '14468.ppt', 6),
-(52, 19, 1, 'Ná»n PPT PowerPoint Ä‘áº¹p lÃ m thuyáº¿t trÃ¬nh p', 'Ná»n PPT PowerPoint Ä‘áº¹p lÃ m thuyáº¿t trÃ¬nh phÃ¢n tÃ­ch kinh doanh', '2016-05-07 23:07:16', '30829.pptx', 8),
-(53, 16, 4, 'Ná»n PowerPoint Äáº¹p lÃ m slide giÃ¡o Ã¡n, thuy', 'Ná»n PowerPoint Äáº¹p lÃ m slide giÃ¡o Ã¡n, thuyáº¿t trÃ¬nh, luáº­n vÄƒn', '2016-05-07 23:07:46', '11426.ppt', 5);
+(44, 15, 1, 'Giáo án slide', 'Giáo án slide', '2016-05-07 23:04:41', '15932.ppt', 7),
+(45, 15, 3, 'Download slide thuyết trình', 'Thuyết trình 2013', '2016-05-07 23:05:27', '1973.pptx', 5),
+(48, 17, 3, 'Slide chuyên nghiệp', 'Silde chuyên nghiệp', '2016-05-07 23:06:16', '27185.ppt', 12),
+(51, 19, 1, 'Mẫu slide 2013', 'Office 2013', '2016-05-07 23:06:53', '14468.ppt', 6),
+(52, 19, 1, 'PPT đẹp chuẩn', 'PPT đẹp chuẩn', '2016-05-07 23:07:16', '30829.pptx', 8),
+(53, 16, 4, 'Slide kỹ sư', 'Slide kỹ sư', '2016-05-07 23:07:46', '11426.ppt', 5);
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userid`, `username`, `password`, `userright`, `avatar`, `firstname`, `lastname`, `email`) VALUES
-(15, 'ductuan', '8ec7012ae70b511012d280dba6ae3df3b0ace935', 'user', 'default.png', 'Nguyen', 'Tuan', 'ductuan@gmail.com'),
+(15, 'ductuan', '8ec7012ae70b511012d280dba6ae3df3b0ace935', 'admin', 'default.png', 'Nguyen', 'Tuan', 'ductuan@gmail.com'),
 (16, 'quangpham', '409ac02bd065f4bb96f5b9afdc7b3f5e8950b2ae', 'user', 'default.png', 'Pham', 'Quang', 'quangpham@gmail.com'),
 (17, 'keophuong', 'bd88e0b64d178fe63a0e538f9b31243215b7e8c0', 'user', 'default.png', 'Keo', 'Phuong', 'keophuong@gmail.com'),
 (19, 'admin', 'd4e8e6deaa7b1f8381e09e3e6b83e36f0b681c5c', 'admin', 'default.png', 'Naruto', 'Kun', 'admin@gmail.com');
