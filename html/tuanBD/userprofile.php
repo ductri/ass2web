@@ -34,11 +34,11 @@ include(dirname(__FILE__)."\..\header\index.php");
 ?>
 
 <div class="container">
-      <div class="row adjust">
+    <div class="row adjust">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
          
        <br>
-<p class=" text-info" id="time">May 01,2015,03:00 pm </p>
+          <p class=" text-info" id="time">May 01,2015,03:00 pm </p>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
    
@@ -65,13 +65,10 @@ include(dirname(__FILE__)."\..\header\index.php");
                         <td id="email"><a href="https://www.gmail.com">nnductuan@gmail.com</a></td>
                       </tr>
                        
-                      </tr>
-                      </tr>
+                     
+                      <tr>
                         <td>My slide</td>
-                        <td id="slide">
-            
-
-                        </td>
+                        <td id="slide"></td>
                            
                       </tr>
                     </tbody>
@@ -91,6 +88,7 @@ include(dirname(__FILE__)."\..\header\index.php");
         </div>
       </div>
     </div>
+</div>
 <!--mockup -->
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
@@ -115,7 +113,6 @@ include(dirname(__FILE__)."\..\header\index.php");
       
        <form id="form-avatar" >
           <input type="file" name="avatar" id="avatar">
-          <input type="submit">
         </form>
       </div>
 
@@ -163,15 +160,12 @@ include(dirname(__FILE__)."\..\header\index.php");
       <!-- Begin # DIV Form -->
       <div id="div-forms">
         <div class="modal-header text-center">
-      
        
-       
-        <div class="row">
      
           <div class="col-xs-12 col-sm-6 col-md-6">
-           <div class="form-group">
+           <div class="form-group" style:"display:block">
 
-              <input type="password" id="oldpassword" class="form-control input-lg" placeholder="Password" tabindex="5" required>
+              <input type="password" id="oldpassword" class="form-control input-lg" placeholder="Old Password" tabindex="5" required>
 
             </div>
 
@@ -199,7 +193,6 @@ include(dirname(__FILE__)."\..\header\index.php");
           </div>
         </div>
         </form>
-      
       </div>
       <!-- End # DIV Form -->
 
