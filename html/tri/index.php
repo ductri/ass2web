@@ -29,12 +29,6 @@ include(dirname(__FILE__)."\..\header\index.php");
 			<div class='col-ex-12 col-sm-12 col-md-7 col-lg-7'>
 				<div class='media-middle' id='slides'>
 					<div id='slide-wrap'>
-						<img class="img-responsive image-slide" id="slide1" src="/slide/1/1" alt="Slide1">
-						
-						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
-
-						<img class="img-responsive image-slide" id="slide2" src="/slide/1/2" alt="Slide2">
-
 						<div class="progress" id="progressBar">
 							<div id="progressbar" class="progress-bar active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
 						</div>
@@ -232,8 +226,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 			start_cmt=0;
 			lend_cmt=2;
 			showListComment(start_cmt,lend_cmt);
-			showRecommend();
-		//	showListRecommend();
+			showListRecommend();
 
 		$.ajax({
 			url: "/slide/getinfo/"+slideid,
@@ -250,7 +243,7 @@ include(dirname(__FILE__)."\..\header\index.php");
 					
 					var showSlide = document.createElement("IMG");
 					showSlide.setAttribute("class","img-responsive image-slide");
-					showSlide.setAttribute("src","/slide/getslide/"+slideid+"/"+i);
+					showSlide.setAttribute("src","/slide/getslide/"+slideid+"/"+(i+1));
 					var slide_wrap = document.getElementById("slide-wrap");
 					var progress = document.getElementById("progressBar");
 					slide_wrap.insertBefore(showSlide,progress);
@@ -500,16 +493,18 @@ function showRecommend(r_href,r_name,r_src,r_des){
 
 
 
-
- function showListRecommend(){
+function showListRecommend(){
  	$.ajax({
- 		url: "/slide/getlist/"+slideid,
+ 		url: "/slide/getlist/"+topicid,
  		type: "get",
 
  		success: function(data){
  			slide_data=JSON.parse(data);
  			for(i=0;i<slide_data.data.length;i++){
  				//showRecommend(slide_data[i].)
+ 				if(slide_data.data.slideid!=slideid){
+ 					showRecommend("/catalog/"+topicid+"/"+slide_data.data[i].slideid,slide_data.data[i].title,"/slide/getslide/"+slideid+"/1",slide_data.data[i].description );
+ 				}
  			}
  		},
 
