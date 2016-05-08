@@ -71,6 +71,7 @@ var ExampleApplication = React.createClass({
     console.log(keyword);
     $.getJSON("/slide/search/"+keyword, function(data) {
       this.setState({items : data.data});
+      $('#loadAni').hide();
     }.bind(this));
   },
   render: function() {
@@ -88,7 +89,7 @@ var ExampleApplication = React.createClass({
 
               </div>
               <hr></hr>
-              <span  className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+              <span id="loadAni" className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
             </div>
           </div>
         </div>
