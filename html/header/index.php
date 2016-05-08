@@ -1,6 +1,8 @@
 <?php
-if(!isset($_SESSION["username"]))
+if(!isset($_SESSION["username"])) {
+  echo "ductri";
   include("header_guest.php");
+  }
 else {
 	echo "<script>";
     //echo $_SERVER['REQUEST_URI'];
