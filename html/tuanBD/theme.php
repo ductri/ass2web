@@ -17,8 +17,7 @@ if(!isset($_SESSION))
 { 
     session_start(); 
 }
-include(dirname(__FILE__)."\..\header\index.php");
-
+include(dirname(__FILE__)."/../header/index.php");
 ?>
 
 
