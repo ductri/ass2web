@@ -1,5 +1,5 @@
 <?php 
-require_once(".\..\libs\utils.php");
+require_once(dirname(__FILE__)."/../libs/utils.php");
 require_once("TopicDB.php");
 require_once("UserDB.php");
 require_once("SlideDB.php");
