@@ -62,7 +62,7 @@ var SlideThumb = React.createClass({
                     </div>
                   </div>
                   <p  className="info text-left no-padding">
-                    <span  className="glyphicon glyphicon-circle-arrow-down"></span> 1.4k&emsp;
+                    <span  className="glyphicon glyphicon-circle-arrow-down"></span> {this.props.data.nodownload}&emsp;
                     <span  className="glyphicon glyphicon-star span-item"></span> 2.3k
                   </p>
                   <hr></hr>
@@ -97,6 +97,7 @@ var ExampleApplication = React.createClass({
       urlApi = "/slide/topdownload/3";
     }
     $.getJSON(urlApi, function(data) {
+      console.log(data.data);
       this.setState({items : data.data});
       $('#loadAni').hide();
     }.bind(this));
