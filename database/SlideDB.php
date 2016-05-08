@@ -64,7 +64,7 @@ class SlideDB  {
 
 	public function deleteSlide($slideId) {
 		$sql = "DELETE FROM SLIDE WHERE slideid='$slideId'";
-		echo $sql;
+		//echo $sql;
 		$result = $this->conn->query($sql);
 		if ($result=== true) {
 			return "success";
