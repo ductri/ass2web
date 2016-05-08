@@ -92,19 +92,33 @@ var ExampleApplication = React.createClass({
     };
   },
   componentWillMount: function () {
-    $.getJSON("/slide/getlist/"+topicId, function(data) {
+    var urlApi = "/slide/getlist/"+topicId;
+    if(topicId == 'top-rate' || topicId == 'top-download'){
+      urlApi = "/slide/topdownload/3";
+    }
+    $.getJSON(urlApi, function(data) {
       this.setState({items : data.data});
       $('#loadAni').hide();
     }.bind(this));
 
     $.getJSON("/topic/get", function(data) {
-      console.log(data);
+      var check = false;
       for (var i = data.length - 1; i >= 0; i--) {
         if(Number(data[i].topicid) == topicId){
-          this.setState({topic : data[i].name});
+          this.setState({topic : 'Topic ' + data[i].name});
+          check = true;
           break;
         }
       };
+      if(!check){
+        if(topicId == 'top-rate'){
+          this.setState({topic : 'Top rate'});
+        }
+        if(topicId == 'top-download'){
+          this.setState({topic : 'Top download'});
+        }
+      }
+
     }.bind(this));
   },
   render: function() {
@@ -113,7 +127,7 @@ var ExampleApplication = React.createClass({
         <div className="container">
           <div  className="row text-center center-items">
             <div id="center"  className="col-md-12">
-              <h2>{this.state.topic} Topic</h2>
+              <h2>{this.state.topic}</h2>
               <hr  className="catalog"/>
               <div  className="row">
 

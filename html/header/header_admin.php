@@ -43,8 +43,8 @@
       <li>
         <a href="" class="dropdown-toggle" data-toggle="dropdown">More Topics <b class="caret"></b></a>
         <ul class="dropdown-menu" id="nav_mobile">
-          <li><a href="/catalog/1">Top Rate</a></li>
-          <li><a href="/catalog/2">Top Download</a></li>
+          <li><a href="/catalog/top-rate">Top Rate</a></li>
+          <li><a href="/catalog/top-download">Top Download</a></li>
         </ul>
       </li>
     </ul>
@@ -64,9 +64,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <div class="input-group stylish-input-group" id="search">
-        <input type="text" class="form-control"  placeholder="Search" >
+        <input id="keywordInput" type="text" class="form-control"  placeholder="Search" >
         <span class="input-group-addon">
-          <button type="submit">
+          <button type="submit" onClick="clickS1()">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </span>
@@ -85,8 +85,8 @@
     <div class="collapse navbar-collapse">
      <ul class="nav navbar-nav navbar-left" style="padding-right: 5%; display: block" id="nav">
         <li><a href="/">Home</a></li>
-        <li><a href="/catalog/1">Top Rate</a></li>
-        <li><a href="/catalog/2">Top Download</a></li>
+        <li><a href="/catalog/top-rate">Top Rate</a></li>
+        <li><a href="/catalog/top-download">Top Download</a></li>
       </ul>
     </div>
   </div>
@@ -139,3 +139,4 @@ var $id_web = "nav";
 
 
 </script>
+<script src="/pub/js/quang/search.js"></script>
