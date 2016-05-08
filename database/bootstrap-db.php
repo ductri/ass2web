@@ -1,5 +1,5 @@
 <?php 
-require_once($OPENSHIFT_HOMEDIR."/utils.php");
+require_once(".\..\utils.php");
 require_once("TopicDB.php");
 require_once("UserDB.php");
 require_once("SlideDB.php");
