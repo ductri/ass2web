@@ -547,17 +547,18 @@ $collector->get('/slide/getlist/{topicId}', function($topicId){
 
 $collector->get('/slide/getinfo/{slideId}', function($slideId){
 	$response = array();
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		$response["code"] = 0;
-		$response["msg"] = "Success";
-		global $DBManager;
-		$slideDB = $DBManager->getTable("slide");
-		$response["data"] = $slideDB->getSlide($slideId);
-	}
+	//TODO Risk
+	// if (Utils::checkLogin() === "") {
+	// 	$response["code"] = 1;
+	// 	$response["msg"] = "Have not logged in";
+	// 	$response["data"] = [];
+	// } else {
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getSlide($slideId);
+	//}
 	echo json_encode($response);
 });
 
