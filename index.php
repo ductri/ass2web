@@ -193,12 +193,45 @@ $collector->post('/user/register', function() {
 		$firstName = $_POST["firstname"];
 		$lastName = $_POST["lastname"];
 		$email = $_POST["email"];
+		$password = $_POST["password"];
+
+		if (($check = Utils::checkUsername($userName)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		if (($check = Utils::checkLastname($lastName)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		if (($check = Utils::checkFirstname($firstName)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		if (($check = Utils::checkEmail($email)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		if (($check = Utils::checkPassword($password)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
 		$password = utils::encrypt($_POST["password"]);
-		
-			// $temporary = explode(".", $_FILES["avatar"]["name"]);
-			// $file_extension = end($temporary);
-			// //echo utils::console_log($_FILES["avatar"]);
-			// $avatarFileName = move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$userName.".".$file_extension);
+			
 		global $DBManager;
 		$userDB = $DBManager->getTable("user");
 		$result = $userDB->register($userName, $firstName, $lastName, 
@@ -276,13 +309,21 @@ $collector->post('/user/editinfo/{userId}', function($userId) {
 		} else {
 			$firstName = $_POST["firstname"];
 			$lastName = $_POST["lastname"];
+			if (($check = Utils::checkLastname($lastName)) !== "") {
+				$response["code"] = 4;
+				$response["msg"] = $check;
+				$response["data"] = [];
+				echo json_encode($response);
+				return;
+			}
+			if (($check = Utils::checkFirstname($firstName)) !== "") {
+				$response["code"] = 4;
+				$response["msg"] = $check;
+				$response["data"] = [];
+				echo json_encode($response);
+				return;
+			}
 			
-			// if (isset($_FILES["avatar"])) {
-			// 	$temporary = explode(".", $_FILES["avatar"]["name"]);
-			// 	$file_extension = end($temporary);
-			// 	$avatarFileName = $userId.".".$file_extension;
-			// 	move_uploaded_file($_FILES["avatar"]["tmp_name"], UPLOAD_DIR_AVATAR.$avatarFileName);	
-			// }
 			global $DBManager;
 			$userDB = $DBManager->getTable("user");
 			$result = $userDB->updateInfo($userId, $firstName, $lastName);
@@ -305,7 +346,27 @@ $collector->post('/user/changepass/{userId}', function($userId) {
 	$oldPass = $_POST["oldpass"];
 	$newPass1 = $_POST["newpass1"];
 	$newPass2 = $_POST["newpass2"];
-
+	if (($check = Utils::checkPassword($oldPass)) !== "") {
+		$response["code"] = 4;
+		$response["msg"] = $check;
+		$response["data"] = [];
+		echo json_encode($response);
+		return;
+	}
+	if (($check = Utils::checkPassword($newPass1)) !== "") {
+		$response["code"] = 4;
+		$response["msg"] = $check;
+		$response["data"] = [];
+		echo json_encode($response);
+		return;
+	}
+	if (($check = Utils::checkPassword($newPass2)) !== "") {
+		$response["code"] = 4;
+		$response["msg"] = $check;
+		$response["data"] = [];
+		echo json_encode($response);
+		return;
+	}
 	$response = array();
 	if (Utils::checkLogin() === "") {
 		$response["code"] = 1;
@@ -358,6 +419,14 @@ $collector->post('/user/changeavatar/{userId}', function($userId) {
 			$response["data"] = [];
 		} else {
 			if (isset($_FILES["avatar"])) {
+				if (($check = Utils::is_image($_FILES["avatar"]["tmp_name"])) === false) {
+					$response["code"] = 4;
+					$response["msg"] = $check;
+					$response["data"] = [];
+					echo json_encode($response);
+					return;
+				}
+
 				$temporary = explode(".", $_FILES["avatar"]["name"]);
 				$file_extension = end($temporary);
 				$avatarFileName = $userId.".".$file_extension;
@@ -478,17 +547,18 @@ $collector->get('/slide/getlist/{topicId}', function($topicId){
 
 $collector->get('/slide/getinfo/{slideId}', function($slideId){
 	$response = array();
-	if (Utils::checkLogin() === "") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else {
-		$response["code"] = 0;
-		$response["msg"] = "Success";
-		global $DBManager;
-		$slideDB = $DBManager->getTable("slide");
-		$response["data"] = $slideDB->getSlide($slideId);
-	}
+	//TODO Risk
+	// if (Utils::checkLogin() === "") {
+	// 	$response["code"] = 1;
+	// 	$response["msg"] = "Have not logged in";
+	// 	$response["data"] = [];
+	// } else {
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getSlide($slideId);
+	//}
 	echo json_encode($response);
 });
 
@@ -511,6 +581,9 @@ $collector->get('/slide/download/{slideId}', function($slideId) {
 	} else {
 		global $DBManager;
 		$slideDB = $DBManager->getTable("slide");
+
+		$slideDB->increaseNoDownload($slideId);
+
 		$slide = $slideDB->getSlide($slideId);
 		$file = UPLOAD_DIR_SLIDE.$slide['userid']."/".$slide['filename'];
 		header("Content-disposition: attachment;filename=".$slide['filename']);
@@ -533,8 +606,30 @@ $collector->post('/slide/upload/', function() {
 		$title = $_POST["title"];
 		$description = $_POST["description"];
 
+		if (($check = Utils::checkStringNotEmpty($title)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		if (($check = Utils::checkStringNotEmpty($description)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+		
 		$temporary = explode(".", $_FILES["file"]["name"]);
 		$file_extension = end($temporary);
+		if ($file_extension !== "ppt" && $file_extension !== "pptx") {
+			$response["code"] = 4;
+			$response["msg"] = "Only ppt or pptx accepted";
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
 		$dir = UPLOAD_DIR_SLIDE.$userId;
 		if (!is_dir($dir)) {
 			mkdir($dir, 0777);
@@ -618,6 +713,17 @@ $collector->get('/slide/delete/{slideId}', function($slideId){
 	}
 	echo json_encode($response);
 });
+
+$collector->get('/slide/topdownload/{count}', function($count){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$slideDB = $DBManager->getTable("slide");
+	$response["data"] = $slideDB->getTopDownload($count);
+	echo json_encode($response);
+});
 //////////////////
 //COMMENT
 //////////////////
@@ -649,6 +755,15 @@ $collector->post('/comment/add', function(){
 		$slideId = $_POST["slideid"];
 		$userId = $_POST["userid"];
 		$content = $_POST["content"];
+
+		if (($check = Utils::checkStringNotEmpty($content)) !== "") {
+			$response["code"] = 4;
+			$response["msg"] = $check;
+			$response["data"] = [];
+			echo json_encode($response);
+			return;
+		}
+
 		$result = $commentDB->add($slideId, $userId, $content);
 		$response["data"] = [];
 		if ($result === true) {
