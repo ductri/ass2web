@@ -31,7 +31,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" style="padding-right: 5%; display: block">
       <li><a id="userlink1" style="color: white;"><strong><?php echo $_SESSION["username"]?></strong></a></li>
-        <li><a href="../keo/Upload/upload.html">Up load</a></li>
+        <li><a href="/upload">Up load</a></li>
 
         <li><a href="/logout">Logout</a> </li>
       </ul>
