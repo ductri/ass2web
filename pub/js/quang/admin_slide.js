@@ -53,7 +53,7 @@ var ExampleApplication = React.createClass({
     };
   },
   componentWillMount: function () {
-    $.getJSON("/slide/getlist/1", function(data) {
+    $.getJSON("/slide/getall/0/100", function(data) {
       this.setState({items : data.data});
     }.bind(this));
   },
