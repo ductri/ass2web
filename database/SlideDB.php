@@ -1,5 +1,5 @@
 <?php 
-require_once('/../utils.php');
+require_once(dirname(__FILE__)."/../libs/utils.php");
 class SlideDB  {
 	private $conn;
 

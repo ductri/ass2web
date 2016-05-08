@@ -3,7 +3,6 @@
     
     "require": {
         "phroute/phroute": "^2.1",
-        "phpmailer/phpmailer": "^5.2",
-        "aspose/slides-sdk-php": "dev-master"
+        "phpmailer/phpmailer": "^5.2"
     }
 }
