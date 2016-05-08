@@ -1,8 +1,10 @@
 <?php
-if(!isset($_SESSION["username"]))
+
+if(!isset($_SESSION["username"])) {
   include("header_guest.php");
+  }
 else {
-	echo "<script>";
+	   echo "<script>";
     //echo $_SERVER['REQUEST_URI'];
    	echo "window.userid = ".$_SESSION['userid'].";";
     echo 'window.typeUser = "'.$_SESSION['type'].'";';
