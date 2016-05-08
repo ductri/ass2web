@@ -1,6 +1,6 @@
 <?php
+
 if(!isset($_SESSION["username"])) {
-  echo "ductri";
   include("header_guest.php");
   }
 else {
