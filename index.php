@@ -34,7 +34,7 @@ $collector->get('/catalog/{catalogId}', function($catalogId){
 	//Asume
 	$catalog = "top-download";
 	echo "<script>";
-	echo "topicId=".$catalogId.";";
+	echo 'topicId="'.$catalogId.'";';
 	echo "</script>";
 
 	include('html/quang/catalog.php');

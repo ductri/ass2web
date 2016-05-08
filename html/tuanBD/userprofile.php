@@ -78,7 +78,7 @@ include(dirname(__FILE__)."\..\header\index.php");
               </div>
             </div>
                  <div class="panel-footer">
-                       <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-password"><i class="glyphicon glyphicon-edit"></i></a>
+                       <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" data-target="#edit-password" style=" background-color: hue">Change password</a>
                         <span class="pull-right">
                             <a href="#" role="button" data-toggle="modal" data-original-title="Edit profile" data-toggle="tooltip modal" type="button" class="btn btn-sm btn-warning" data-target="#edit-user"><i class="glyphicon glyphicon-edit"></i></a>
                           
@@ -341,13 +341,7 @@ function changeInfo(){
   });
 }
 
-function onClickDownload(event){
-      if($("#linkuser1")==""){
-        alert('You need to login to download file!');
-      } else {
-        window.location = "/slide/download/"+slideid;
-      }
-    }
+
 
 </script>
 </body>
