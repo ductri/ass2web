@@ -918,7 +918,7 @@
                                 if (isEnabled) {
                                     self.upload();
                                 }
-                                alert(data.msg);
+                                alert("Upload successed !");
                                 window.location.href = "/upload";
                                } else {
                                     alert(data.msg);
@@ -1788,6 +1788,7 @@
                 if (!isEmpty(fileExt)) {
                     fileExtExpr = new RegExp('\\.(' + fileExt.join('|') + ')$', 'i');
                 }
+                
                 fileSize = fileSize.toFixed(2);
                 if (self.maxFileSize > 0 && fileSize > self.maxFileSize) {
                     msg = self.msgSizeTooLarge.replace('{name}', caption)
@@ -1795,7 +1796,7 @@
                         .replace('{maxSize}', self.maxFileSize);
                     self.isError = throwError(msg, file, previewId, i);
                     return;
-                }
+                } 
                 if (!isEmpty(fileTypes) && isArray(fileTypes)) {
                     for (j = 0; j < fileTypes.length; j += 1) {
                         typ = fileTypes[j];
@@ -2695,7 +2696,7 @@
         resizePreference: 'width',
         resizeQuality: 0.92,
         resizeDefaultImageType: 'image/jpeg',
-        maxFileSize: 0,
+        maxFileSize: 8192,
         minFileCount: 0,
         maxFileCount: 0,
         validateInitialCount: false,

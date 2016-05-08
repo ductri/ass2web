@@ -1,5 +1,5 @@
 <script src="/pub/js/keo/signup/signup.js"></script>
-<script src="/pub/js/quang/search.js"></script>
+<!--<script src="/pub/js/quang/search.js"></script> -->
 <body>
 <!-- Header -->
 <nav class="navbar navbar-inverse nonedis visible-xs" id="navadd1">

@@ -1,6 +1,14 @@
 //require_once("config.php");
 
+
+
 $( document ).ready(function() {
+	function clickS1(){
+	  var keyW = $('#keywordInput').val();
+	  if (keyW != undefined && keyW != null) {
+	      window.location = '/search?keyword=' + keyW;
+	  }
+	}
     var $formLogin = $('#login-form');
     var $formLost = $('#lost-form');
     var $divForms = $('#div-forms');
