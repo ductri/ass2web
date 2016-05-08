@@ -3,9 +3,7 @@
  * Get url to route
  * @return array
  */
-use Aspose\Slides\SlidesApi;
-use Aspose\Slides\APIClient;
-use Aspose\Storage\StorageApi;
+
 class Utils {
 
 	private $EOL = "<br>";
