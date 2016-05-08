@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-include 'utils.php';
+include './libs/utils.php';
 #echo "2";
 include "config/config.php";
 #echo "3";
 include 'vendor/autoload.php';
 #echo "4";
-require('bootstrap.php');
+require('./libs/bootstrap.php');
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
