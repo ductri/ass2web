@@ -12,13 +12,14 @@ require('bootstrap.php');
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 $collector = new RouteCollector();
-#echo "1";
+echo "1";
 //***********************************
 // html render
 //***********************************
 $collector->get('/', function(){
-	#echo "2";
+	echo "2";
 	include('html/tuanBD/theme.php');
+	echo "3";
 });
 #echo "3";
 $collector->get('/upload', function(){
