@@ -346,21 +346,21 @@ $collector->post('/user/changepass/{userId}', function($userId) {
 	$newPass1 = $_POST["newpass1"];
 	$newPass2 = $_POST["newpass2"];
 	if (($check = Utils::checkPassword($oldPass)) !== "") {
-		$response["code"] = 4;
+		$response["code"] = 7;
 		$response["msg"] = $check;
 		$response["data"] = [];
 		echo json_encode($response);
 		return;
 	}
 	if (($check = Utils::checkPassword($newPass1)) !== "") {
-		$response["code"] = 4;
+		$response["code"] = 7;
 		$response["msg"] = $check;
 		$response["data"] = [];
 		echo json_encode($response);
 		return;
 	}
 	if (($check = Utils::checkPassword($newPass2)) !== "") {
-		$response["code"] = 4;
+		$response["code"] = 7;
 		$response["msg"] = $check;
 		$response["data"] = [];
 		echo json_encode($response);
@@ -723,6 +723,32 @@ $collector->get('/slide/topdownload/{count}', function($count){
 	$response["data"] = $slideDB->getTopDownload($count);
 	echo json_encode($response);
 });
+
+$collector->get('/slide/getall/{startIndex}/{length}', function($startIndex, $length){
+	$response = array();
+
+	$response["code"] = 0;
+	$response["msg"] = "Success";
+	global $DBManager;
+	$response = array();
+	$checkLogin = Utils::checkAdminLogin();
+	if ($checkLogin === "not_login") {
+		$response["code"] = 1;
+		$response["msg"] = "Have not logged in";
+		$response["data"] = [];
+	} else if ($checkLogin === "not_admin") {
+		$response["code"] = 3;
+		$response["msg"] = "You are not admin";
+		$response["data"] = [];
+		
+	} else {
+		$slideDB = $DBManager->getTable("slide");
+		$result = $slideDB->getAllSlide($startIndex, $length);
+		$response["msg"] = "Success";
+		$response["data"] = $result;	
+	}
+	echo json_encode($response);
+});
 //////////////////
 //COMMENT
 //////////////////
@@ -777,31 +803,7 @@ $collector->post('/comment/add', function(){
 	echo json_encode($response);
 });
 
-$collector->get('/comment/getall/{startIndex}/{length}', function($startIndex, $length){
-	$response = array();
 
-	$response["code"] = 0;
-	$response["msg"] = "Success";
-	global $DBManager;
-	$response = array();
-	$checkLogin = Utils::checkAdminLogin();
-	if ($checkLogin === "not_login") {
-		$response["code"] = 1;
-		$response["msg"] = "Have not logged in";
-		$response["data"] = [];
-	} else if ($checkLogin === "not_admin") {
-		$response["code"] = 3;
-		$response["msg"] = "You are not admin";
-		$response["data"] = [];
-		
-	} else {
-		$slideDB = $DBManager->getTable("slide");
-		$result = $slideDB->getAllSlide($startIndex, $length);
-		$response["msg"] = "Success";
-		$response["data"] = $result;	
-	}
-	echo json_encode($response);
-});
 
 $dispatcher =  new Dispatcher($collector->getData());
 
